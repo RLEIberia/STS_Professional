@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/test"
+    app:startDestination="@id/PhotoFragment">
+    <fragment android:id="@+id/PhotoFragment" >
+        <action
+            android:id="@+id/action_placeholder2_self"
+            app:destination="@id/PhotoFragment" />
+        <action
+            android:id="@+id/action_PhotoFragment_to_TextFagment"
+            app:destination="@id/TextFagment" />
+        <action
+            android:id="@+id/action_PhotoFragment_to_QRFragment"
+            app:destination="@id/QRFragment" />
+    </fragment>
+    <fragment android:id="@+id/QRFragment" >
+        <action
+            android:id="@+id/action_QRFragment_to_TextFagment"
+            app:destination="@id/TextFagment" />
+        <action
+            android:id="@+id/action_QRFragment_to_PhotoFragment"
+            app:destination="@id/PhotoFragment" />
+        <action
+            android:id="@+id/action_QRFragment_self"
+            app:destination="@id/QRFragment" />
+    </fragment>
+    <fragment android:id="@+id/TextFagment" >
+        <action
+            android:id="@+id/action_TextFagment_to_PhotoFragment"
+            app:destination="@id/PhotoFragment" />
+        <action
+            android:id="@+id/action_TextFagment_to_QRFragment"
+            app:destination="@id/QRFragment" />
+        <action
+            android:id="@+id/action_TextFagment_self"
+            app:destination="@id/TextFagment" />
+    </fragment>
+    <fragment android:id="@+id/Home" >
+        <action
+            android:id="@+id/action_Home_to_Projects"
+            app:destination="@id/Projects" />
+    </fragment>
+    <fragment android:id="@+id/Projects" >
+        <action
+            android:id="@+id/action_Projects_to_CheckLists"
+            app:destination="@id/CheckLists" />
+    </fragment>
+    <fragment android:id="@+id/CheckLists" >
+        <action
+            android:id="@+id/action_CheckLists_to_QRFragment"
+            app:destination="@id/QRFragment" />
+        <action
+            android:id="@+id/action_CheckLists_to_TextFagment"
+            app:destination="@id/TextFagment" />
+        <action
+            android:id="@+id/action_CheckLists_to_PhotoFragment"
+            app:destination="@id/PhotoFragment" />
+    </fragment>
+</navigation>

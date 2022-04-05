@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name" translatable="false">STS</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment" translatable="false">Hello blank fragment</string>
+    <string name="ir_atras">Go back</string>
+    <string name="siguiente">Next</string>
+    <string name="menu">MENU</string>
+    <string name="audio">AUDIO</string>
+</resources>

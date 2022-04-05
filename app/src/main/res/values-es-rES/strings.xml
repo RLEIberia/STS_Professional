@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="ir_atras">Ir atras</string>
+    <string name="siguiente">Siguiente</string>
+    <string name="menu">MENU</string>
+    <string name="audio">AUDIO</string>
+</resources>
