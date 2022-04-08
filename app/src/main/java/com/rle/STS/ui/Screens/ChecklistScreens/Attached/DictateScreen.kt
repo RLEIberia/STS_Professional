@@ -30,7 +30,7 @@ fun DictateScreen() {
             val data = it.data
             result.value = "[No Dictation]"
             if ( data != null) {
-                result.value = data.getStringExtra(methods.EXTRA_RESULT)!!
+                result.value = data.getStringExtra("result")//methods.EXTRA_RESULT)!!
             }
         }
 
