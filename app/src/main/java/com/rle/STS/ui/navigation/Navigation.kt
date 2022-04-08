@@ -62,9 +62,6 @@ fun Navigation() {
 
                     navController.navigate(NavItem.Main.createNavRoute(false))
 
-                    Log.d("TEST", (activity==null).toString())
-
-
                 }, itemsList = itemsList, title = "", letter = "P")
             }
         }

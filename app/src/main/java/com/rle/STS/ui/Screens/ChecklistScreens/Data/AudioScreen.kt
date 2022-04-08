@@ -12,8 +12,11 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import com.rle.STS.R
 import com.rle.STS.ui.widgets.BottomButtons
+import com.rle.STS.ui.widgets.CustomButton
 import java.io.File
 
 @Composable
@@ -26,30 +29,20 @@ fun AudioScreen() {
 
     Column() {
 
-        Spacer(modifier = Modifier.weight(1f))
-
-
         Row() {
             Spacer(modifier = Modifier.weight(1f))
 
             val uri = Uri.fromFile(file)
             val mp: MediaPlayer = MediaPlayer.create(context, uri)
-            Button(onClick = { mp.start() }) {
-                Text(text = "Reproducir audio")
-            }
+            CustomButton(
+                text = stringResource(id = R.string.play_audio),
+                buttonSize = 180,
+                onClick = { mp.start() }
+            )
 
             Spacer(modifier = Modifier.weight(1f))
         }
 
-        Spacer(modifier = Modifier.weight(1f))
-
     }
-
-}
-
-
-@Composable
-fun playAudio(context: Context) {
-
 
 }

@@ -3,6 +3,8 @@ package com.rle.STS.ui.Screens.ChecklistScreens
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -55,11 +57,39 @@ fun CheckListStepScreen() {
 
     ) { // Cargar JSON y seleccionar vista actual, Crear metodo que lea JSON y devuelva siguiente vista
 
+        val checkList = createMockCheclist()
+        val checkListPosition = remember { mutableStateOf(0) }
+
         Column {
 
             Spacer(modifier = Modifier.weight(1f))
 
             // DATA SCREENS
+            when (checkList[checkListPosition.value]){
+
+                "texto"         -> TextScreen()
+
+                "imagen"        -> ImageScreen(file = "Capture.PNG")
+
+                "video"         -> VideoScreen(file = "test.mp4")
+
+                "audio"         -> AudioScreen()
+
+                "QR"            -> QRScreen()
+
+                "Record_Audio"  -> RecordAudioScreen()
+
+                "Dictate"       -> DictateScreen()
+
+                "Take_Picture"  -> TakePictureScreen()
+
+                "Take_Video"    -> TakeVideoScreen()
+
+                "Number"        -> NumberScreen()
+
+                //TODO: Colocar aqui las vistas de checklist
+
+            }
 
             //TextScreen()
             //ImageScreen(file = "Capture.PNG")
@@ -71,18 +101,17 @@ fun CheckListStepScreen() {
 
             //QRScreen()
 
-
             // ATTACHED SCREENS
 
             //RecordAudioScreen()
             //DictateScreen()
-            TakePictureScreen()   //Lo guardan en un sitio no memoria interna
-            //TakeVideoScreen()     //Lo guardan en un sitio no memoria interna
-            //NumberScreen()          //En proceso
+            //TakePictureScreen()
+            //TakeVideoScreen()
+            //NumberScreen()
 
             /* TODO
                 Finalizar pantallas en proceso
-             */
+            */
 
             // RESULT SCREENS
 
@@ -92,10 +121,19 @@ fun CheckListStepScreen() {
                 MultiOptionScreen()
                 OKKOScreen()
             */
+            Spacer(modifier = Modifier.weight(1f))
 
             Spacer(modifier = Modifier.height(10.dp))
 
-            BottomButtons() // Manejar botones desde aqui para cargar siguiente vista correctamente mediante metodo de lectura de JSON
+            BottomButtons( leftFunction = {
+                if (checkListPosition.value > 0){
+                    checkListPosition.value--
+                }
+            }, rightFunction = {
+                if (checkListPosition.value < checkList.size - 1){
+                    checkListPosition.value++
+                }
+            }) // Manejar botones desde aqui para cargar siguiente vista correctamente mediante metodo de lectura de JSON
 
             Spacer(modifier = Modifier.height(10.dp))
 
@@ -106,6 +144,10 @@ fun CheckListStepScreen() {
 
 }
 
+
+fun createMockCheclist() : ArrayList<String>{
+    return arrayListOf<String>("texto","imagen","video","audio","QR","Record_Audio","Dictate","Take_Picture","Take_Video","Number")
+}
 
 @Preview(showBackground = true, widthDp = 851, heightDp = 480)
 @Composable

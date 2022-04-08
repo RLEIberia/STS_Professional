@@ -27,34 +27,46 @@ import com.rle.STS.ui.theme.*
 
 //Boton preparado con estilo de la aplicacion
 @Composable
-fun CustomButton(text: String, onClick: () -> Unit, buttonColor: Color = buttonsColor, textColor: Color = buttonsTextColor, textSize: Float = 30.0f, borderColor: Color = buttonsTextBorderColor, visibility: Boolean = true, buttonSize: Int = 110) {
+fun CustomButton(
+    text: String,
+    onClick: () -> Unit,
+    buttonColor: Color = buttonsColor,
+    textColor: Color = buttonsTextColor,
+    textSize: Float = 30.0f,
+    borderColor: Color = buttonsTextBorderColor,
+    buttonSize: Int = 110
+) {
 
-    if (visibility) {
-        androidx.compose.material.Surface(
-            elevation = 4.dp,
-            color = Color.Black.copy(alpha = 0f)
+    androidx.compose.material.Surface(
+        elevation = 4.dp,
+        color = Color.Black.copy(alpha = 0f)
+    ) {
+        Box(
+            modifier = Modifier
+                .background(color = buttonColor, shape = RoundedCornerShape(10))
+                .padding(start = 10.dp, end = 10.dp, top = 5.dp, bottom = 5.dp)
+                .width(buttonSize.dp)
         ) {
-            Box(
-                modifier = Modifier
-                    .background(color = buttonColor, shape = RoundedCornerShape(10))
-                    .padding(start = 10.dp, end = 10.dp, top = 5.dp, bottom = 5.dp)
-                    .width(buttonSize.dp)
-            ) {
-                /*CustomText(
-                    text = text,
-                    onClick = onClick,
-                    textColorParameter = textColor,
-                    borderColor = borderColor
-                )*/
-                XMLText(text = text, onClick = { onClick() })
-            }
+            /*CustomText(
+                text = text,
+                onClick = onClick,
+                textColorParameter = textColor,
+                borderColor = borderColor
+            )*/
+            XMLText(text = text, onClick = { onClick() })
         }
     }
 }
 
 //Texto del boton preparado con estilo de la aplicacion (Parte interactuable)
 @Composable
-fun CustomText(text: String, onClick: () -> Unit, textColorParameter: Color = textColor, textSize: Float = 25.0f, borderColor: Color = textBorderColor) {
+fun CustomText(
+    text: String,
+    onClick: () -> Unit,
+    textColorParameter: Color = textColor,
+    textSize: Float = 25.0f,
+    borderColor: Color = textBorderColor
+) {
     val context = LocalContext.current
 
     Text(
@@ -70,10 +82,10 @@ fun CustomText(text: String, onClick: () -> Unit, textColorParameter: Color = te
                 blurRadius = 4f
             ),
 
-        ),
+            ),
         modifier = Modifier
-            .clickable(true, onClick = onClick )
-            //.border(width = 2.dp, color = borderColor, shape= Shape)
+            .clickable(true, onClick = onClick)
+        //.border(width = 2.dp, color = borderColor, shape= Shape)
     )
 
 }
@@ -81,7 +93,13 @@ fun CustomText(text: String, onClick: () -> Unit, textColorParameter: Color = te
 
 //Texto del boton preparado con estilo de la aplicacion (Parte interactuable)
 @Composable
-fun XMLText(text: String, onClick: (View) -> Unit, textColorParameter: Color = textColor, textSize: Float = 25.0f, borderColor: Color = textBorderColor) {
+fun XMLText(
+    text: String,
+    onClick: (View) -> Unit,
+    textColorParameter: Color = textColor,
+    textSize: Float = 25.0f,
+    borderColor: Color = textBorderColor
+) {
     /*
     Text(
         text = text,

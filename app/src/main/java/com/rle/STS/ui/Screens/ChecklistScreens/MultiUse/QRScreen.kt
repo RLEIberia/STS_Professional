@@ -15,7 +15,10 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
+import com.rle.STS.R
 import com.rle.STS.ui.Items.RWMethod
+import com.rle.STS.ui.widgets.CustomButton
 
 @Composable
 fun QRScreen() {
@@ -34,12 +37,11 @@ fun QRScreen() {
     intent.putExtra(RWMethod.EXTRA_CODE_QR, true)
     intent.addFlags(RWMethod.BARCODE_REQUEST_CODE)
 
-    val result = remember { mutableStateOf<String?>(null) }
+    val result = remember { mutableStateOf<String?>("") }
     val launcher =
         rememberLauncherForActivityResult(ActivityResultContracts.StartActivityForResult()) {
 
             val data = it.data
-            result.value = "[No Barcode]"
             if ( data != null) {
                 result.value = data.getStringExtra(RWMethod.EXTRA_RESULT)!!
             }
@@ -47,20 +49,14 @@ fun QRScreen() {
 
     Column() {
 
-        Spacer(modifier = Modifier.weight(1f))
-
-        val resultPrefix = "Resultado: "
-
         Row() {
             Spacer(modifier = Modifier.weight(1f))
 
-            Button(onClick = {
-
-                launcher.launch(intent)
-
-            }) {
-                Text(text = "Leer QR")
-            }
+            CustomButton(
+                text = stringResource(id = R.string.read_qr),
+                buttonSize = 150,
+                onClick = { launcher.launch(intent) }
+            )
 
             Spacer(modifier = Modifier.weight(1f))
         }
@@ -69,13 +65,11 @@ fun QRScreen() {
             Spacer(modifier = Modifier.weight(1f))
 
             if (result.value != null) {
-                Text(text = resultPrefix + result.value)
+                Text(text = stringResource(id = R.string.result, result.value!!))
             }
 
             Spacer(modifier = Modifier.weight(1f))
         }
-
-        Spacer(modifier = Modifier.weight(1f))
 
     }
 

@@ -12,7 +12,10 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
+import com.rle.STS.R
 import com.rle.STS.ui.Items.RWMethod
+import com.rle.STS.ui.widgets.CustomButton
 
 @Composable
 fun DictateScreen() {
@@ -34,9 +37,6 @@ fun DictateScreen() {
 
     Column() {
 
-        Spacer(modifier = Modifier.weight(1f))
-
-
         Row() {
             Spacer(modifier = Modifier.weight(1f))
 
@@ -49,18 +49,13 @@ fun DictateScreen() {
         Row() {
             Spacer(modifier = Modifier.weight(1f))
 
-            Button(onClick = {
-
-                launcher.launch(intent)
-
-            }) {
-                Text(text = "Dictar")
-            }
+            CustomButton(
+                text = stringResource(id = R.string.dictate),
+                onClick = { launcher.launch(intent) }
+            )
 
             Spacer(modifier = Modifier.weight(1f))
         }
-
-        Spacer(modifier = Modifier.weight(1f))
 
     }
 

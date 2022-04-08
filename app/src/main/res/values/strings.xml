@@ -2,8 +2,34 @@
     <string name="app_name" translatable="false">STS</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment" translatable="false">Hello blank fragment</string>
-    <string name="ir_atras">Go back</string>
-    <string name="siguiente">Next</string>
+    <string name="go_back">Go back</string>
+    <string name="next">Next</string>
     <string name="menu">MENU</string>
     <string name="audio">AUDIO</string>
+    <string name="previous">Previous</string>
+    <string name="take_picture">Take Picture</string>
+    <string name="open_list">Open List</string>
+    <string name="select">Select</string>
+    <string name="inspect">Inspect</string>
+    <string name="delete">Delete</string>
+    <string name="play_audio">Play Audio</string>
+    <string name="open_image">Open Image</string>
+    <string name="open_video">Open Video</string>
+    <string name="read_qr">Read QR</string>
+    <string name="result">Result: %1$s</string>
+    <string name="correct">Correct</string>
+    <string name="incorrect">Incorrect</string>
+    <string name="dictate">Dictate</string>
+    <string name="introduce_number">Introduce</string>
+    <string name="start_recording">Start Recording</string>
+    <string name="play_recording">Play Recording</string>
+    <string name="stop_recording">Stop Recording</string>
+    <string name="record_video">Record Video</string>
+    <string name="clear">Clear</string>
+    <string name="total_fotos">Total photos:</string>
+    <string name="total_videos">Total videos:</string>
+    <string name="confirm">Confirm</string>
+    <string name="cancel">Cancel</string>
+    <string name="inspect_s">Inspect</string>
+    <string name="is_recording">Stop Recording First</string>
 </resources>

@@ -5,7 +5,7 @@
         name="files_root"
         path="Android/data/data/${applicationId}/files"/>
     <files-path
-        name="images"
+        name="files"
         path="."
         />
     <!--<external-path

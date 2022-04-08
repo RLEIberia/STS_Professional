@@ -13,16 +13,11 @@ fun TextScreen() {
 
     Column() {
 
-        Spacer(modifier = Modifier.weight(1f))
-
-
         Row() {
             Spacer(modifier = Modifier.weight(1f))
             Text(text = "Elemento 1 checklist") // ELEMENTO DEL PASO
             Spacer(modifier = Modifier.weight(1f))
         }
-
-        Spacer(modifier = Modifier.weight(1f))
 
     }
 

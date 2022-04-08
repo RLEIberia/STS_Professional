@@ -8,7 +8,9 @@ import androidx.compose.material.Button
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import com.rle.STS.R
 import com.rle.STS.ui.widgets.BottomButtons
 
 @Composable
@@ -22,11 +24,11 @@ fun OKKOScreen() {
         Row() {
             Spacer(modifier = Modifier.weight(1f))
             Button(onClick = { /*TODO*/ }) {
-                Text(text = "Correcto")
+                Text(text = stringResource(id = R.string.correct))
             }
             Spacer(modifier = Modifier.weight(1f))
             Button(onClick = { /*TODO*/ }) {
-                Text(text = "Incorrecto")
+                Text(text = stringResource(id = R.string.incorrect))
             }
             Spacer(modifier = Modifier.weight(1f))
         }
