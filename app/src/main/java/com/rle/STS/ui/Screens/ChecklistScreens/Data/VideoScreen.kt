@@ -33,6 +33,7 @@ import coil.decode.VideoFrameDecoder
 import coil.request.ImageRequest
 import com.rle.STS.R
 import com.rle.STS.ui.widgets.CustomButton
+import com.rle.STS.ui.widgets.VideoThumbnail
 import java.io.File
 
 
@@ -55,33 +56,8 @@ fun VideoScreen(file: String) {
                     .clip(RoundedCornerShape(10))
                     .border(1.dp, Color.Black, RoundedCornerShape(10)),
             ) {
-                AndroidView(
-                    factory = { context: Context ->
-                        val view = LayoutInflater.from(context)
-                            .inflate(R.layout.imageview_layout, null, false)
-                        val imageView = view.findViewById<ImageView>(R.id.imageView)
 
-                        val imageLoader = ImageLoader.Builder(context)
-                            .components {
-                                add(VideoFrameDecoder.Factory())
-                            }
-                            .build()
-
-                        val request = ImageRequest.Builder(context)
-                            .data(video)
-                            .crossfade(true)
-                            .target(imageView)
-                            .build()
-
-                        imageLoader.enqueue(request)
-
-                        view
-                    },
-                    modifier = Modifier
-                        .width(450.dp)
-                        .height(253.dp)
-                        .clip(RoundedCornerShape(10)),
-                )
+                VideoThumbnail(video = video)
 
             }
 

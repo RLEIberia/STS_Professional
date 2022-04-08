@@ -25,22 +25,16 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.viewinterop.AndroidView
 import androidx.compose.ui.window.DialogProperties
 import androidx.core.content.FileProvider
-import coil.ImageLoader
-import coil.compose.rememberAsyncImagePainter
-import coil.decode.VideoFrameDecoder
-import coil.request.ImageRequest
 import com.rle.STS.R
 import com.rle.STS.ui.theme.CheckListaApplicationTheme
 import com.rle.STS.ui.theme.buttonExtraColor
 import com.rle.STS.ui.theme.cardsColor
 import com.rle.STS.ui.widgets.BottomButtons
 import com.rle.STS.ui.widgets.CustomButton
+import com.rle.STS.ui.widgets.VideoThumbnail
 import java.io.File
-import java.text.SimpleDateFormat
-import java.util.*
 
 @SuppressLint("RestrictedApi")
 @Composable
@@ -109,33 +103,7 @@ fun TakeVideoScreen() {
 
                             if (list.isNotEmpty()) {
 
-                                AndroidView(
-                                    factory = { context: Context ->
-                                        val view = LayoutInflater.from(context)
-                                            .inflate(R.layout.imageview_layout, null, false)
-                                        val imageView = view.findViewById<ImageView>(R.id.imageView)
-
-                                        val imageLoader = ImageLoader.Builder(context)
-                                            .components {
-                                                add(VideoFrameDecoder.Factory())
-                                            }
-                                            .build()
-
-                                        val request = ImageRequest.Builder(context)
-                                            .data(list.last())
-                                            .crossfade(true)
-                                            .target(imageView)
-                                            .build()
-
-                                        imageLoader.enqueue(request)
-
-                                        view
-                                    },
-                                    modifier = Modifier
-                                        .width(450.dp)
-                                        .height(253.dp)
-                                        .clip(RoundedCornerShape(10)),
-                                )
+                                VideoThumbnail(video = list.last())
 
                             } else {
                                 Box(
@@ -275,33 +243,9 @@ fun ConfirmVideoDialog(
                             .clip(RoundedCornerShape(10))
                             .border(1.dp, Color.Black, RoundedCornerShape(10)),
                     ) {
-                        AndroidView(
-                            factory = { context: Context ->
-                                val view = LayoutInflater.from(context)
-                                    .inflate(R.layout.imageview_layout, null, false)
-                                val imageView = view.findViewById<ImageView>(R.id.imageView)
 
-                                val imageLoader = ImageLoader.Builder(context)
-                                    .components {
-                                        add(VideoFrameDecoder.Factory())
-                                    }
-                                    .build()
+                        VideoThumbnail(video = file)
 
-                                val request = ImageRequest.Builder(context)
-                                    .data(file)
-                                    .crossfade(true)
-                                    .target(imageView)
-                                    .build()
-
-                                imageLoader.enqueue(request)
-
-                                view
-                            },
-                            modifier = Modifier
-                                .width(450.dp)
-                                .height(260.dp)
-                                .clip(RoundedCornerShape(10)),
-                        )
                     }
 
                     Spacer(modifier = Modifier.height(20.dp))
@@ -393,33 +337,9 @@ fun videosListDialog(
                                 .clip(RoundedCornerShape(10))
                                 .border(1.dp, Color.Black, RoundedCornerShape(10)),
                         ) {
-                            AndroidView(
-                                factory = { context: Context ->
-                                    val view = LayoutInflater.from(context)
-                                        .inflate(R.layout.imageview_layout, null, false)
-                                    val imageView = view.findViewById<ImageView>(R.id.imageView)
 
-                                    val imageLoader = ImageLoader.Builder(context)
-                                        .components {
-                                            add(VideoFrameDecoder.Factory())
-                                        }
-                                        .build()
+                            VideoThumbnail(fileList[video.value])
 
-                                    val request = ImageRequest.Builder(context)
-                                        .data(fileList[video.value])
-                                        .crossfade(true)
-                                        .target(imageView)
-                                        .build()
-
-                                    imageLoader.enqueue(request)
-
-                                    view
-                                },
-                                modifier = Modifier
-                                    .width(450.dp)
-                                    .height(260.dp)
-                                    .clip(RoundedCornerShape(10)),
-                            )
                         }
                     }
                     Spacer(modifier = Modifier.height(20.dp))
