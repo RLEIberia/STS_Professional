@@ -57,53 +57,54 @@ fun RecordAudioScreen() {
         }
     }
 
+
+    val launcher = rememberLauncherForActivityResult(
+        ActivityResultContracts.RequestPermission()
+    ) { isGranted: Boolean ->
+        if (isGranted) {
+            // Permission Accepted: Do something
+            Log.d("RecordAudioScreen", "PERMISSION GRANTED")
+
+        } else {
+            // Permission Denied: Do something
+            Log.d("RecordAudioScreen", "PERMISSION DENIED")
+        }
+    }
+
+    val mediaRecorder = remember {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+            MediaRecorder(context)
+        } else {
+            MediaRecorder()
+        }
+    }
+
+
+    when (PackageManager.PERMISSION_GRANTED) {
+        ContextCompat.checkSelfPermission(
+            context,
+            RECORD_AUDIO
+        ) -> {
+
+        }
+        else -> {
+            // Asking for permission
+            SideEffect {
+                launcher.launch(RECORD_AUDIO)
+            }
+        }
+    }
+
+    val recordingStarted = remember { mutableStateOf(false) }
+
+    val textRecording =
+        remember { mutableStateOf(context.getString(R.string.start_recording)) }
+
     Column() {
 
         Row() {
 
-            val launcher = rememberLauncherForActivityResult(
-                ActivityResultContracts.RequestPermission()
-            ) { isGranted: Boolean ->
-                if (isGranted) {
-                    // Permission Accepted: Do something
-                    Log.d("RecordAudioScreen", "PERMISSION GRANTED")
-
-                } else {
-                    // Permission Denied: Do something
-                    Log.d("RecordAudioScreen", "PERMISSION DENIED")
-                }
-            }
-
-            var mediaRecorder = remember {
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
-                    MediaRecorder(context)
-                } else {
-                    MediaRecorder()
-                }
-            }
-
-
-            when (PackageManager.PERMISSION_GRANTED) {
-                ContextCompat.checkSelfPermission(
-                    context,
-                    RECORD_AUDIO
-                ) -> {
-
-                }
-                else -> {
-                    // Asking for permission
-                    SideEffect {
-                        launcher.launch(RECORD_AUDIO)
-                    }
-                }
-            }
-
-            var recordingStarted = remember { mutableStateOf(false) }
-
             Spacer(modifier = Modifier.weight(1f))
-
-            var textRecording =
-                remember { mutableStateOf(context.getString(R.string.start_recording)) }
 
             CustomButton(
                 text = textRecording.value,
@@ -143,7 +144,8 @@ fun RecordAudioScreen() {
                         textRecording.value = context.getString(R.string.stop_recording)
 
                     }
-                })
+                }
+            )
 
             Spacer(modifier = Modifier.weight(1f))
 
@@ -169,7 +171,8 @@ fun RecordAudioScreen() {
                         }
 
                     }
-                })
+                }
+            )
 
             Spacer(modifier = Modifier.weight(1f))
 

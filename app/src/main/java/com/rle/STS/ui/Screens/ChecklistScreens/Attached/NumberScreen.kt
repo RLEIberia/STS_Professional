@@ -7,10 +7,12 @@ import android.view.LayoutInflater
 import android.view.inputmethod.EditorInfo
 import android.widget.EditText
 import androidx.compose.foundation.layout.*
+import androidx.compose.material.Icon
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.viewinterop.AndroidView
@@ -20,11 +22,10 @@ import com.rle.STS.ui.widgets.CustomButton
 
 @SuppressLint("RestrictedApi")
 @Composable
-fun NumberScreen() {
+fun NumberScreen(check: () -> Unit,) {
 
     val numero = remember { mutableStateOf("") }
     val openKeyboard = remember { mutableStateOf(false) }
-
 
     Row() {
 
@@ -38,6 +39,7 @@ fun NumberScreen() {
                 editText.setText(numero.value)
                 editText.addTextChangedListener {
                     numero.value = it.toString()
+                    check()
                 }
                 editText.setOnEditorActionListener { textView, actionId, keyEvent ->
                     if(actionId== EditorInfo.IME_ACTION_DONE){
@@ -45,8 +47,8 @@ fun NumberScreen() {
                     }
                     false;
                 }
-                //editText.setInputType(InputType.TYPE_CLASS_NUMBER or InputType.TYPE_NUMBER_FLAG_DECIMAL)
-                editText.setInputType(InputType.TYPE_CLASS_NUMBER)
+                editText.setInputType(InputType.TYPE_CLASS_NUMBER or InputType.TYPE_NUMBER_FLAG_DECIMAL)
+                //editText.setInputType(InputType.TYPE_CLASS_NUMBER)
 
                 view
             },

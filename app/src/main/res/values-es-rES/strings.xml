@@ -30,4 +30,5 @@
     <string name="cancel">Cancelar</string>
     <string name="inspect_s">Revisar</string>
     <string name="is_recording">Deten la grabacion primero</string>
+    <string name="nsnc">NSNC</string>
 </resources>

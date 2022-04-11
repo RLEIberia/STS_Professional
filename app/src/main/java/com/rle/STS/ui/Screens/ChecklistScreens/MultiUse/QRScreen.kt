@@ -21,7 +21,7 @@ import com.rle.STS.ui.Items.RWMethod
 import com.rle.STS.ui.widgets.CustomButton
 
 @Composable
-fun QRScreen() {
+fun QRScreen(task : () -> Unit) {
     val context = LocalContext.current
 
     val RWMethod = RWMethod()
@@ -31,10 +31,10 @@ fun QRScreen() {
     //
     // Set which symbologies are enabled. If none is specified, all are enabled by default
     //
-    intent.putExtra(RWMethod.EXTRA_CODE_128, false)
+    /*intent.putExtra(RWMethod.EXTRA_CODE_128, false)
     intent.putExtra(RWMethod.EXTRA_CODE_DM, true)
     intent.putExtra(RWMethod.EXTRA_CODE_EAN_UPC, true)
-    intent.putExtra(RWMethod.EXTRA_CODE_QR, true)
+    intent.putExtra(RWMethod.EXTRA_CODE_QR, true)*/
     intent.addFlags(RWMethod.BARCODE_REQUEST_CODE)
 
     val result = remember { mutableStateOf<String?>("") }
@@ -65,7 +65,8 @@ fun QRScreen() {
             Spacer(modifier = Modifier.weight(1f))
 
             if (result.value != null) {
-                Text(text = stringResource(id = R.string.result, result.value!!))
+                task()
+                //Text(text = stringResource(id = R.string.result, result.value!!))
             }
 
             Spacer(modifier = Modifier.weight(1f))

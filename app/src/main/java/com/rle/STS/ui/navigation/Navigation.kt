@@ -105,7 +105,7 @@ fun Navigation() {
 
         composable(NavItem.Text) { backStackEntry ->
             CheckListaApplicationTheme {
-                TextScreen()
+                TextScreen(title = "Elemento 1 checklist Title", description = "Elemento 1 checklist Description")
             }
         }
     }

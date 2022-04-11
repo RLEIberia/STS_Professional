@@ -9,13 +9,19 @@ import com.rle.STS.ui.widgets.BottomButtons
 
 
 @Composable
-fun TextScreen() {
+fun TextScreen(title : String, description : String = "") {
 
     Column() {
 
         Row() {
             Spacer(modifier = Modifier.weight(1f))
-            Text(text = "Elemento 1 checklist") // ELEMENTO DEL PASO
+            if (description != "") { // Tipo descripcion
+                Text(text = title)
+                Spacer(modifier = Modifier.weight(1f))
+                Text(text = description)
+            }else { // Tipo titulo
+                Text(text = title)
+            }
             Spacer(modifier = Modifier.weight(1f))
         }
 

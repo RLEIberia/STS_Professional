@@ -14,6 +14,8 @@ import androidx.compose.ui.unit.dp
 import com.rle.STS.R
 import com.rle.STS.ui.Screens.ChecklistScreens.Attached.*
 import com.rle.STS.ui.Screens.ChecklistScreens.Data.*
+import com.rle.STS.ui.Screens.ChecklistScreens.Result.MultiOptionScreen
+import com.rle.STS.ui.Screens.ChecklistScreens.Result.OKKOScreen
 import com.rle.STS.ui.theme.CheckListaApplicationTheme
 import com.rle.STS.ui.theme.topBarColor
 import com.rle.STS.ui.widgets.BottomButtons
@@ -65,17 +67,17 @@ fun CheckListStepScreen() {
             Spacer(modifier = Modifier.weight(1f))
 
             // DATA SCREENS
-            when (checkList[checkListPosition.value]){
+            /*when (checkList[checkListPosition.value]){
 
-                "texto"         -> TextScreen()
+                "texto"         -> TextScreen(title = "Elemento 1 checklist Title", description = "Elemento 1 checklist Description")
 
-                "imagen"        -> ImageScreen(file = "Capture.PNG")
+                "imagen"        -> ImageScreen(file = "Capture.PNG", type = 0)
 
                 "video"         -> VideoScreen(file = "test.mp4")
 
                 "audio"         -> AudioScreen()
 
-                "QR"            -> QRScreen()
+                "QR"            -> QRScreen({})
 
                 "Record_Audio"  -> RecordAudioScreen()
 
@@ -85,21 +87,25 @@ fun CheckListStepScreen() {
 
                 "Take_Video"    -> TakeVideoScreen()
 
-                "Number"        -> NumberScreen()
+                "Number"        -> NumberScreen( check = {  } )
+
+                "OK/KO"         -> OKKOScreen()
+
+                "MultiOption"   -> MultiOptionScreen(option1 = "option1", option2 = "option2", option3 = "option3", option4 = "option4")
 
                 //TODO: Colocar aqui las vistas de checklist
 
-            }
+            }*/
 
-            //TextScreen()
-            //ImageScreen(file = "Capture.PNG")
+            //TextScreen(title = "Elemento 1 checklist Title", description = "Elemento 1 checklist Description")
+            ImageScreen(file = "169.png", type = 1)
             //VideoScreen(file = "test.mp4")
             //AudioScreen()
 
 
             // MULTI-USE SCREENS
 
-            //QRScreen()
+            //QRScreen({})
 
             // ATTACHED SCREENS
 
@@ -107,20 +113,18 @@ fun CheckListStepScreen() {
             //DictateScreen()
             //TakePictureScreen()
             //TakeVideoScreen()
-            //NumberScreen()
-
-            /* TODO
-                Finalizar pantallas en proceso
-            */
+            //NumberScreen( check = {  } )
 
             // RESULT SCREENS
 
+            //OKKOScreen()
+            //MultiOptionScreen(option1 = "option1", option2 = "option2") //option3 = "option3", option4 = "option4")
+
             /* TODO
                 CheckNumberScreen()
-                MultiOptionQRI()
-                MultiOptionScreen()
-                OKKOScreen()
-            */
+                MultiOptionQR()
+             */
+
             Spacer(modifier = Modifier.weight(1f))
 
             Spacer(modifier = Modifier.height(10.dp))
@@ -146,7 +150,7 @@ fun CheckListStepScreen() {
 
 
 fun createMockCheclist() : ArrayList<String>{
-    return arrayListOf<String>("texto","imagen","video","audio","QR","Record_Audio","Dictate","Take_Picture","Take_Video","Number")
+    return arrayListOf<String>("texto","imagen","video","audio","QR","Record_Audio","Dictate","Take_Picture","Take_Video","Number", "OK/KO")
 }
 
 @Preview(showBackground = true, widthDp = 851, heightDp = 480)
