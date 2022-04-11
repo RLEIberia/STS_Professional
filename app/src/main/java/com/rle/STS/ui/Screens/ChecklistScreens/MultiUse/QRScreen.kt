@@ -1,20 +1,15 @@
 package com.rle.STS.ui.Screens.ChecklistScreens.Data
 
 import android.content.Intent
-import android.graphics.Color
-import android.util.Log
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.material.Button
-import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import com.rle.STS.R
 import com.rle.STS.ui.Items.RWMethod
@@ -22,7 +17,6 @@ import com.rle.STS.ui.widgets.CustomButton
 
 @Composable
 fun QRScreen(task : () -> Unit) {
-    val context = LocalContext.current
 
     val RWMethod = RWMethod()
 

@@ -1,7 +1,6 @@
 package com.rle.STS.ui.Items
 
 import android.annotation.SuppressLint
-import android.app.Activity
 import android.content.ContentValues
 import android.content.Context
 import android.content.Intent

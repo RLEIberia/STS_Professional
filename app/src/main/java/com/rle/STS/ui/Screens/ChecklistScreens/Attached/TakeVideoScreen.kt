@@ -3,11 +3,8 @@ package com.rle.STS.ui.Screens.ChecklistScreens.Attached
 import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
-import android.view.LayoutInflater
-import android.widget.ImageView
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
