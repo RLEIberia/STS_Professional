@@ -67,7 +67,7 @@ fun CheckListStepScreen() {
             Spacer(modifier = Modifier.weight(1f))
 
             // DATA SCREENS
-            /*when (checkList[checkListPosition.value]){
+            when (checkList[checkListPosition.value]){
 
                 "texto"         -> TextScreen(title = "Elemento 1 checklist Title", description = "Elemento 1 checklist Description")
 
@@ -95,10 +95,11 @@ fun CheckListStepScreen() {
 
                 //TODO: Colocar aqui las vistas de checklist
 
-            }*/
+            }
 
             //TextScreen(title = "Elemento 1 checklist Title", description = "Elemento 1 checklist Description")
-            ImageScreen(file = "169.png", type = 1)
+            //ImageScreen(file = "169.png", type = 1)
+            //ImageScreen(file = "Capture.PNG", type = 1)
             //VideoScreen(file = "test.mp4")
             //AudioScreen()
 
@@ -150,7 +151,7 @@ fun CheckListStepScreen() {
 
 
 fun createMockCheclist() : ArrayList<String>{
-    return arrayListOf<String>("texto","imagen","video","audio","QR","Record_Audio","Dictate","Take_Picture","Take_Video","Number", "OK/KO")
+    return arrayListOf<String>("texto","imagen","video","audio","QR","Record_Audio","Dictate","Take_Picture","Take_Video","Number", "OK/KO", "MultiOption")
 }
 
 @Preview(showBackground = true, widthDp = 851, heightDp = 480)

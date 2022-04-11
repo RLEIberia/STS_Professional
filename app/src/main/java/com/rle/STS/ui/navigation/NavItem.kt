@@ -19,17 +19,18 @@ sealed class NavItem(
         navArgument(it.key) {type = it.navType }
     }
 
-    object Main: NavItem("main",listOf(NavArg.IsProjects)){ //Lista checklists
+    object Main: NavItem("main")
+    object PCList: NavItem("pcList",listOf(NavArg.IsProjects)){ //Lista checklists
         fun createNavRoute(isP: Boolean) = "$baseRoute/$isP"
     }
     object View: NavItem("view", listOf(NavArg.Text)){
         fun createNavRoute(text: String) = "$baseRoute/$text"
     }
-    object Text: NavItem("text")
+    object State: NavItem("state")
 
 }
 
 enum class NavArg(val key: String, val navType: NavType<*>) {
     Text("text", NavType.StringType),
-    IsProjects("main", NavType.BoolType)
+    IsProjects("isP", NavType.BoolType)
 }

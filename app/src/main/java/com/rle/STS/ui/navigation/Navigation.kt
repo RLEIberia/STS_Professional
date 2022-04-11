@@ -1,74 +1,60 @@
 package com.rle.STS.ui.navigation
 
-import android.util.Log
-import androidx.activity.compose.setContent
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.semantics.clearAndSetSemantics
 import androidx.navigation.NavBackStackEntry
 import androidx.navigation.NavGraphBuilder
-import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import androidx.navigation.navArgument
 import com.rle.STS.Screens.ProjectsChecklists
-import com.rle.STS.getActivity
 import com.rle.STS.ui.Screens.ChecklistScreens.CheckListStepScreen
-import com.rle.STS.ui.Screens.ChecklistScreens.Data.ImageScreen
-import com.rle.STS.ui.Screens.ChecklistScreens.Data.TextScreen
-import com.rle.STS.ui.Screens.PhotoInspect
+import com.rle.STS.ui.Screens.MainMenu
+import com.rle.STS.ui.Screens.StateScreen
 import com.rle.STS.ui.theme.CheckListaApplicationTheme
 
 @Composable
 fun Navigation() {
     val navController = rememberNavController()
 
-    val InitialARG_ID = "true"
-
-    val activity = LocalContext.current.getActivity()
-
     NavHost(
         navController = navController,
-        startDestination = "main/{$InitialARG_ID}"
+        startDestination = "main"
     ) {
-        composable(     //Si Start destination tiene argumentos debe ser una ruta con los argumentos ya definidos en ella
-            route = "main/{$InitialARG_ID}",
-            arguments = listOf(navArgument(InitialARG_ID) {
-                type = NavType.BoolType; defaultValue = true
-            }),
-        ) {
+        composable(route = "main") {
             CheckListaApplicationTheme {
-                val itemsList = ArrayList<String>()
-                itemsList.add("Proyecto uno")
-                itemsList.add("Proyecto dos")
-                itemsList.add("Proyecto tres")
-                itemsList.add("Proyecto cuatro")
-                itemsList.add("Proyecto cinco")
-                itemsList.add("Proyecto seis")
-                itemsList.add("Proyecto siete")
-                itemsList.add("Proyecto ocho")
-                itemsList.add("Proyecto nueve")
-                itemsList.add("Proyecto diez")
-                itemsList.add("Proyecto once")
-                itemsList.add("Proyecto doce")
-                itemsList.add("Proyecto trece")
-                itemsList.add("Proyecto catorce")
-                itemsList.add("Proyecto quince")
-                itemsList.add("Proyecto dieciseis")
-                itemsList.add("Proyecto diecisiete")
-                ProjectsChecklists({
-
-                    navController.navigate(NavItem.Main.createNavRoute(false))
-
-                }, itemsList = itemsList, title = "", letter = "P")
+                MainMenu(
+                    onProjectsClick = {
+                        navController.navigate(NavItem.PCList.createNavRoute(true))
+                    },
+                    onStateClick = {
+                        navController.navigate(NavItem.State.route)
+                    }
+                )
             }
         }
 
-
-        composable(NavItem.Main) { backStackEntry ->    //Lista checklists
+        composable(NavItem.PCList) { backStackEntry ->    //Lista checklists
             CheckListaApplicationTheme {
+                val projectsList = ArrayList<String>()
+                projectsList.add("Proyecto uno")
+                projectsList.add("Proyecto dos")
+                projectsList.add("Proyecto tres")
+                projectsList.add("Proyecto cuatro")
+                projectsList.add("Proyecto cinco")
+                projectsList.add("Proyecto seis")
+                projectsList.add("Proyecto siete")
+                projectsList.add("Proyecto ocho")
+                projectsList.add("Proyecto nueve")
+                projectsList.add("Proyecto diez")
+                projectsList.add("Proyecto once")
+                projectsList.add("Proyecto doce")
+                projectsList.add("Proyecto trece")
+                projectsList.add("Proyecto catorce")
+                projectsList.add("Proyecto quince")
+                projectsList.add("Proyecto dieciseis")
+                projectsList.add("Proyecto diecisiete")
 
                 val CheckLists = ArrayList<String>()
                 CheckLists.add("Checklist uno")
@@ -88,26 +74,33 @@ fun Navigation() {
                 CheckLists.add("Checklist quince")
                 CheckLists.add("Checklist dieciseis")
                 CheckLists.add("Checklist diecisiete")
-                ProjectsChecklists({
-                    navController.navigate(NavItem.View.createNavRoute("test"))
 
-                    //navController.navigate(NavItem.Inspect.createNavRoute(text))
-                }, itemsList = CheckLists, title = "", letter = "C")
+                val projects = backStackEntry.arguments!!.getBoolean("isP")
+
+                if (projects) {
+                    ProjectsChecklists({
+                        navController.navigate(NavItem.PCList.createNavRoute(false))
+                    }, itemsList = projectsList, title = "", letter = "P")
+                } else {
+                    ProjectsChecklists({
+                        navController.navigate(NavItem.View.createNavRoute("test"))
+                    }, itemsList = CheckLists, title = "", letter = "C")
+                }
             }
         }
+
         composable(NavItem.View) { backStackEntry ->
             CheckListaApplicationTheme {
                 CheckListStepScreen()
-                Modifier.clearAndSetSemantics {  }
-
             }
         }
 
-        composable(NavItem.Text) { backStackEntry ->
+        composable(NavItem.State) { backStackEntry ->
             CheckListaApplicationTheme {
-                TextScreen(title = "Elemento 1 checklist Title", description = "Elemento 1 checklist Description")
+                StateScreen()
             }
         }
+
     }
 }
 

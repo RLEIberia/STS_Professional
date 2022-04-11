@@ -1,8 +1,6 @@
 package com.rle.STS.ui.Screens.ChecklistScreens.Data
 
 import android.content.Intent
-import android.net.Uri
-import android.os.Build
 import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.border
@@ -13,11 +11,11 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Check
 import androidx.compose.material.icons.filled.Clear
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -57,16 +55,23 @@ fun ImageScreen(file: String, type: Int) {
             Box(
                 modifier = Modifier
                     .width(450.dp)
-                    .height(253.dp)
-                    .clip(RoundedCornerShape(10))
-                    .border(borderWidth.dp, borderColor, RoundedCornerShape(10)),
+                    .height(253.dp),
             ) {
-                Image(
-                    rememberAsyncImagePainter(file),
-                    contentDescription = "",
-                    modifier = Modifier
-                        .fillMaxSize()
-                )
+                Column() {
+                    Spacer(modifier = Modifier.weight(1f))
+                    Row() {
+                        Spacer(modifier = Modifier.weight(1f))
+                        Image(
+                            rememberAsyncImagePainter(file),
+                            contentDescription = "",
+                            modifier = Modifier
+                                .clip(RoundedCornerShape(10))
+                                .border(borderWidth.dp, borderColor, RoundedCornerShape(10)),
+                        )
+                        Spacer(modifier = Modifier.weight(1f))
+                    }
+                    Spacer(modifier = Modifier.weight(1f))
+                }
                 if (type == 1)
                     Icon(
                         Icons.Filled.Check,
@@ -124,7 +129,6 @@ fun ImageScreen(file: String, type: Int) {
     }
 
 }
-
 
 
 @Preview(showBackground = true, widthDp = 851, heightDp = 480)

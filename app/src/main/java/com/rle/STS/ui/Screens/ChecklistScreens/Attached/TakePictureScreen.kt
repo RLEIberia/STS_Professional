@@ -91,38 +91,34 @@ fun TakePictureScreen() {
                 Row() {
 
                     fileList.let { list ->
-                        Card(
-                            modifier = Modifier
-                                .width(450.dp)
-                                .height(253.dp)
-                                .clip(RoundedCornerShape(10))
-                                .border(1.dp, Color.Black, RoundedCornerShape(10)),
-                        ) {
 
-                            if (list.isNotEmpty()) {
-                                Image(
-                                    painter = rememberAsyncImagePainter(list.last()),
+                        if (list.isNotEmpty()) {
+                            Image(
+                                painter = rememberAsyncImagePainter(list.last()),
+                                contentDescription = null,
+                                modifier = Modifier
+                                    .width(450.dp)
+                                    .height(253.dp)
+                                    .clip(RoundedCornerShape(10))
+                                    .border(1.dp, Color.Black, RoundedCornerShape(10)),
+                            )
+                        } else {
+                            Box(
+                                modifier = Modifier
+                                    .width(450.dp)
+                                    .height(253.dp)
+                                    .clip(RoundedCornerShape(10))
+                                    .border(1.dp, Color.Black, RoundedCornerShape(10))
+                                    .background(Color.Gray),
+                                contentAlignment = Alignment.Center
+                            ) {
+                                Icon(
+                                    painter = painterResource(id = R.drawable.ic_baseline_image_24),
                                     contentDescription = null,
                                     modifier = Modifier
-                                        .width(450.dp)
-                                        .height(260.dp)
-                                        .clip(RoundedCornerShape(10)),
+                                        .width(250.dp)
+                                        .height(140.dp)
                                 )
-                            } else {
-                                Box(
-                                    modifier = Modifier
-                                        .fillMaxSize()
-                                        .background(Color.Gray),
-                                    contentAlignment = Alignment.Center
-                                ) {
-                                    Icon(
-                                        painter = painterResource(id = R.drawable.ic_baseline_image_24),
-                                        contentDescription = null,
-                                        modifier = Modifier
-                                            .width(250.dp)
-                                            .height(140.dp)
-                                    )
-                                }
                             }
                         }
                     }
@@ -235,22 +231,17 @@ fun ConfirmImageDialog(
                 Spacer(modifier = Modifier.weight(1f))
                 Column() {
                     Spacer(modifier = Modifier.height(20.dp))
-                    Card(
+
+                    Image(
+                        painter = rememberAsyncImagePainter(file),
+                        contentDescription = null,
                         modifier = Modifier
                             .width(450.dp)
                             .height(253.dp)
                             .clip(RoundedCornerShape(10))
                             .border(1.dp, Color.Black, RoundedCornerShape(10)),
-                    ) {
-                        Image(
-                            painter = rememberAsyncImagePainter(file),
-                            contentDescription = null,
-                            modifier = Modifier
-                                .width(500.dp)
-                                .height(300.dp)
-                                .clip(RoundedCornerShape(10)),
-                        )
-                    }
+                    )
+
                     Spacer(modifier = Modifier.height(20.dp))
                 }
                 Spacer(modifier = Modifier.weight(1f))
@@ -332,22 +323,15 @@ fun ImagesListDialog(
                     )
                     Spacer(modifier = Modifier.height(20.dp))
                     if (fileList.size > imagen.value) {
-                        Card(
+                        Image(
+                            painter = rememberAsyncImagePainter(fileList[imagen.value]),
+                            contentDescription = null,
                             modifier = Modifier
                                 .width(450.dp)
                                 .height(253.dp)
                                 .clip(RoundedCornerShape(10))
                                 .border(1.dp, Color.Black, RoundedCornerShape(10)),
-                        ) {
-                            Image(
-                                painter = rememberAsyncImagePainter(fileList[imagen.value]),
-                                contentDescription = null,
-                                modifier = Modifier
-                                    .width(500.dp)
-                                    .height(300.dp)
-                                    .clip(RoundedCornerShape(10)),
-                            )
-                        }
+                        )
                     }
                     Spacer(modifier = Modifier.height(20.dp))
                 }
