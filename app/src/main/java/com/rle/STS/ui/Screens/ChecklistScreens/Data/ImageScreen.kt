@@ -22,12 +22,14 @@ import androidx.core.content.FileProvider
 import coil.compose.rememberAsyncImagePainter
 import com.rle.STS.R
 import com.rle.STS.ui.Screens.ChecklistScreens.CheckListStepScreen
+import com.rle.STS.ui.Screens.ChecklistScreens.CheckListStepViewModel
 import com.rle.STS.ui.theme.CheckListaApplicationTheme
+import com.rle.STS.ui.widgets.BottomButtons
 import com.rle.STS.ui.widgets.CustomButton
 import java.io.File
 
 @Composable
-fun ImageScreen(file: String, type: Int) {
+fun ImageScreen(file: String, type: Int, stepViewModel: CheckListStepViewModel) {
 
     val context = LocalContext.current
 
@@ -46,6 +48,8 @@ fun ImageScreen(file: String, type: Int) {
     }
 
     Column() {
+
+        Spacer(modifier = Modifier.weight(1f))
 
         Row() {
 
@@ -124,6 +128,27 @@ fun ImageScreen(file: String, type: Int) {
             Spacer(modifier = Modifier.weight(1f))
 
         }
+
+        Spacer(modifier = Modifier.weight(1f))
+
+        Spacer(modifier = Modifier.height(10.dp))
+
+        val checkListPosition = stepViewModel.getPosition()
+        val checkListSize = stepViewModel.getSize()
+
+        BottomButtons(leftFunction = {
+            if (checkListPosition.value!! > 0) {
+                stepViewModel.setPosition(checkListPosition.value!! - 1)
+            }
+        }, rightFunction = {
+            if (checkListPosition.value!! >= checkListSize.value!! - 1) {
+                //Terminar checklist
+            } else {
+                stepViewModel.setPosition(checkListPosition.value!! + 1)
+            }
+        }) // Manejar botones desde aqui para cargar siguiente vista correctamente mediante metodo de lectura de JSON
+
+        Spacer(modifier = Modifier.height(10.dp))
 
     }
 

@@ -31,4 +31,9 @@
     <string name="inspect_s">Revisar</string>
     <string name="is_recording">Deten la grabacion primero</string>
     <string name="nsnc">NSNC</string>
+    <string name="close">Cerrar</string>
+    <string name="confirm_continue">¿Estas seguro de que deseas continuar?</string>
+    <string name="data_incorrect">La informacion introducida es incorrecta</string>
+    <string name="down">bajar</string>
+    <string name="up">subir</string>
 </resources>

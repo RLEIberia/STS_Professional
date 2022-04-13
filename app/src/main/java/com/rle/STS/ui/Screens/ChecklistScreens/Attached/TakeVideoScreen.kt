@@ -25,6 +25,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.DialogProperties
 import androidx.core.content.FileProvider
 import com.rle.STS.R
+import com.rle.STS.ui.Screens.ChecklistScreens.CheckListStepViewModel
 import com.rle.STS.ui.theme.CheckListaApplicationTheme
 import com.rle.STS.ui.theme.buttonExtraColor
 import com.rle.STS.ui.theme.cardsColor
@@ -35,7 +36,7 @@ import java.io.File
 
 @SuppressLint("RestrictedApi")
 @Composable
-fun TakeVideoScreen() {
+fun TakeVideoScreen(stepViewModel: CheckListStepViewModel) {
 
     val context = LocalContext.current
 
@@ -78,7 +79,7 @@ fun TakeVideoScreen() {
 
     Column() {
 
-        Spacer(modifier = Modifier.height(10.dp))
+        Spacer(modifier = Modifier.weight(1f))
 
         Row() {
 
@@ -182,6 +183,27 @@ fun TakeVideoScreen() {
 
             Spacer(modifier = Modifier.weight(1f))
         }
+
+        Spacer(modifier = Modifier.weight(1f))
+
+        Spacer(modifier = Modifier.height(10.dp))
+
+        val checkListPosition = stepViewModel.getPosition()
+        val checkListSize = stepViewModel.getSize()
+
+        BottomButtons(leftFunction = { // TODO: Comprobar que haya dictado algo
+            if (checkListPosition.value!! > 0) {
+                stepViewModel.setPosition(checkListPosition.value!! - 1)
+            }
+        }, rightFunction = {
+            if (checkListPosition.value!! >= checkListSize.value!! - 1) {
+                //Terminar checklist
+            } else {
+                stepViewModel.setPosition(checkListPosition.value!! + 1)
+            }
+        }) // Manejar botones desde aqui para cargar siguiente vista correctamente mediante metodo de lectura de JSON
+
+        Spacer(modifier = Modifier.height(10.dp))
 
     }
 
@@ -468,13 +490,4 @@ fun createVideoFile(context: Context, project: String, checklist: String, user: 
         ".mp4",
         storageDir
     )
-}
-
-
-@Preview(showBackground = true, widthDp = 851, heightDp = 480)
-@Composable
-private fun DefaultPreview() {
-    CheckListaApplicationTheme {
-        TakeVideoScreen()
-    }
 }

@@ -1,18 +1,23 @@
 package com.rle.STS.ui.Screens.ChecklistScreens
 
+import android.util.Log
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.*
+import androidx.compose.runtime.livedata.observeAsState
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
+import androidx.compose.ui.window.DialogProperties
+import androidx.lifecycle.LiveData
 import com.rle.STS.R
 import com.rle.STS.ui.Screens.ChecklistScreens.Attached.*
 import com.rle.STS.ui.Screens.ChecklistScreens.Data.*
+import com.rle.STS.ui.Screens.ChecklistScreens.MultiUse.QRScreenViewModel
 import com.rle.STS.ui.Screens.ChecklistScreens.Result.MultiOptionScreen
 import com.rle.STS.ui.Screens.ChecklistScreens.Result.OKKOScreen
 import com.rle.STS.ui.theme.CheckListaApplicationTheme
@@ -26,6 +31,12 @@ fun CheckListStepScreen() {
 
     val scaffoldState = rememberScaffoldState(rememberDrawerState(DrawerValue.Closed))
     val scope = rememberCoroutineScope()
+    val openConfirmDialog = remember { mutableStateOf(false) }
+
+    val checkList = createMockCheclist()
+    val viewModel = CheckListStepViewModel()
+    val checkListPosition = viewModel.getPosition().observeAsState()
+    viewModel.setSize(checkList.size)
 
     Scaffold(
         topBar = {
@@ -44,6 +55,7 @@ fun CheckListStepScreen() {
                         })
                         Spacer(modifier = Modifier.weight(1f))
                         CustomButton(text = stringResource(R.string.audio), onClick = {
+                            Log.d("TEST", checkListPosition.value.toString())
                             scope.launch {
                                 scaffoldState.drawerState.open()
                             }
@@ -56,56 +68,62 @@ fun CheckListStepScreen() {
             }
         },
 
-    ) { // Cargar JSON y seleccionar vista actual, Crear metodo que lea JSON y devuelva siguiente vista
-
-        val checkList = createMockCheclist()
-        val checkListPosition = remember { mutableStateOf(0) }
+        ) { // Cargar JSON y seleccionar vista actual, Crear metodo que lea JSON y devuelva siguiente vista
 
         Column {
 
             Spacer(modifier = Modifier.weight(1f))
 
             // DATA SCREENS
-            when (checkList[checkListPosition.value]){
+            when (checkList[checkListPosition.value!!]) {
 
-                "texto"         -> TextScreen(title = "Elemento 1 checklist Title", description = "Elemento 1 checklist Description")
+                "texto" -> TextScreen(
+                    title = "Elemento 1 checklist Title",
+                    description = "Elemento 1 checklist Description",
+                    viewModel
+                )
 
-                "imagen"        -> ImageScreen(file = "Capture.PNG", type = 0)
+                "imagen" -> ImageScreen(file = "Capture.PNG", type = 0, viewModel)
 
-                "video"         -> VideoScreen(file = "test.mp4")
+                "video" -> VideoScreen(file = "test.mp4", viewModel)
 
-                "audio"         -> AudioScreen()
+                "audio" -> AudioScreen(fileName = "Grabacion.m4a", viewModel)
 
-                "QR"            -> QRScreen({})
+                "QR" -> QRScreen(type = 3, check = { true }, viewModel)
 
-                "Record_Audio"  -> RecordAudioScreen()
+                "Record_Audio" -> RecordAudioScreen(viewModel)
 
-                "Dictate"       -> DictateScreen()
+                "Dictate" -> DictateScreen(viewModel)
 
-                "Take_Picture"  -> TakePictureScreen()
+                "Take_Picture" -> TakePictureScreen(viewModel)
 
-                "Take_Video"    -> TakeVideoScreen()
+                "Take_Video" -> TakeVideoScreen(viewModel)
 
-                "Number"        -> NumberScreen( check = {  } )
+                "Number" -> NumberScreen(check = { }, viewModel) //Hueco que indique si el numero es correcto o incorrecto y comprobar al pulsar siguiente
 
-                "OK/KO"         -> OKKOScreen()
+                "OK/KO" -> OKKOScreen(viewModel)
 
-                "MultiOption"   -> MultiOptionScreen(option1 = "option1", option2 = "option2", option3 = "option3", option4 = "option4")
+                "MultiOption" -> MultiOptionScreen(
+                    option1 = "option1",
+                    option2 = "option2",
+                    option3 = "option3",
+                    option4 = "option4",
+                    viewModel
+                )
 
                 //TODO: Colocar aqui las vistas de checklist
 
             }
 
-            //TextScreen(title = "Elemento 1 checklist Title", description = "Elemento 1 checklist Description")
-            //ImageScreen(file = "169.png", type = 1)
-            //ImageScreen(file = "Capture.PNG", type = 1)
-            //VideoScreen(file = "test.mp4")
-            //AudioScreen()
+            //TextScreen(title = "Elemento 1 checklist Title", description = "Elemento 1 checklist Description", viewModel)
+            //ImageScreen(file = "169.png", type = 1, viewModel)
+            //ImageScreen(file = "Capture.PNG", type = 1, viewModel)
+            //VideoScreen(file = "test.mp4", viewModel)
+            //AudioScreen(fileName = "Grabacion.m4a", viewModel)
 
 
             // MULTI-USE SCREENS
-
-            //QRScreen({})
+            QRScreen(type = 3, check = { true }, viewModel)
 
             // ATTACHED SCREENS
 
@@ -123,35 +141,88 @@ fun CheckListStepScreen() {
             /* TODO
                 CheckNumberScreen() Probar a utilizar la pantalla NumberScreen
                 MultiOptionQR()     Probar a utilizar la pantalla QRScreen
-
              */
 
-            Spacer(modifier = Modifier.weight(1f))
+            Log.d("TEST_PADRE",checkListPosition.value.toString())
 
-            Spacer(modifier = Modifier.height(10.dp))
-
-            BottomButtons( leftFunction = {
-                if (checkListPosition.value > 0){
-                    checkListPosition.value--
-                }
-            }, rightFunction = {
-                if (checkListPosition.value < checkList.size - 1){
-                    checkListPosition.value++
-                }
-            }) // Manejar botones desde aqui para cargar siguiente vista correctamente mediante metodo de lectura de JSON
-
-            Spacer(modifier = Modifier.height(10.dp))
+            if (openConfirmDialog.value) {
+                ShowConfirmDialog(
+                    openConfirmDialog = openConfirmDialog,
+                    checkList = checkList,
+                    viewModel = viewModel
+                )
+            }
 
         }
 
     }
 
-
 }
 
 
-fun createMockCheclist() : ArrayList<String>{
-    return arrayListOf<String>("texto","imagen","video","audio","QR","Record_Audio","Dictate","Take_Picture","Take_Video","Number", "OK/KO", "MultiOption")
+@OptIn(ExperimentalComposeUiApi::class)
+@Composable
+fun ShowConfirmDialog(
+    openConfirmDialog: MutableState<Boolean>,
+    checkList: ArrayList<String>,
+    viewModel: CheckListStepViewModel
+) {
+
+    AlertDialog(
+        properties = DialogProperties(
+            usePlatformDefaultWidth = false
+        ),
+        modifier = Modifier
+            .width(450.dp),
+        onDismissRequest = {
+            openConfirmDialog.value = false
+        },
+        text = {
+            Column(horizontalAlignment = Alignment.CenterHorizontally) {
+
+                Text(text = stringResource(id = R.string.confirm_continue), fontSize = 30.sp)
+
+            }
+        },
+        buttons = {
+            Row(
+                modifier = Modifier.padding(all = 8.dp),
+                horizontalArrangement = Arrangement.Center
+            ) {
+                BottomButtons(
+                    leftFunction = { openConfirmDialog.value = false },
+                    leftText = stringResource(id = R.string.cancel),
+                    rightFunction = {
+                        val position = viewModel.getPosition().value!!
+                        if (position < checkList.size - 1) {
+                            viewModel.setPosition(position + 1)
+                        } else {
+                            //finalizar checklist
+                        }
+                    },
+                    rightText = stringResource(id = R.string.confirm)
+                )
+            }
+        }
+    )
+}
+
+
+fun createMockCheclist(): ArrayList<String> {
+    return arrayListOf<String>(
+        "texto",
+        "imagen",
+        "video",
+        "audio",
+        "QR",
+        "Record_Audio",
+        "Dictate",
+        "Take_Picture",
+        "Take_Video",
+        "Number",
+        "OK/KO",
+        "MultiOption"
+    )
 }
 
 @Preview(showBackground = true, widthDp = 851, heightDp = 480)

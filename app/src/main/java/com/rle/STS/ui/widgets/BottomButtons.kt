@@ -77,6 +77,7 @@ fun BottomButtons(
     middleText: String,
     middleFunction: () -> Unit,
     middleColor: Color = buttonExtraColor,
+    middleInteractable: Boolean = true,
     leftText: String = stringResource(R.string.go_back),
     rightText: String = stringResource(R.string.next),
     leftFunction: () -> Unit = {},
@@ -90,7 +91,7 @@ fun BottomButtons(
             CustomButton(
                 text = leftText,
                 onClick = leftFunction,
-                buttonSize = 150 + 40
+                buttonSize = 150
             )
         } else {
             Box(modifier = Modifier.width(190.dp))
@@ -100,7 +101,8 @@ fun BottomButtons(
             text = middleText,
             onClick = middleFunction,
             buttonColor = middleColor,
-            buttonSize = 150
+            buttonSize = 150,
+            enabled = middleInteractable,
         )
         Spacer(modifier = Modifier.weight(1f))
         if (rightVisible) {

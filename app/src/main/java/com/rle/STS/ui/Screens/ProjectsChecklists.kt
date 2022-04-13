@@ -6,7 +6,9 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
+import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.semantics
@@ -15,6 +17,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.compose.ui.window.DialogProperties
 import com.rle.STS.R
 import com.rle.STS.ui.Screens.Drawer
 import com.rle.STS.ui.theme.CheckListaApplicationTheme
@@ -34,10 +37,13 @@ fun ProjectsChecklists(
 ) {
 
     var page by remember { mutableStateOf(1) }
+    val openConfirmDialog = remember { mutableStateOf(false) }
     var limitPage: Boolean
     //rememberSaveable for composition change
     val scaffoldState = rememberScaffoldState(rememberDrawerState(DrawerValue.Closed))
     val scope = rememberCoroutineScope()
+    val clickedList = remember { mutableStateOf(letter + "0") }
+    val context = LocalContext.current
 
     Scaffold(
         scaffoldState = scaffoldState,
@@ -95,14 +101,20 @@ fun ProjectsChecklists(
                         CardView(
                             text = number,
                             clickable = true,
-                            onListClick = onListClick
+                            onListClick = {
+                                if (letter == "P") {
+                                    onListClick()
+                                } else {
+                                    openConfirmDialog.value = true
+                                    clickedList.value = number
+                                }
+                            }
                         )
                     }
                     Box(modifier = Modifier.weight(8.9f)) {
                         CardView(
                             text = item,
                             clickable = false,
-                            onListClick = onListClick
                         )
                     }
                     Spacer(modifier = Modifier.width(10.dp))
@@ -118,11 +130,16 @@ fun ProjectsChecklists(
                         page--
                     }
                 },
+                leftText = stringResource(id = R.string.up),
                 rightFunction = {
                     if (!limitPage) {
                         page++
                     }
                 },
+                rightText = stringResource(id = R.string.down),
+                middleText = stringResource(id = R.string.go_back),
+                middleFunction = {  }, // ir atras
+                middleInteractable = false,
                 leftVisible = page != 1,
                 rightVisible = !limitPage
             )
@@ -133,12 +150,16 @@ fun ProjectsChecklists(
 
     }
 
+    if (openConfirmDialog.value){
+        ShowConfirmDialog(openConfirmDialog = openConfirmDialog, onListClick = onListClick, clickedList = clickedList)
+    }
+
 }
 
 
 //Cards para mostrar los proyectos o checklists
 @Composable
-fun CardView(text: String, clickable: Boolean, onListClick: () -> Unit) {
+fun CardView(text: String, clickable: Boolean, onListClick: () -> Unit = {}) {
 
     Card(
         shape = RoundedCornerShape(8.dp),
@@ -198,6 +219,48 @@ fun CardView(text: String, clickable: Boolean, onListClick: () -> Unit) {
 
 }
 
+
+@OptIn(ExperimentalComposeUiApi::class)
+@Composable
+fun ShowConfirmDialog(
+    openConfirmDialog: MutableState<Boolean>,
+    clickedList: MutableState<String>,
+    onListClick: () -> Unit,
+) {
+
+    AlertDialog(
+        properties = DialogProperties(
+            usePlatformDefaultWidth = false
+        ),
+        modifier = Modifier
+            .width(450.dp),
+        onDismissRequest = {
+            openConfirmDialog.value = false
+        },
+        text = {
+            Column(horizontalAlignment = Alignment.CenterHorizontally) {
+
+                Text(text = clickedList.value, fontSize = 30.sp)
+
+            }
+        },
+        buttons = {
+            Row(
+                modifier = Modifier.padding(all = 8.dp),
+                horizontalArrangement = Arrangement.Center
+            ) {
+                BottomButtons(
+                    leftFunction = { openConfirmDialog.value = false },
+                    leftText = stringResource(id = R.string.cancel),//ROJO
+                    rightFunction = {
+                        onListClick()
+                    },
+                    rightText = stringResource(id = R.string.confirm)//VERDE
+                )
+            }
+        }
+    )
+}
 
 @Preview(showBackground = true, widthDp = 851, heightDp = 480)
 @Composable

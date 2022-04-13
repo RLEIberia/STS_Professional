@@ -17,19 +17,23 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.core.content.FileProvider
 import com.rle.STS.R
+import com.rle.STS.ui.Screens.ChecklistScreens.CheckListStepViewModel
+import com.rle.STS.ui.widgets.BottomButtons
 import com.rle.STS.ui.widgets.CustomButton
 import com.rle.STS.ui.widgets.VideoThumbnail
 import java.io.File
 
 
 @Composable
-fun VideoScreen(file: String) {
+fun VideoScreen(file: String, stepViewModel: CheckListStepViewModel) {
 
     val context = LocalContext.current
     val videoPath: File = File(context.getFilesDir(), "Videos")
     val video = File(videoPath, file);
 
     Column {
+
+        Spacer(modifier = Modifier.weight(1f))
 
         Row() {
             Spacer(modifier = Modifier.weight(1f))
@@ -84,6 +88,27 @@ fun VideoScreen(file: String) {
             Spacer(modifier = Modifier.weight(1f))
 
         }
+
+        Spacer(modifier = Modifier.weight(1f))
+
+        Spacer(modifier = Modifier.height(10.dp))
+
+        val checkListPosition = stepViewModel.getPosition()
+        val checkListSize = stepViewModel.getSize()
+
+        BottomButtons(leftFunction = {
+            if (checkListPosition.value!! > 0) {
+                stepViewModel.setPosition(checkListPosition.value!! - 1)
+            }
+        }, rightFunction = {
+            if (checkListPosition.value!! >= checkListSize.value!! - 1) {
+                //Terminar checklist
+            } else {
+                stepViewModel.setPosition(checkListPosition.value!! + 1)
+            }
+        }) // Manejar botones desde aqui para cargar siguiente vista correctamente mediante metodo de lectura de JSON
+
+        Spacer(modifier = Modifier.height(10.dp))
 
     }
 

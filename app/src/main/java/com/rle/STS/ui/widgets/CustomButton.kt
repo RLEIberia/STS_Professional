@@ -34,7 +34,8 @@ fun CustomButton(
     textColor: Color = buttonsTextColor,
     textSize: Float = 30.0f,
     borderColor: Color = buttonsTextBorderColor,
-    buttonSize: Int = 110
+    buttonSize: Int = 110,
+    enabled : Boolean = true
 ) {
 
     androidx.compose.material.Surface(
@@ -53,7 +54,7 @@ fun CustomButton(
                 textColorParameter = textColor,
                 borderColor = borderColor
             )*/
-            XMLText(text = text, onClick = { onClick() })
+            XMLText(text = text, onClick = { onClick() }, enabled = enabled)
         }
     }
 }
@@ -65,7 +66,8 @@ fun CustomText(
     onClick: () -> Unit,
     textColorParameter: Color = textColor,
     textSize: Float = 25.0f,
-    borderColor: Color = textBorderColor
+    borderColor: Color = textBorderColor,
+    enabled: Boolean = true
 ) {
     val context = LocalContext.current
 
@@ -84,7 +86,7 @@ fun CustomText(
 
             ),
         modifier = Modifier
-            .clickable(true, onClick = onClick)
+            .clickable(enabled = enabled, onClick = onClick)
         //.border(width = 2.dp, color = borderColor, shape= Shape)
     )
 
@@ -98,46 +100,28 @@ fun XMLText(
     onClick: (View) -> Unit,
     textColorParameter: Color = textColor,
     textSize: Float = 25.0f,
-    borderColor: Color = textBorderColor
+    borderColor: Color = textBorderColor,
+    enabled: Boolean
 ) {
-    /*
-    Text(
-        text = text,
-        fontSize = textSize.sp,
-        fontWeight = FontWeight.Bold,
-        color = textColorParameter,
-        textAlign = TextAlign.Center,
-        style = MaterialTheme.typography.h4.copy(
-            shadow = Shadow(
-                color = Color.Black,
-                offset = Offset(2f, 2f),
-                blurRadius = 4f
-            ),
-
-            ),
-        modifier = Modifier
-            .clickable(true, onClick = onClick )
-        //.border(width = 2.dp, color = borderColor, shape= Shape)
-    )
-    */
-
-
     val selectedItem = remember { mutableStateOf(0) }
-
 
     AndroidView(
         factory = { context ->
             val view = LayoutInflater.from(context)
                 .inflate(R.layout.text_layout, null, false)
             val textView = view.findViewById<TextView>(R.id.textView)
-            textView.setOnClickListener(onClick)
+            if (enabled){
+                textView.setOnClickListener(onClick)
+            }
             textView.text = text
             // do whatever you want...
             view // return the view
         },
         update = { view ->
             val textView = view.findViewById<TextView>(R.id.textView)
-            textView.setOnClickListener(onClick)
+            if (enabled){
+                textView.setOnClickListener(onClick)
+            }
             textView.text = text
             // Update the view
         },

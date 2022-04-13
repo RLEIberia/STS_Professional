@@ -27,6 +27,7 @@ import androidx.compose.ui.window.DialogProperties
 import androidx.core.content.FileProvider
 import coil.compose.rememberAsyncImagePainter
 import com.rle.STS.R
+import com.rle.STS.ui.Screens.ChecklistScreens.CheckListStepViewModel
 import com.rle.STS.ui.theme.CheckListaApplicationTheme
 import com.rle.STS.ui.theme.buttonExtraColor
 import com.rle.STS.ui.theme.cardsColor
@@ -36,7 +37,7 @@ import java.io.File
 
 @SuppressLint("RestrictedApi")
 @Composable
-fun TakePictureScreen() {
+fun TakePictureScreen(stepViewModel: CheckListStepViewModel) {
 
     val context = LocalContext.current
 
@@ -79,7 +80,7 @@ fun TakePictureScreen() {
 
     Column() {
 
-        Spacer(modifier = Modifier.height(10.dp))
+        Spacer(modifier = Modifier.weight(1f))
 
         Row() {
 
@@ -183,6 +184,27 @@ fun TakePictureScreen() {
 
             Spacer(modifier = Modifier.weight(1f))
         }
+
+        Spacer(modifier = Modifier.weight(1f))
+
+        Spacer(modifier = Modifier.height(10.dp))
+
+        val checkListPosition = stepViewModel.getPosition()
+        val checkListSize = stepViewModel.getSize()
+
+        BottomButtons(leftFunction = { // TODO: Comprobar que haya hecho una foto
+            if (checkListPosition.value!! > 0) {
+                stepViewModel.setPosition(checkListPosition.value!! - 1)
+            }
+        }, rightFunction = {
+            if (checkListPosition.value!! >= checkListSize.value!! - 1) {
+                //Terminar checklist
+            } else {
+                stepViewModel.setPosition(checkListPosition.value!! + 1)
+            }
+        }) // Manejar botones desde aqui para cargar siguiente vista correctamente mediante metodo de lectura de JSON
+
+        Spacer(modifier = Modifier.height(10.dp))
 
     }
 
@@ -460,13 +482,4 @@ fun createImageFile(context: Context, project: String, checklist: String, user: 
         ".jpg",
         storageDir
     )
-}
-
-
-@Preview(showBackground = true, widthDp = 851, heightDp = 480)
-@Composable
-private fun DefaultPreview() {
-    CheckListaApplicationTheme {
-        TakePictureScreen()
-    }
 }
