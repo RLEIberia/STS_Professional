@@ -7,15 +7,15 @@ import androidx.room.PrimaryKey
 import java.util.*
 
 @Entity(
-    tableName = "viewPersistance",
+    tableName = "viewsPersistance",
     foreignKeys = [ForeignKey(
-        entity = ChecklistInstances::class,
+        entity = CkInstances::class,
         parentColumns = ["uniqueID"],
         childColumns = ["idInstance"],
         onDelete = ForeignKey.CASCADE
     )]
 )
-data class ViewPersistance(
+data class ViewsPersistance(
 
     @PrimaryKey
     @ColumnInfo(name = "uniqueID")

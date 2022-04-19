@@ -16,7 +16,8 @@ import java.util.*
         onDelete = ForeignKey.CASCADE
     )]
 )
-data class ChecklistInstances(
+data class CkInstances(
+
     @PrimaryKey
     @ColumnInfo(name = "uniqueID")
     val uniqueID: UUID,
