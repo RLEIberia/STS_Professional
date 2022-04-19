@@ -9,6 +9,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import com.rle.STS.BBDD.Database.STSDatabase
 import com.rle.STS.R
 import com.rle.STS.ui.theme.topBarColor
 import com.rle.STS.ui.widgets.CustomButton
