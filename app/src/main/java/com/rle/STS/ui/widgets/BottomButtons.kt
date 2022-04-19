@@ -3,6 +3,7 @@ package com.rle.STS.ui.widgets
 import android.widget.Toast
 import androidx.compose.foundation.layout.*
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
@@ -11,6 +12,7 @@ import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.unit.dp
 import com.rle.STS.R
+import com.rle.STS.ui.Screens.ChecklistScreens.CheckListStepViewModel
 import com.rle.STS.ui.theme.buttonExtraColor
 
 //VERSION SIN PARAMETROS UNICAMENTE PARA TEST DE PANTALLAS
@@ -116,4 +118,26 @@ fun BottomButtons(
         }
         Spacer(modifier = Modifier.width(20.dp))
     }
+}
+
+
+@Composable
+fun defaultStepBottomButtons(stepViewModel: CheckListStepViewModel, tieneValor: Boolean = true){
+
+    val checkListPosition = stepViewModel.checkListPosition.collectAsState()
+    val checkListSize = stepViewModel.checkListSize.collectAsState()
+
+    BottomButtons(leftFunction = {
+        if (checkListPosition.value > 0) {
+            stepViewModel.setPosition(checkListPosition.value - 1)
+        }
+    }, rightFunction = {
+        if (tieneValor) {
+            if (checkListPosition.value >= checkListSize.value - 1) {
+                //TODO: Terminar checklist
+            } else {
+                stepViewModel.setPosition(checkListPosition.value + 1)
+            }
+        }
+    }) // Manejar botones desde aqui para cargar siguiente vista correctamente mediante metodo de lectura de JSON
 }

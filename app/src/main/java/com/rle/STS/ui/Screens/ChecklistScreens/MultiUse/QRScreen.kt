@@ -7,10 +7,7 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.AlertDialog
 import androidx.compose.material.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.MutableState
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
+import androidx.compose.runtime.*
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -25,8 +22,6 @@ import com.rle.STS.ui.widgets.CustomButton
 
 @Composable
 fun QRScreen(type: Int, check: () -> Boolean, stepViewModel: CheckListStepViewModel) {
-
-    val RWMethod = RWMethod()
 
     val intent = Intent(RWMethod.SCAN_BARCODE)
 
@@ -51,7 +46,7 @@ fun QRScreen(type: Int, check: () -> Boolean, stepViewModel: CheckListStepViewMo
             }
         }
 
-    Column() {
+    Column {
 
         Spacer(modifier = Modifier.weight(1f))
 
@@ -111,19 +106,18 @@ fun QRScreen(type: Int, check: () -> Boolean, stepViewModel: CheckListStepViewMo
 
         Spacer(modifier = Modifier.height(10.dp))
 
-        val checkListPosition = stepViewModel.getPosition()
-        val checkListSize = stepViewModel.getSize()
-        val showConfirmdDialog = stepViewModel.getConfirmDialog()
+        val checkListPosition = stepViewModel.checkListPosition.collectAsState()
+        val checkListSize = stepViewModel.checkListSize.collectAsState()
 
         BottomButtons(leftFunction = {
-            if (checkListPosition.value!! > 0) {
-                stepViewModel.setPosition(checkListPosition.value!! - 1)
+            if (checkListPosition.value > 0) {
+                stepViewModel.setPosition(checkListPosition.value - 1)
             }
         }, rightFunction = {
 
             var increaseChecklist = true
 
-            if (checkListPosition.value!! >= checkListSize.value!! - 1) {
+            if (checkListPosition.value >= checkListSize.value - 1) {
                 increaseChecklist = false
             } else {
                 //finalizar checklist
@@ -135,7 +129,7 @@ fun QRScreen(type: Int, check: () -> Boolean, stepViewModel: CheckListStepViewMo
             }
 
             if (increaseChecklist) {
-                stepViewModel.setPosition(checkListPosition.value!! + 1)
+                stepViewModel.setPosition(checkListPosition.value + 1)
             }
         }) // Manejar botones desde aqui para cargar siguiente vista correctamente mediante metodo de lectura de JSON
 

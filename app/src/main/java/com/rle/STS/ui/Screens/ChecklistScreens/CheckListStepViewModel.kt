@@ -1,51 +1,44 @@
 package com.rle.STS.ui.Screens.ChecklistScreens
 
-import android.util.Log
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.asStateFlow
 
 class CheckListStepViewModel : ViewModel() {
 
-    private val checkListSize: MutableLiveData<Int> by lazy {
-        MutableLiveData<Int>(0)
+    private val _checkListSize = MutableStateFlow<Int>(0)
+
+    val checkListSize = _checkListSize.asStateFlow()
+
+    fun setSize(size: Int) {
+        _checkListSize.value = size
     }
 
+    /*
     fun getSize(): LiveData<Int> {
-        return checkListSize
+        return _checkListSize
     }
 
     fun setSize(size: Int) {
         // Do an asynchronous operation to fetch users.
-        checkListSize.value = size
+        _checkListSize.value = size
     }
+    */
 
-    private val checkListPosition: MutableLiveData<Int> by lazy {
-        MutableLiveData<Int>(0)
-    }
+    private val _checkListPosition = MutableStateFlow<Int>(0)
 
-    fun getPosition(): LiveData<Int> {
-        return checkListPosition
-    }
+    val checkListPosition = _checkListPosition.asStateFlow()
 
     fun setPosition(position: Int) {
-        // Do an asynchronous operation to fetch users.
-        checkListPosition.value = position
-        Log.d("TEST",checkListPosition.value.toString())
+        _checkListPosition.value = position
     }
 
+    private val _showConfirmDialog = MutableStateFlow<Boolean>(false)
 
-    private val showConfirmDialog: MutableLiveData<Boolean> by lazy {
-        MutableLiveData<Boolean>(false)
-    }
-
-    fun getConfirmDialog(): LiveData<Boolean> {
-        return showConfirmDialog
-    }
+    val showConfirmDialog = _showConfirmDialog.asStateFlow()
 
     fun setConfirmDialog(openDialog: Boolean) {
-        // Do an asynchronous operation to fetch users.
-        showConfirmDialog.value = openDialog
+        _showConfirmDialog.value = openDialog
     }
 
 }

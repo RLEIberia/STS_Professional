@@ -16,10 +16,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.height
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.SideEffect
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
+import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
@@ -29,6 +26,7 @@ import com.rle.STS.R
 import com.rle.STS.ui.Screens.ChecklistScreens.CheckListStepViewModel
 import com.rle.STS.ui.widgets.BottomButtons
 import com.rle.STS.ui.widgets.CustomButton
+import com.rle.STS.ui.widgets.defaultStepBottomButtons
 import java.io.File
 import java.io.IOException
 import java.lang.Exception
@@ -186,20 +184,8 @@ fun RecordAudioScreen(stepViewModel: CheckListStepViewModel) {
 
         Spacer(modifier = Modifier.height(10.dp))
 
-        val checkListPosition = stepViewModel.getPosition()
-        val checkListSize = stepViewModel.getSize()
-
-        BottomButtons(leftFunction = { // TODO: Comprobar que haya grabado algo
-            if (checkListPosition.value!! > 0) {
-                stepViewModel.setPosition(checkListPosition.value!! - 1)
-            }
-        }, rightFunction = {
-            if (checkListPosition.value!! >= checkListSize.value!! - 1) {
-                //Terminar checklist
-            } else {
-                stepViewModel.setPosition(checkListPosition.value!! + 1)
-            }
-        }) // Manejar botones desde aqui para cargar siguiente vista correctamente mediante metodo de lectura de JSON
+        // TODO: Comprobar que haya grabado algo
+        defaultStepBottomButtons(stepViewModel)
 
         Spacer(modifier = Modifier.height(10.dp))
 

@@ -33,6 +33,7 @@ import com.rle.STS.ui.theme.buttonExtraColor
 import com.rle.STS.ui.theme.cardsColor
 import com.rle.STS.ui.widgets.BottomButtons
 import com.rle.STS.ui.widgets.CustomButton
+import com.rle.STS.ui.widgets.defaultStepBottomButtons
 import java.io.File
 
 @SuppressLint("RestrictedApi")
@@ -189,20 +190,8 @@ fun TakePictureScreen(stepViewModel: CheckListStepViewModel) {
 
         Spacer(modifier = Modifier.height(10.dp))
 
-        val checkListPosition = stepViewModel.getPosition()
-        val checkListSize = stepViewModel.getSize()
-
-        BottomButtons(leftFunction = { // TODO: Comprobar que haya hecho una foto
-            if (checkListPosition.value!! > 0) {
-                stepViewModel.setPosition(checkListPosition.value!! - 1)
-            }
-        }, rightFunction = {
-            if (checkListPosition.value!! >= checkListSize.value!! - 1) {
-                //Terminar checklist
-            } else {
-                stepViewModel.setPosition(checkListPosition.value!! + 1)
-            }
-        }) // Manejar botones desde aqui para cargar siguiente vista correctamente mediante metodo de lectura de JSON
+        defaultStepBottomButtons(stepViewModel)
+        // TODO: Comprobar que haya hecho una foto
 
         Spacer(modifier = Modifier.height(10.dp))
 

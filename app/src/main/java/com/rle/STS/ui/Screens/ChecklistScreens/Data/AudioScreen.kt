@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.height
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
@@ -16,6 +17,7 @@ import com.rle.STS.R
 import com.rle.STS.ui.Screens.ChecklistScreens.CheckListStepViewModel
 import com.rle.STS.ui.widgets.BottomButtons
 import com.rle.STS.ui.widgets.CustomButton
+import com.rle.STS.ui.widgets.defaultStepBottomButtons
 import java.io.File
 
 @Composable
@@ -48,20 +50,7 @@ fun AudioScreen(fileName: String, stepViewModel: CheckListStepViewModel) {
 
         Spacer(modifier = Modifier.height(10.dp))
 
-        val checkListPosition = stepViewModel.getPosition()
-        val checkListSize = stepViewModel.getSize()
-
-        BottomButtons(leftFunction = {
-            if (checkListPosition.value!! > 0) {
-                stepViewModel.setPosition(checkListPosition.value!! - 1)
-            }
-        }, rightFunction = {
-            if (checkListPosition.value!! >= checkListSize.value!! - 1) {
-                //Terminar checklist
-            } else {
-                stepViewModel.setPosition(checkListPosition.value!! + 1)
-            }
-        }) // Manejar botones desde aqui para cargar siguiente vista correctamente mediante metodo de lectura de JSON
+        defaultStepBottomButtons(stepViewModel)
 
         Spacer(modifier = Modifier.height(10.dp))
 

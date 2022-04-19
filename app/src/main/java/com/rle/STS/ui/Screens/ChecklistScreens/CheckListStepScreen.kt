@@ -1,10 +1,8 @@
 package com.rle.STS.ui.Screens.ChecklistScreens
 
-import android.util.Log
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
 import androidx.compose.runtime.*
-import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
@@ -13,11 +11,10 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.DialogProperties
-import androidx.lifecycle.LiveData
 import com.rle.STS.R
 import com.rle.STS.ui.Screens.ChecklistScreens.Attached.*
 import com.rle.STS.ui.Screens.ChecklistScreens.Data.*
-import com.rle.STS.ui.Screens.ChecklistScreens.MultiUse.QRScreenViewModel
+import com.rle.STS.ui.Screens.ChecklistScreens.Repository.Repository
 import com.rle.STS.ui.Screens.ChecklistScreens.Result.MultiOptionScreen
 import com.rle.STS.ui.Screens.ChecklistScreens.Result.OKKOScreen
 import com.rle.STS.ui.theme.CheckListaApplicationTheme
@@ -35,7 +32,7 @@ fun CheckListStepScreen() {
 
     val checkList = createMockCheclist()
     val viewModel = CheckListStepViewModel()
-    val checkListPosition = viewModel.getPosition().observeAsState()
+    val checkListPosition = viewModel.checkListPosition.collectAsState()
     viewModel.setSize(checkList.size)
 
     Scaffold(
@@ -55,7 +52,6 @@ fun CheckListStepScreen() {
                         })
                         Spacer(modifier = Modifier.weight(1f))
                         CustomButton(text = stringResource(R.string.audio), onClick = {
-                            Log.d("TEST", checkListPosition.value.toString())
                             scope.launch {
                                 scaffoldState.drawerState.open()
                             }
@@ -75,7 +71,7 @@ fun CheckListStepScreen() {
             Spacer(modifier = Modifier.weight(1f))
 
             // DATA SCREENS
-            when (checkList[checkListPosition.value!!]) {
+            when (checkList[checkListPosition.value]) {
 
                 "texto" -> TextScreen(
                     title = "Elemento 1 checklist Title",
@@ -83,7 +79,7 @@ fun CheckListStepScreen() {
                     viewModel
                 )
 
-                "imagen" -> ImageScreen(file = "Capture.PNG", type = 0, viewModel)
+                "imagen" -> Repository.Im1("Capture.PNG", viewModel)//ImageScreen(file = "Capture.PNG", type = 0, viewModel)
 
                 "video" -> VideoScreen(file = "test.mp4", viewModel)
 
@@ -123,7 +119,7 @@ fun CheckListStepScreen() {
 
 
             // MULTI-USE SCREENS
-            QRScreen(type = 3, check = { true }, viewModel)
+            //QRScreen(type = 3, check = { true }, viewModel)
 
             // ATTACHED SCREENS
 
@@ -142,8 +138,6 @@ fun CheckListStepScreen() {
                 CheckNumberScreen() Probar a utilizar la pantalla NumberScreen
                 MultiOptionQR()     Probar a utilizar la pantalla QRScreen
              */
-
-            Log.d("TEST_PADRE",checkListPosition.value.toString())
 
             if (openConfirmDialog.value) {
                 ShowConfirmDialog(
@@ -193,9 +187,9 @@ fun ShowConfirmDialog(
                     leftFunction = { openConfirmDialog.value = false },
                     leftText = stringResource(id = R.string.cancel),
                     rightFunction = {
-                        val position = viewModel.getPosition().value!!
-                        if (position < checkList.size - 1) {
-                            viewModel.setPosition(position + 1)
+                        val position = viewModel.checkListPosition
+                        if (position.value < checkList.size - 1) {
+                            viewModel.setPosition(position.value + 1)
                         } else {
                             //finalizar checklist
                         }

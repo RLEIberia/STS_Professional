@@ -8,6 +8,7 @@ import android.view.inputmethod.EditorInfo
 import android.widget.EditText
 import androidx.compose.foundation.layout.*
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
@@ -19,6 +20,7 @@ import com.rle.STS.R
 import com.rle.STS.ui.Screens.ChecklistScreens.CheckListStepViewModel
 import com.rle.STS.ui.widgets.BottomButtons
 import com.rle.STS.ui.widgets.CustomButton
+import com.rle.STS.ui.widgets.defaultStepBottomButtons
 
 @SuppressLint("RestrictedApi")
 @Composable
@@ -27,7 +29,7 @@ fun NumberScreen(check: () -> Unit, stepViewModel: CheckListStepViewModel) {
     val numero = remember { mutableStateOf("") }
     val openKeyboard = remember { mutableStateOf(false) }
 
-    Column() {
+    Column {
 
         Spacer(modifier = Modifier.weight(1f))
 
@@ -99,20 +101,8 @@ fun NumberScreen(check: () -> Unit, stepViewModel: CheckListStepViewModel) {
 
         Spacer(modifier = Modifier.height(10.dp))
 
-        val checkListPosition = stepViewModel.getPosition()
-        val checkListSize = stepViewModel.getSize()
-
-        BottomButtons(leftFunction = { //TODO: Comprobar que haya introducido un numero
-            if (checkListPosition.value!! > 0) {
-                stepViewModel.setPosition(checkListPosition.value!! - 1)
-            }
-        }, rightFunction = {
-            if (checkListPosition.value!! >= checkListSize.value!! - 1) {
-                //Terminar checklist
-            } else {
-                stepViewModel.setPosition(checkListPosition.value!! + 1)
-            }
-        }) // Manejar botones desde aqui para cargar siguiente vista correctamente mediante metodo de lectura de JSON
+        //TODO: Comprobar que haya introducido un numero
+        defaultStepBottomButtons(stepViewModel)
 
         Spacer(modifier = Modifier.height(10.dp))
 
