@@ -23,16 +23,15 @@ import com.rle.STS.ui.widgets.CustomButton
 import com.rle.STS.ui.widgets.defaultStepBottomButtons
 
 @Composable
-fun DictateScreen(stepViewModel: CheckListStepViewModel) {
+fun DictateScreen(stepViewModel: CheckListStepViewModel, nextType: Int) {
 
 
     val intent = Intent(RWMethod.ACTION_DICTATION)
-    val result = remember { mutableStateOf<String?>("no text") }
+    val result = remember { mutableStateOf<String?>("") }
     val launcher =
         rememberLauncherForActivityResult(ActivityResultContracts.StartActivityForResult()) {
 
             val data = it.data
-            result.value = "[No Dictation]"
             if ( data != null) {
                 result.value = data.getStringExtra("result")//methods.EXTRA_RESULT)!!
             }
@@ -67,8 +66,11 @@ fun DictateScreen(stepViewModel: CheckListStepViewModel) {
 
         Spacer(modifier = Modifier.height(10.dp))
 
-        //TODO: Comprobar que se haya dictado algo
-        defaultStepBottomButtons(stepViewModel)
+        if (result.value == ""){
+            defaultStepBottomButtons(stepViewModel, hasValue = false, nextType = nextType)
+        } else {
+            defaultStepBottomButtons(stepViewModel, hasValue = true, nextType = nextType)
+        }
 
         Spacer(modifier = Modifier.height(10.dp))
 

@@ -1,7 +1,8 @@
 package com.rle.STS.ui.Screens.ChecklistScreens.Data
 
 import android.content.Intent
-import android.util.Log
+import android.renderscript.ScriptIntrinsicYuvToRGB
+import android.speech.tts.TextToSpeech
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.layout.*
@@ -11,6 +12,7 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.DialogProperties
@@ -19,11 +21,21 @@ import com.rle.STS.ui.Items.RWMethod
 import com.rle.STS.ui.Screens.ChecklistScreens.CheckListStepViewModel
 import com.rle.STS.ui.widgets.BottomButtons
 import com.rle.STS.ui.widgets.CustomButton
+import com.rle.STS.ui.widgets.defaultStepBottomButtons
+import java.util.*
+
 
 @Composable
-fun QRScreen(type: Int, check: () -> Boolean, stepViewModel: CheckListStepViewModel) {
+fun QRScreen(
+    type: Int,
+    check: () -> Boolean,
+    stepViewModel: CheckListStepViewModel,
+    nextType: Int
+) {
 
     val intent = Intent(RWMethod.SCAN_BARCODE)
+
+    val context = LocalContext.current
 
     val openDialog = remember { mutableStateOf(false) }
 
@@ -109,29 +121,35 @@ fun QRScreen(type: Int, check: () -> Boolean, stepViewModel: CheckListStepViewMo
         val checkListPosition = stepViewModel.checkListPosition.collectAsState()
         val checkListSize = stepViewModel.checkListSize.collectAsState()
 
-        BottomButtons(leftFunction = {
-            if (checkListPosition.value > 0) {
-                stepViewModel.setPosition(checkListPosition.value - 1)
-            }
-        }, rightFunction = {
+        BottomButtons(
+            leftFunction = {
+                if (checkListPosition.value > 0) {
+                    stepViewModel.setPosition(checkListPosition.value - 1)
+                }
+            },
+            rightFunction = {
+                var increaseChecklist = true
 
-            var increaseChecklist = true
+                if (checkListPosition.value >= checkListSize.value - 1) {
+                    increaseChecklist = false
+                } else {
+                    //finalizar checklist
+                }
 
-            if (checkListPosition.value >= checkListSize.value - 1) {
-                increaseChecklist = false
-            } else {
-                //finalizar checklist
-            }
+                if (result.value != "Hola") { // Comprobar si es valor esperado
+                    increaseChecklist = false
+                    stepViewModel.setConfirmDialog(true)
+                }
 
-            if (result.value != "Hola") { // Comprobar si es valor esperado
-                increaseChecklist = false
-                stepViewModel.setConfirmDialog(true)
-            }
+                if (increaseChecklist || nextType == 0) {
+                    stepViewModel.setPosition(checkListPosition.value + 1)
+                } else if (nextType == 1) {
+                    stepViewModel.setConfirmDialog(true)
+                } else {
 
-            if (increaseChecklist) {
-                stepViewModel.setPosition(checkListPosition.value + 1)
+                }
             }
-        }) // Manejar botones desde aqui para cargar siguiente vista correctamente mediante metodo de lectura de JSON
+        ) // Manejar botones desde aqui para cargar siguiente vista correctamente mediante metodo de lectura de JSON
 
         Spacer(modifier = Modifier.height(10.dp))
 

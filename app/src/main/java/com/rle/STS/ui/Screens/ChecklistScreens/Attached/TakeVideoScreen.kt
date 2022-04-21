@@ -37,7 +37,7 @@ import java.io.File
 
 @SuppressLint("RestrictedApi")
 @Composable
-fun TakeVideoScreen(stepViewModel: CheckListStepViewModel) {
+fun TakeVideoScreen(stepViewModel: CheckListStepViewModel, nextType: Int) {
 
     val context = LocalContext.current
 
@@ -189,11 +189,11 @@ fun TakeVideoScreen(stepViewModel: CheckListStepViewModel) {
 
         Spacer(modifier = Modifier.height(10.dp))
 
-        val checkListPosition = stepViewModel.checkListPosition.collectAsState()
-        val checkListSize = stepViewModel.checkListSize.collectAsState()
-
-        // TODO: Comprobar que haya grabado algo
-        defaultStepBottomButtons(stepViewModel)
+        if (fileList.isEmpty()){
+            defaultStepBottomButtons(stepViewModel, hasValue = false, nextType = nextType)
+        } else {
+            defaultStepBottomButtons(stepViewModel, hasValue = true, nextType = nextType)
+        }
 
         Spacer(modifier = Modifier.height(10.dp))
 

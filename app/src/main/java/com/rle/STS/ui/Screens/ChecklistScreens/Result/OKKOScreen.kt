@@ -31,7 +31,7 @@ import java.io.IOException
 import java.lang.Exception
 
 @Composable
-fun OKKOScreen(stepViewModel: CheckListStepViewModel) {
+fun OKKOScreen(stepViewModel: CheckListStepViewModel, nextType: Int) {
 
     var B1Enabled = remember { true }
     var B2Enabled = remember { true }
@@ -223,8 +223,12 @@ fun OKKOScreen(stepViewModel: CheckListStepViewModel) {
 
         Spacer(modifier = Modifier.height(10.dp))
 
-        //TODO: Comprobar que se haya seleccionado opcion
-        defaultStepBottomButtons(stepViewModel)
+        val oneSelected = B1Enabled || B2Enabled || B3Enabled
+        if (oneSelected){
+            defaultStepBottomButtons(stepViewModel, hasValue = true, nextType = nextType)
+        } else {
+            defaultStepBottomButtons(stepViewModel, hasValue = false, nextType = nextType)
+        }
 
         Spacer(modifier = Modifier.height(10.dp))
     }
