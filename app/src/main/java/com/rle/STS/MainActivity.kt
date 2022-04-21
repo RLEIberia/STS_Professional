@@ -7,7 +7,6 @@ import android.view.KeyEvent
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.appcompat.app.AppCompatActivity
-import com.rle.STS.BBDD.Database.STSDatabase
 import com.rle.STS.ui.navigation.Navigation
 
 class MainActivity : ComponentActivity() {
