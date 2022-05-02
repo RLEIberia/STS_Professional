@@ -102,7 +102,9 @@ dependencies {
     //LiveData Compose
     implementation "androidx.compose.runtime:runtime-livedata:$compose_version"
 
+
     //Room
+
     implementation "androidx.room:room-runtime:$room_version"
     annotationProcessor "androidx.room:room-compiler:$room_version"
     kapt("androidx.room:room-compiler:$room_version")
@@ -112,5 +114,6 @@ dependencies {
     implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-core:1.5.2'
     implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.5.2'
     implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-play-services:1.5.2'
+
 
 }

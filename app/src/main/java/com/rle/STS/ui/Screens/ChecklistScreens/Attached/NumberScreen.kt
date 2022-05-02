@@ -24,7 +24,7 @@ import com.rle.STS.ui.widgets.defaultStepBottomButtons
 
 @SuppressLint("RestrictedApi")
 @Composable
-fun NumberScreen(check: () -> Unit, stepViewModel: CheckListStepViewModel) {
+fun NumberScreen(check: () -> Unit, stepViewModel: CheckListStepViewModel, nextType: Int) {
 
     val numero = remember { mutableStateOf("") }
     val openKeyboard = remember { mutableStateOf(false) }
@@ -101,8 +101,11 @@ fun NumberScreen(check: () -> Unit, stepViewModel: CheckListStepViewModel) {
 
         Spacer(modifier = Modifier.height(10.dp))
 
-        //TODO: Comprobar que haya introducido un numero
-        defaultStepBottomButtons(stepViewModel)
+        if (numero.value == ""){
+            defaultStepBottomButtons(stepViewModel, hasValue = false, nextType = nextType)
+        } else {
+            defaultStepBottomButtons(stepViewModel, hasValue = true, nextType = nextType)
+        }
 
         Spacer(modifier = Modifier.height(10.dp))
 

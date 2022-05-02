@@ -12,11 +12,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.DialogProperties
 import com.rle.STS.R
-import com.rle.STS.ui.Screens.ChecklistScreens.Attached.*
 import com.rle.STS.ui.Screens.ChecklistScreens.Data.*
 import com.rle.STS.ui.Screens.ChecklistScreens.Repository.Repository
-import com.rle.STS.ui.Screens.ChecklistScreens.Result.MultiOptionScreen
-import com.rle.STS.ui.Screens.ChecklistScreens.Result.OKKOScreen
 import com.rle.STS.ui.theme.CheckListaApplicationTheme
 import com.rle.STS.ui.theme.topBarColor
 import com.rle.STS.ui.widgets.BottomButtons
@@ -81,58 +78,31 @@ fun CheckListStepScreen() {
 
                 "imagen" -> Repository.Im1("Capture.PNG", viewModel)//ImageScreen(file = "Capture.PNG", type = 0, viewModel)
 
-                "video" -> VideoScreen(file = "test.mp4", viewModel)
+                "video" -> Repository.VideoScreen1(file = "test.mp4", viewModel)
 
-                "audio" -> AudioScreen(fileName = "Grabacion.m4a", viewModel)
+                "audio" -> Repository.AudioScreen1(file = "Grabacion.m4a", viewModel)
 
-                "QR" -> QRScreen(type = 3, check = { true }, viewModel)
+                "QR" -> Repository.QR0(viewModel = viewModel, 0)
 
-                "Record_Audio" -> RecordAudioScreen(viewModel)
+                "Record_Audio" -> Repository.RecordAudioScreen1(viewModel, 0)
 
-                "Dictate" -> DictateScreen(viewModel)
+                "Dictate" -> Repository.DictateScreen1(viewModel, 0)
 
-                "Take_Picture" -> TakePictureScreen(viewModel)
+                "Take_Picture" -> Repository.TakePictureScreen1(viewModel, 0)
 
-                "Take_Video" -> TakeVideoScreen(viewModel)
+                "Take_Video" -> Repository.TakeVideoScreen1(viewModel, 0)
 
-                "Number" -> NumberScreen(check = { }, viewModel) //Hueco que indique si el numero es correcto o incorrecto y comprobar al pulsar siguiente
+                "Number" -> Repository.NumberScreen1(check = { }, viewModel, 0) //Hueco que indique si el numero es correcto o incorrecto y comprobar al pulsar siguiente
 
-                "OK/KO" -> OKKOScreen(viewModel)
+                "OK/KO" -> Repository.OKKOScreen1(viewModel, 0)
 
-                "MultiOption" -> MultiOptionScreen(
-                    option1 = "option1",
-                    option2 = "option2",
-                    option3 = "option3",
-                    option4 = "option4",
-                    viewModel
-                )
+                "MultiOption" -> Repository.MultiOption2(viewModel = viewModel, 0)
 
                 //TODO: Colocar aqui las vistas de checklist
 
             }
 
-            //TextScreen(title = "Elemento 1 checklist Title", description = "Elemento 1 checklist Description", viewModel)
-            //ImageScreen(file = "169.png", type = 1, viewModel)
-            //ImageScreen(file = "Capture.PNG", type = 1, viewModel)
-            //VideoScreen(file = "test.mp4", viewModel)
-            //AudioScreen(fileName = "Grabacion.m4a", viewModel)
 
-
-            // MULTI-USE SCREENS
-            //QRScreen(type = 3, check = { true }, viewModel)
-
-            // ATTACHED SCREENS
-
-            //RecordAudioScreen()
-            //DictateScreen()
-            //TakePictureScreen()
-            //TakeVideoScreen()
-            //NumberScreen( check = {  } )
-
-            // RESULT SCREENS
-
-            //OKKOScreen()
-            //MultiOptionScreen(option1 = "option1", option2 = "option2") //option3 = "option3", option4 = "option4")
 
             /* TODO
                 CheckNumberScreen() Probar a utilizar la pantalla NumberScreen

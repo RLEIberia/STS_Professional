@@ -34,7 +34,7 @@ import java.lang.Exception
 
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
-fun RecordAudioScreen(stepViewModel: CheckListStepViewModel) {
+fun RecordAudioScreen(stepViewModel: CheckListStepViewModel, nextType: Int) {
 
     val context = LocalContext.current
 
@@ -184,8 +184,11 @@ fun RecordAudioScreen(stepViewModel: CheckListStepViewModel) {
 
         Spacer(modifier = Modifier.height(10.dp))
 
-        // TODO: Comprobar que haya grabado algo
-        defaultStepBottomButtons(stepViewModel)
+        if (file.length() > 0L){
+            defaultStepBottomButtons(stepViewModel, hasValue = true, nextType = nextType)
+        } else {
+            defaultStepBottomButtons(stepViewModel, hasValue = false, nextType = nextType)
+        }
 
         Spacer(modifier = Modifier.height(10.dp))
 

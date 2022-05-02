@@ -38,7 +38,7 @@ import java.io.File
 
 @SuppressLint("RestrictedApi")
 @Composable
-fun TakePictureScreen(stepViewModel: CheckListStepViewModel) {
+fun TakePictureScreen(stepViewModel: CheckListStepViewModel, nextType: Int) {
 
     val context = LocalContext.current
 
@@ -190,8 +190,11 @@ fun TakePictureScreen(stepViewModel: CheckListStepViewModel) {
 
         Spacer(modifier = Modifier.height(10.dp))
 
-        defaultStepBottomButtons(stepViewModel)
-        // TODO: Comprobar que haya hecho una foto
+        if (fileList.isEmpty()){
+            defaultStepBottomButtons(stepViewModel, hasValue = false, nextType = nextType)
+        } else {
+            defaultStepBottomButtons(stepViewModel, hasValue = true, nextType = nextType)
+        }
 
         Spacer(modifier = Modifier.height(10.dp))
 
