@@ -12,10 +12,8 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
-import androidx.compose.material.Button
-import androidx.compose.material.Text
-import com.rle.STS.ui.Items.RWMethod
-import com.rle.STS.ui.navigation.Navigation
+import com.rle.STS.Items.RWMethod
+import com.rle.STS.navigation.Navigation
 import java.util.*
 
 
