@@ -12,15 +12,15 @@ import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.DialogProperties
 import androidx.navigation.NavController
 import com.rle.STS.R
-import com.rle.STS.screens.viewScreens.data.*
+import com.rle.STS.viewScreens.data.*
 import com.rle.STS.ui.theme.topBarColor
 import com.rle.STS.screens.CkViewRepository
-import com.rle.STS.screens.widgets.BottomButtons
-import com.rle.STS.screens.widgets.CustomButton
+import com.rle.STS.widgets.BottomButtons
+import com.rle.STS.widgets.CustomButton
 import kotlinx.coroutines.launch
 
 @Composable
-fun CheckListStepScreen(
+fun ChecklistScreen(
     navController: NavController,
     //TODO - Add ViewModel
 ) {
@@ -102,7 +102,7 @@ fun CheckListStepScreen(
                     0
                 ) //Hueco que indique si el numero es correcto o incorrecto y comprobar al pulsar siguiente
 
-                "OK/KO" -> CkViewRepository.OKKOScreen1(viewModel, 0)
+                "OK/KO" -> CkViewRepository.OP1(viewModel, 0)
 
                 "MultiOption" -> CkViewRepository.MultiOption2(viewModel = viewModel, 0)
 

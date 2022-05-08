@@ -1,14 +1,14 @@
 package com.rle.STS.screens
 
 import androidx.compose.runtime.Composable
-import com.rle.STS.screens.viewScreens.attach.*
+import com.rle.STS.viewScreens.attach.*
 import com.rle.STS.screens.checklist.ChecklistViewModel
-import com.rle.STS.screens.viewScreens.data.AudioScreen
-import com.rle.STS.screens.viewScreens.data.ImageScreen
-import com.rle.STS.screens.viewScreens.data.QRScreen
-import com.rle.STS.screens.viewScreens.data.VideoScreen
-import com.rle.STS.screens.viewScreens.result.MultiOptionScreen
-import com.rle.STS.screens.viewScreens.result.OKKOScreen
+import com.rle.STS.viewScreens.data.AudioScreen
+import com.rle.STS.viewScreens.data.ImageScreen
+import com.rle.STS.viewScreens.data.QRScreen
+import com.rle.STS.viewScreens.data.VideoScreen
+import com.rle.STS.viewScreens.result.MultiOptionScreen
+import com.rle.STS.viewScreens.result.OKKOScreen
 
 class CkViewRepository {
 
@@ -57,7 +57,7 @@ class CkViewRepository {
 
 
         @Composable
-        fun OKKOScreen1(viewModel: ChecklistViewModel, nextType: Int) {
+        fun OP1(viewModel: ChecklistViewModel, nextType: Int) {
             OKKOScreen(viewModel, nextType)
         }
 

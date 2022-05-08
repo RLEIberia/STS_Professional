@@ -1,16 +1,14 @@
 package com.rle.STS.navigation
 
 import androidx.compose.runtime.Composable
-import androidx.navigation.NavHost
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.rememberNavController
 import com.rle.STS.screens.MainScreen
 import androidx.navigation.compose.composable
-import com.rle.STS.model.JSON.checklistStructure.Checklist
-import com.rle.STS.screens.checklist.CheckListStepScreen
+import com.rle.STS.screens.checklist.ChecklistScreen
 import com.rle.STS.screens.checklistSelect.ChecklistSelectScreen
 import com.rle.STS.screens.projectSelect.ProjectSelectScreen
-
+import com.rle.STS.screens.splash.SplashScreen
 
 @Composable
 fun STSNavigation() {
@@ -19,10 +17,13 @@ fun STSNavigation() {
 
     NavHost(
         navController = navController,
-        startDestination = STSScreens.MainScreen.name
+        startDestination = STSScreens.SplashScreen.name
     ) {
 
-        //TODO SplashScreen
+        composable(STSScreens.SplashScreen.name) {
+            SplashScreen(navController = navController)
+            //TODO FadeOut
+        }
 
         composable(STSScreens.MainScreen.name) {
             MainScreen(navController = navController)
@@ -37,10 +38,8 @@ fun STSNavigation() {
         }
 
         composable(STSScreens.Checklist.name) {
-            CheckListStepScreen(navController = navController)
+            ChecklistScreen(navController = navController)
         }
 
-
     }
-
 }

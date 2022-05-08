@@ -5,7 +5,9 @@ import android.net.Uri
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
 import androidx.compose.runtime.*
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
@@ -13,7 +15,8 @@ import androidx.navigation.NavController
 import com.rle.STS.R
 import com.rle.STS.navigation.STSScreens
 import com.rle.STS.ui.theme.topBarColor
-import com.rle.STS.screens.widgets.CustomButton
+import com.rle.STS.widgets.CustomButton
+import com.rle.STS.widgets.CustomIconButton
 import kotlinx.coroutines.launch
 
 
@@ -56,24 +59,56 @@ fun MainScreen(
         },
     ) { contentPadding ->
 
-        Column() {
-            Spacer(modifier = Modifier.weight(1f))
-            Row() {
-                Spacer(modifier = Modifier.weight(1f))
-                CustomButton(text = "Proyectos", onClick = { navController.navigate(STSScreens.ProjectSelectScreen.name) }, buttonSize = 220)
-                Spacer(modifier = Modifier.weight(1f))
-                CustomButton(text = "Videollamadas", onClick = {
-                    val sendIntent = Intent(
-                        Intent.ACTION_VIEW,
-                        Uri.parse("msteams://teams.microsoft.com")
+        Surface(
+
+        ) {
+            Column(
+                modifier = Modifier
+                    .fillMaxSize(),
+                verticalArrangement = Arrangement.Center
+            ) {
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth(),
+                    horizontalArrangement = Arrangement.SpaceEvenly,
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    CustomIconButton(
+                        text = "Proyectos",
+                        icon = R.drawable.pencil_icon,
+                        onClick = {
+                            navController.navigate(STSScreens.ProjectSelectScreen.name)
+                        },
+                        buttonColor = Color(0xffff8000),
+                        buttonSize = 180
                     )
-                    context.startActivity(sendIntent)
-                }, buttonSize = 220)
-                Spacer(modifier = Modifier.weight(1f))
-                CustomButton(text = "Estado", onClick = { /*TODO - Añadir dirección de estado*/ navController.navigate(STSScreens.ProjectSelectScreen.name) }, buttonSize = 220)
-                Spacer(modifier = Modifier.weight(1f))
+                    CustomIconButton(
+                        text = "Llamada",
+                        icon = R.drawable.call_icon,
+                        onClick = {
+                            val sendIntent = Intent(
+                                Intent.ACTION_VIEW,
+                                Uri.parse("msteams://teams.microsoft.com")
+                            )
+                            context.startActivity(sendIntent)
+                        },
+                        buttonColor = Color(0xFF366CF4),
+                        buttonSize = 180
+                    )
+                    CustomIconButton(
+                        text = "Estado",
+                        icon = R.drawable.discover_icon,
+                        onClick = {
+                            /*TODO - Añadir dirección de estado*/
+                            navController.navigate(STSScreens.ProjectSelectScreen.name)
+                        },
+                        buttonColor = Color(0xFFF44336),
+                        buttonSize = 180
+                    )
+                }
+
             }
-            Spacer(modifier = Modifier.weight(1f))
+
         }
 
     }

@@ -1,7 +1,5 @@
 package com.rle.STS.model.JSON.checklistStructure
 
-import com.rle.STS.model.JSON.utils.FileInfo
-
 data class ViewData(
 
     //reproduce text as audio
@@ -11,6 +9,7 @@ data class ViewData(
     val text: ArrayList<String>, //Si hay 2 -> 0 título, 1 descripción
 
     //files
+    //qr cuenta como files
     val files: ArrayList<FileInfo>,
 
     //number introduction
@@ -21,7 +20,6 @@ data class ViewData(
     //Options
     val nOptions: Int,
     val options: ArrayList<String>,
-    //qr cuenta como files
 
     //answer
     val blockUntilAnswer: Int,

@@ -16,8 +16,8 @@ import com.rle.STS.screens.projects.ProjectsViewModel
 import com.rle.STS.screens.utils.ListCardView
 import com.rle.STS.screens.utils.ListConfirmDialog
 import com.rle.STS.ui.theme.topBarColor
-import com.rle.STS.screens.widgets.BottomButtons
-import com.rle.STS.screens.widgets.CustomButton
+import com.rle.STS.widgets.BottomButtons
+import com.rle.STS.widgets.CustomButton
 import kotlinx.coroutines.launch
 
 
