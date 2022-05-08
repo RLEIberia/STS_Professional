@@ -1,0 +1,89 @@
+{
+  "info": {
+    "language": "es-ES",
+    "checklistName": "Checklist prototipo 1",
+    "checklistCode": "rleCkProt001",
+    "projectName": "Proyecto prototipo 1",
+    "projectCode": "rlePjProt001",
+    "version": 1,
+    "createDate": 1651565282,
+    "modDate": 1651565356,
+    "designer": "RLE DT Valencia",
+    "manufacturer": "RLE SmartGlasses",
+    "client": "RLE DT Barcelona"
+  },
+  "checklist": {
+    "numSteps": 10,
+    "steps": [
+      {
+        "position": 1,
+        "idStep": "",
+        "stepName": "Paso 1",
+        "numViews": 4,
+        "path": [
+          {
+            "actionCode": "100",
+            "message": "",
+            "nextStep": [2]
+          },
+          {
+            "actionCode": "100",
+            "message": "",
+            "nextStep": [2]
+          },
+          {
+            "actionCode": "100",
+            "message": "",
+            "nextStep": [2]
+          }
+        ],
+        "views": [
+          {
+            "idView": "",
+            "viewOrder": 1,
+            "viewType": "TX1",
+            "viewData": {
+              "text": "Título de paso",
+              "audio": "Título de paso reproducido por las gafas"
+            }
+          },
+          {
+            "idView": "",
+            "viewOrder": 2,
+            "viewType": "TX2",
+            "viewData": {
+              "text": "Descripción del paso",
+              "audio": "Descripción del paso leído por las gafas"
+            }
+          },
+          {
+            "idView": "",
+            "viewOrder": 3,
+            "viewType": "OP1",
+            "viewData": {
+              "text": "Elige entre Correcto, Incorrecto y NSNC",
+              "audio": "Elige entre las opciones que ve en pantalla"
+            }
+          },
+          {
+            "idView": "",
+            "viewOrder": 4,
+            "viewType": "CM1",
+            "viewData": {
+              "text": "Saca una foto",
+              "audio": "Tienes que sacar una o varias fotos"
+            }
+          }
+        ]
+      },
+      {
+        "position": 2,
+        "idStep": "",
+        "stepName": "Paso 2",
+        "numViews": 3,
+        "path": [
+        ]
+      }
+    ]
+  }
+}

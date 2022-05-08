@@ -12,11 +12,22 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
-import com.rle.STS.Items.RWMethod
-import com.rle.STS.navigation.Navigation
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.material.MaterialTheme
+import androidx.compose.material.Surface
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import com.rle.STS.items.RWMethod
+import com.rle.STS.navigation.STSNavigation
+import com.rle.STS.ui.theme.STSTheme
+import dagger.hilt.android.AndroidEntryPoint
 import java.util.*
 
 
+@AndroidEntryPoint
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
 
@@ -25,8 +36,8 @@ class MainActivity : ComponentActivity() {
 
         setContent {
 
-            Navigation()
-            
+            STSApp()
+
             /*Button(onClick = {
                 //textToSpeechEngine.speak("Probando el texto a dialogo", TextToSpeech.QUEUE_FLUSH, null, "tts1")
                 //textToSpeechRealWear()
@@ -37,6 +48,8 @@ class MainActivity : ComponentActivity() {
         }
     }
 
+
+    //TODO REVISAR FUNCIONES
 
     //Text to Speech RealWear
     private val EXTRA_TEXT = "text_to_speak"
@@ -95,6 +108,26 @@ class MainActivity : ComponentActivity() {
             }
         }
         return super.onKeyUp(keyCode, event)
+    }
+
+}
+
+@Composable
+fun STSApp() {
+
+    STSTheme() {
+
+        Surface(
+            modifier = Modifier.fillMaxSize(),
+            color = MaterialTheme.colors.background
+        ) {
+            Column(
+                verticalArrangement = Arrangement.Center,
+                horizontalAlignment = Alignment.CenterHorizontally
+            ){
+                STSNavigation()
+            }
+        }
     }
 
 }
