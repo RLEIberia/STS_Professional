@@ -72,39 +72,39 @@ fun ChecklistScreen(
             when (checkList[checkListPosition.value]) {
 
                 "texto" -> TextScreen(
-                    title = "Elemento 1 checklist Title",
-                    description = "Elemento 1 checklist Description",
+                    title = "Título de checklist de ejemplo",
+                    description = "Lorem ipsum es el texto que se usa habitualmente en diseño gráfico o de moda en demostraciones de tipografías o de borradores de diseño.",
                     viewModel
                 )
 
-                "imagen" -> CkViewRepository.IM2(
-                    "Capture.PNG",
+                "imagen" -> CkViewRepository.IM1(
+                    "Capture.jpeg",
                     viewModel
                 )//ImageScreen(file = "Capture.PNG", type = 0, viewModel)
 
-                "video" -> CkViewRepository.VD1(file = "test.mp4", viewModel)
+                "video" -> CkViewRepository.VD1(file = "The RealWear HMT-1.mp4", viewModel)
 
                 "audio" -> CkViewRepository.AU2(file = "Grabacion.m4a", viewModel)
 
-                "QR" -> CkViewRepository.QR1(viewModel = viewModel, 0)
+                "QR" -> CkViewRepository.QR1(viewModel = viewModel, nextType = 0)
 
-                "Record_Audio" -> CkViewRepository.AU3(viewModel, 0)
+                "Record_Audio" -> CkViewRepository.AU3(viewModel, nextType = 0)
 
-                "Dictate" -> CkViewRepository.AU1(viewModel, 0)
+                "Dictate" -> CkViewRepository.AU1(viewModel, nextType = 0)
 
-                "Take_Picture" -> CkViewRepository.CM1(viewModel, 0)
+                "Take_Picture" -> CkViewRepository.CM1(viewModel, nextType = 0)
 
-                "Take_Video" -> CkViewRepository.CM2(viewModel, 0)
+                "Take_Video" -> CkViewRepository.CM2(viewModel, nextType = 0)
 
                 "Number" -> CkViewRepository.NumberScreen1(
                     check = { },
                     viewModel,
-                    0
+                    nextType = 0
                 ) //Hueco que indique si el numero es correcto o incorrecto y comprobar al pulsar siguiente
 
-                "OK/KO" -> CkViewRepository.OP1(viewModel, 0)
+                "OK/KO" -> CkViewRepository.OP1(viewModel, nextType = 0)
 
-                "MultiOption" -> CkViewRepository.MultiOption2(viewModel = viewModel, 0)
+                "MultiOption" -> CkViewRepository.MultiOption2(viewModel = viewModel, nextType = 0)
 
                 //TODO: Colocar aqui las vistas de checklist
 
@@ -184,8 +184,8 @@ fun createMockCheclist(): ArrayList<String> {
     return arrayListOf<String>(
         "texto",
         "imagen",
-        "video",
-        "audio",
+        //"video",
+        //"audio",
         "QR",
         "Record_Audio",
         "Dictate",

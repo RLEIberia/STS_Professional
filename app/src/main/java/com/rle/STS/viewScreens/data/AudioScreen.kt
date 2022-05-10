@@ -23,6 +23,10 @@ fun AudioScreen(file: String, stepViewModel: ChecklistViewModel) {
     val context = LocalContext.current
 
     val imagePath: File = File(context.getFilesDir(), "Audios")
+
+    if (!imagePath.exists())
+        imagePath.mkdirs()
+
     val file = File(imagePath, file);
 
     Column() {

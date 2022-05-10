@@ -47,6 +47,9 @@ fun TakeVideoScreen(stepViewModel: ChecklistViewModel, nextType: Int) {
 
     val directory = File(directoryS)
 
+    if (!directory.exists())
+        directory.mkdirs()
+
     lateinit var file: File
 
     for (video in directory.listFiles()!!) {
@@ -270,7 +273,7 @@ fun ConfirmVideoDialog(
                 Spacer(modifier = Modifier.height(20.dp))
 
                 BottomButtons(
-                    leftText = stringResource(id = R.string.cancel),
+                    leftText = "BORRAR",
                     leftFunction = {
                         file.delete()
                         openConfirmDialog.value = false
@@ -469,11 +472,13 @@ fun VideosActionDialog(
 
 }
 
-
 fun createVideoFile(context: Context, project: String, checklist: String, user: String): File {
     val title = project + "_" + checklist + "_" + user
     val storageDirS = context.filesDir.path + File.separator + "Videos" + File.separator + "Taken"
     val storageDir = File(storageDirS)
+
+    if (!storageDir.exists())
+        storageDir.mkdirs()
 
     return File.createTempFile(
         "MP4_${title}_",

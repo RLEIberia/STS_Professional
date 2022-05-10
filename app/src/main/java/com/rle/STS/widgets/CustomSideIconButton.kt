@@ -22,7 +22,7 @@ import com.rle.STS.ui.theme.buttonsTextColor
 
 //Boton preparado con estilo de la aplicacion
 @Composable
-fun CustomIconButton(
+fun CustomSideIconButton(
     modifier: Modifier = Modifier,
     text: String,
     onClick: () -> Unit,
@@ -30,7 +30,7 @@ fun CustomIconButton(
     textColor: Color = buttonsTextColor,
     textSize: Float = 30.0f,
     borderColor: Color = buttonsTextBorderColor,
-    buttonSize: Int = 110,
+    buttonSize: Int = 150,
     enabled: Boolean = true,
     icon: Int = R.drawable.call_icon
 
@@ -38,19 +38,22 @@ fun CustomIconButton(
 
     Card(
         elevation = 10.dp,
-        shape = RoundedCornerShape(10)
+        shape = RoundedCornerShape(10),
         //color = Color.Black.copy(alpha = 0f)
     ) {
-        Column(
+
+        Row(
             modifier = Modifier
                 .background(buttonColor)
-                .padding(start = 10.dp, end = 10.dp, top = 15.dp, bottom = 15.dp)
+                .padding(start = 10.dp, end = 10.dp, top = 5.dp, bottom = 5.dp)
                 .width(buttonSize.dp),
-            horizontalAlignment = Alignment.CenterHorizontally
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.SpaceEvenly
         ) {
             Icon(
+                //TODO -> Que el tamaño del icono sea porcentual?
                 modifier = Modifier
-                    .size(100.dp),
+                    .size(40.dp),
                 painter = painterResource(id = icon),
                 contentDescription = null,
                 tint = Color.White,

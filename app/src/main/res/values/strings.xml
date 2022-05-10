@@ -32,7 +32,7 @@
     <string name="cancel">Cancel</string>
     <string name="inspect_s">Inspect</string>
     <string name="is_recording">Stop Recording First</string>
-    <string name="nsnc">NSNC</string>
+    <string name="nsnc">No Answer</string>
     <string name="close">Close</string>
     <string name="confirm_continue">Are you sure you want to continue?</string>
     <string name="data_incorrect">Introduced data is incorrect</string>

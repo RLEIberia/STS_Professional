@@ -19,16 +19,7 @@ fun ProjectSelectScreen(
     projectsList.add("Proyecto cinco")
     projectsList.add("Proyecto seis")
     projectsList.add("Proyecto siete")
-    projectsList.add("Proyecto ocho")
-    projectsList.add("Proyecto nueve")
-    projectsList.add("Proyecto diez")
-    projectsList.add("Proyecto once")
-    projectsList.add("Proyecto doce")
-    projectsList.add("Proyecto trece")
-    projectsList.add("Proyecto catorce")
-    projectsList.add("Proyecto quince")
-    projectsList.add("Proyecto dieciseis")
-    projectsList.add("Proyecto diecisiete")
+
 
     ListScreen(itemsList = projectsList, letter = "P", title = "", navController = navController)
 

@@ -16,7 +16,7 @@ import com.rle.STS.R
 import com.rle.STS.navigation.STSScreens
 import com.rle.STS.ui.theme.topBarColor
 import com.rle.STS.widgets.CustomButton
-import com.rle.STS.widgets.CustomIconButton
+import com.rle.STS.widgets.CustomTopIconButton
 import kotlinx.coroutines.launch
 
 
@@ -60,7 +60,8 @@ fun MainScreen(
     ) { contentPadding ->
 
         Surface(
-
+            modifier = Modifier
+                .fillMaxSize(),
         ) {
             Column(
                 modifier = Modifier
@@ -73,7 +74,7 @@ fun MainScreen(
                     horizontalArrangement = Arrangement.SpaceEvenly,
                     verticalAlignment = Alignment.CenterVertically
                 ) {
-                    CustomIconButton(
+                    CustomTopIconButton(
                         text = "Proyectos",
                         icon = R.drawable.pencil_icon,
                         onClick = {
@@ -82,7 +83,7 @@ fun MainScreen(
                         buttonColor = Color(0xffff8000),
                         buttonSize = 180
                     )
-                    CustomIconButton(
+                    CustomTopIconButton(
                         text = "Llamada",
                         icon = R.drawable.call_icon,
                         onClick = {
@@ -95,7 +96,7 @@ fun MainScreen(
                         buttonColor = Color(0xFF366CF4),
                         buttonSize = 180
                     )
-                    CustomIconButton(
+                    CustomTopIconButton(
                         text = "Estado",
                         icon = R.drawable.discover_icon,
                         onClick = {

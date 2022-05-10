@@ -25,7 +25,7 @@ class CkViewRepository {
 
         //Vídeo
         @Composable
-        fun VD1(file: String, viewModel: ChecklistViewModel) { VideoScreen(file = "test.mp4", stepViewModel = viewModel) }
+        fun VD1(file: String, viewModel: ChecklistViewModel) { VideoScreen(file = "The RealWear HMT-1.mp4", stepViewModel = viewModel) }
 
         //QR
         @Composable
@@ -65,8 +65,9 @@ class CkViewRepository {
         @Composable
         fun MultiOption2(viewModel: ChecklistViewModel, nextType: Int) {
             MultiOptionScreen(
-                option1 = "option1",
-                option2 = "option2",
+                option1 = "Tomar el camino de la derecha",
+                option2 = "Tomar el camino de la izquierda",
+                option3 = "Tomar el camino central",
                 stepViewModel = viewModel,
                 nextType = 0
             )

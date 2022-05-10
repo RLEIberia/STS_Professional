@@ -5,6 +5,9 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.rle.STS.screens.checklist.ChecklistViewModel
@@ -24,9 +27,9 @@ fun TextScreen(title: String, description: String = "", stepViewModel: Checklist
             Column(horizontalAlignment = Alignment.CenterHorizontally) {
 
                 if (description != "") { // Tipo descripcion
-                    Text(text = title, fontSize = 40.sp)
+                    Text(text = title, fontSize = 40.sp, fontWeight = FontWeight.Bold)
                     Spacer(modifier = Modifier.height(30.dp))
-                    Text(text = description, fontSize = 25.sp)
+                    Text(text = description, fontSize = 25.sp, modifier = Modifier.padding(15.dp), textAlign = TextAlign.Center)
                 } else { // Tipo titulo
                     Text(text = title,  fontSize = 50.sp)
                 }

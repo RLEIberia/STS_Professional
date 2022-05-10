@@ -5,6 +5,7 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Card
+import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateListOf
@@ -43,7 +44,17 @@ fun MultiOptionScreen(
 
     Column() {
 
-        Spacer(modifier = Modifier.height(3.dp))
+        Spacer(modifier = Modifier.height(10.dp))
+
+        Text(
+            modifier = Modifier
+                .fillMaxWidth(),
+            style = MaterialTheme.typography.h4,
+            text = "Elige la opción que prefieras",
+            textAlign = TextAlign.Center
+        )
+
+        Spacer(modifier = Modifier.height(10.dp))
 
         for (i in 1..validOptions.size) {
             Row(

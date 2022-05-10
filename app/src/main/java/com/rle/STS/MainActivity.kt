@@ -6,6 +6,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.speech.RecognizerIntent
 import android.speech.tts.TextToSpeech
+import android.speech.tts.TextToSpeechService
 import android.util.Log
 import android.view.KeyEvent
 import androidx.activity.ComponentActivity
@@ -17,6 +18,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
+import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -24,6 +26,9 @@ import com.rle.STS.items.RWMethod
 import com.rle.STS.navigation.STSNavigation
 import com.rle.STS.ui.theme.STSTheme
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
 import java.util.*
 
 
@@ -34,13 +39,14 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
 
 
+
         setContent {
 
             STSApp()
 
             /*Button(onClick = {
                 //textToSpeechEngine.speak("Probando el texto a dialogo", TextToSpeech.QUEUE_FLUSH, null, "tts1")
-                //textToSpeechRealWear()
+                textToSpeechRealWear()
             }) {
                 Text(text = "Prueba")
             }*/
@@ -49,23 +55,14 @@ class MainActivity : ComponentActivity() {
     }
 
 
-    //TODO REVISAR FUNCIONES
 
-    //Text to Speech RealWear
-    private val EXTRA_TEXT = "text_to_speak"
-    private val EXTRA_ID = "tts_id"
-    private val EXTRA_PAUSE = "pause_speech_recognizer"
 
-    private val TTS_REQUEST_CODE = 34
+//    fun ttspause() { //NO FUNCIONA
+//        val intent = Intent(RWMethod.ACTION_TTS)
+//        intent.putExtra(EXTRA_PAUSE,true)
+//        sendBroadcast(intent)
+//    }
 
-    private fun textToSpeechRealWear() {
-        val speech = "Selecciona la imagen correcta"
-        val intent = Intent(RWMethod.ACTION_TTS)
-        intent.putExtra(EXTRA_TEXT, speech)
-        intent.putExtra(EXTRA_ID, TTS_REQUEST_CODE)
-        intent.putExtra(EXTRA_PAUSE, false)
-        sendBroadcast(intent)
-    }
 
     //Text to Speech Android
     private val startForResult = registerForActivityResult(

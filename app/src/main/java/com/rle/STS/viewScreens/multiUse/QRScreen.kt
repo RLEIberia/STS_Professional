@@ -5,13 +5,16 @@ import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.AlertDialog
+import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.*
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.DialogProperties
 import com.rle.STS.R
@@ -58,6 +61,41 @@ fun QRScreen(
 
         Spacer(modifier = Modifier.weight(1f))
 
+        Text(
+            modifier = Modifier
+                .fillMaxWidth(),
+            style = MaterialTheme.typography.h4,
+            text = "Haz la lectura de un código QR.",
+            textAlign = TextAlign.Center
+        )
+
+        Spacer(modifier = Modifier.height(20.dp))
+
+        Column(
+            horizontalAlignment = Alignment.CenterHorizontally,
+            modifier = Modifier.fillMaxWidth()
+        ) {
+            if (result.value == "") {
+                Text(text = "QR sin leer", color = Color.Gray, style = MaterialTheme.typography.h5)
+                //Text(text = "Mas informacion")
+            } else {
+                if (type == 0) {
+                    Text(text = "QR leido correctamente", color = Color.Green , style = MaterialTheme.typography.h5)
+                } else {
+                    if (check()) {
+                        Text(text = "QR leido correctamente", color = Color.Green)
+                    } else {
+                        Text(text = "QR leido incorrectamente", color = Color.Green)
+                    }
+
+                }
+            }
+
+        }
+
+        Spacer(modifier = Modifier.height(20.dp))
+
+
         Row() {
             Spacer(modifier = Modifier.weight(1f))
 
@@ -70,29 +108,7 @@ fun QRScreen(
             Spacer(modifier = Modifier.weight(1f))
         }
 
-        Spacer(modifier = Modifier.height(20.dp))
-
-        Row() {
-            Spacer(modifier = Modifier.weight(1f))
-
-            if (result.value == "") {
-                Text(text = "QR sin leer", color = Color.Gray)
-                //Text(text = "Mas informacion")
-            } else {
-                if (type == 0) {
-                    Text(text = "QR leido correctamente", color = Color.Green)
-                } else {
-                    if (check()) {
-                        Text(text = "QR leido correctamente", color = Color.Green)
-                    } else {
-                        Text(text = "QR leido incorrectamente", color = Color.Green)
-                    }
-
-                }
-            }
-
-            Spacer(modifier = Modifier.weight(1f))
-        }
+        Spacer(modifier = Modifier.weight(1f))
 
         Spacer(modifier = Modifier.height(20.dp))
 

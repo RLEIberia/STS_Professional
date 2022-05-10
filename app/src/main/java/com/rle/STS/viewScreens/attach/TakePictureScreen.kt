@@ -48,6 +48,10 @@ fun TakePictureScreen(stepViewModel: ChecklistViewModel, nextType: Int) {
 
     val directory = File(directoryS)
 
+    if (!directory.exists())
+        directory.mkdirs()
+
+
     lateinit var file: File
 
     for (photo in directory.listFiles()!!) {
@@ -266,7 +270,7 @@ fun ConfirmImageDialog(
                 Spacer(modifier = Modifier.height(20.dp))
 
                 BottomButtons(
-                    leftText = stringResource(id = R.string.cancel),
+                    leftText = "BORRAR",
                     leftFunction = {
                         file.delete()
                         openConfirmDialog.value = false
