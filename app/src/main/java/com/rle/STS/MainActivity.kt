@@ -23,13 +23,18 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import com.rle.STS.items.RWMethod
+import com.rle.STS.logic.json.extractChecklist
 import com.rle.STS.navigation.STSNavigation
+import com.rle.STS.repository.ChecklistRepository
 import com.rle.STS.ui.theme.STSTheme
+import com.rle.STS.utils.GetJsonDataFromAsset
 import dagger.hilt.android.AndroidEntryPoint
+import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 import java.util.*
+import javax.inject.Inject
 
 
 @AndroidEntryPoint
@@ -38,9 +43,15 @@ class MainActivity : ComponentActivity() {
 
         super.onCreate(savedInstanceState)
 
-
-
         setContent {
+
+            val ckJson = GetJsonDataFromAsset(context = applicationContext, fileName = "exampleChecklist.json")
+
+            Log.d("JSON", ckJson.toString())
+
+            val ckData = extractChecklist(ckJson)
+
+            Log.d("CK", ckData.toString())
 
             STSApp()
 

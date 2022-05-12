@@ -24,4 +24,7 @@ data class ViewData(
     //answer
     val blockUntilAnswer: Int,
 
+    //Extra
+    val evidence: ArrayList<String>
+
     )

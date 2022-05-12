@@ -1,7 +1,9 @@
 package com.rle.STS.screens
 
+import android.content.Context
 import android.content.Intent
 import android.net.Uri
+import android.util.Log
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
 import androidx.compose.runtime.*
@@ -11,10 +13,15 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.rle.STS.R
+import com.rle.STS.logic.json.extractChecklist
 import com.rle.STS.navigation.STSScreens
+import com.rle.STS.repository.ChecklistRepository
+import com.rle.STS.screens.main.MainViewModel
 import com.rle.STS.ui.theme.topBarColor
+import com.rle.STS.utils.GetJsonDataFromAsset
 import com.rle.STS.widgets.CustomButton
 import com.rle.STS.widgets.CustomTopIconButton
 import kotlinx.coroutines.launch
@@ -22,14 +29,23 @@ import kotlinx.coroutines.launch
 
 @Composable
 fun MainScreen(
-    navController: NavController
+    navController: NavController,
+    mainViewModel: MainViewModel = hiltViewModel()
 ) {
 
     //rememberSaveable for composition change
     val scaffoldState = rememberScaffoldState(rememberDrawerState(DrawerValue.Closed))
     val scope = rememberCoroutineScope()
 
+
     val context = LocalContext.current
+
+
+    /* TODO - SACAR ESTO - PRUEBAS */
+    val checklistData = mainViewModel.checklistData.collectAsState().value
+    mainViewModel.extractChecklist(context = context, fileName = "exampleChecklist.json")
+    Log.d("CK", checklistData.toString())
+    /* -------------------------- */
 
     Scaffold(
         scaffoldState = scaffoldState,

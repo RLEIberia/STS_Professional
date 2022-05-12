@@ -12,8 +12,8 @@
     "manufacturer": "RLE SmartGlasses",
     "client": "RLE DT Barcelona"
   },
-  "checklist": {
-    "numSteps": 10,
+  "checklistData": {
+    "numSteps": 3,
     "steps": [
       {
         "position": 1,
@@ -43,7 +43,7 @@
             "viewOrder": 1,
             "viewType": "TX1",
             "viewData": {
-              "text": "Título de paso",
+              "text": ["Título de paso"],
               "audio": "Título de paso reproducido por las gafas"
             }
           },
@@ -52,7 +52,7 @@
             "viewOrder": 2,
             "viewType": "TX2",
             "viewData": {
-              "text": "Descripción del paso",
+              "text": ["Descripción del paso"],
               "audio": "Descripción del paso leído por las gafas"
             }
           },
@@ -61,7 +61,7 @@
             "viewOrder": 3,
             "viewType": "OP1",
             "viewData": {
-              "text": "Elige entre Correcto, Incorrecto y NSNC",
+              "text": ["Elige entre Correcto, Incorrecto y NSNC"],
               "audio": "Elige entre las opciones que ve en pantalla"
             }
           },
@@ -70,7 +70,7 @@
             "viewOrder": 4,
             "viewType": "CM1",
             "viewData": {
-              "text": "Saca una foto",
+              "text": ["Saca una foto"],
               "audio": "Tienes que sacar una o varias fotos"
             }
           }

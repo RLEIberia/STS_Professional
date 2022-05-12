@@ -9,7 +9,7 @@ fun nextStep() {
     val choice: Int = 0//TODO From checklistViewModel
     val path: ArrayList<Path> = ArrayList()
 
-    when(path[choice].action) {
+    when(path[choice].actionCode) {
 
         //End checklist
         "000" -> /*TODO - End checklist*/
@@ -19,7 +19,7 @@ fun nextStep() {
 
         //Continue
         "100" -> {
-            step = path[choice].step[0]
+            step = path[choice].nextStep[0]
         }
 
 

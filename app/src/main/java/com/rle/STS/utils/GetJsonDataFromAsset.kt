@@ -4,7 +4,7 @@ import android.content.Context
 import java.io.IOException
 
 
-fun GetJsonDataFromAsset(context: Context, fileName: String): String? {
+ fun GetJsonDataFromAsset(context: Context, fileName: String): String? {
     val jsonString: String
     try {
         jsonString = context.assets.open(fileName).bufferedReader().use { it.readText() }
