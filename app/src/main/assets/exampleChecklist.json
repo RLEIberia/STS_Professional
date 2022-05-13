@@ -6,8 +6,8 @@
     "projectName": "Proyecto prototipo 1",
     "projectCode": "rlePjProt001",
     "version": 1,
-    "createDate": 1651565282,
-    "modDate": 1651565356,
+    "created_at": 1651565282,
+    "updated_at": 1651565356,
     "designer": "RLE DT Valencia",
     "manufacturer": "RLE SmartGlasses",
     "client": "RLE DT Barcelona"
@@ -17,7 +17,7 @@
     "steps": [
       {
         "position": 1,
-        "idStep": "",
+        "idStep": 1,
         "stepName": "Paso 1",
         "numViews": 4,
         "path": [
@@ -39,7 +39,7 @@
         ],
         "views": [
           {
-            "idView": "",
+            "idView": 1,
             "viewOrder": 1,
             "viewType": "TX1",
             "viewData": {
@@ -48,7 +48,7 @@
             }
           },
           {
-            "idView": "",
+            "idView": 2,
             "viewOrder": 2,
             "viewType": "TX2",
             "viewData": {
@@ -57,7 +57,7 @@
             }
           },
           {
-            "idView": "",
+            "idView": 3,
             "viewOrder": 3,
             "viewType": "OP1",
             "viewData": {
@@ -66,7 +66,7 @@
             }
           },
           {
-            "idView": "",
+            "idView": 4,
             "viewOrder": 4,
             "viewType": "CM1",
             "viewData": {

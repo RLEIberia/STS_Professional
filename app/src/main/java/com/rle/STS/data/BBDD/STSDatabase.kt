@@ -4,8 +4,8 @@ import androidx.room.Database
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
 import com.rle.STS.model.BBDD.*
-import com.rle.STS.utils.DateConverter
-import com.rle.STS.utils.UUIDConverter
+import com.rle.STS.utils.converters.DateConverter
+import com.rle.STS.utils.converters.UUIDConverter
 
 @Database(
     entities = [

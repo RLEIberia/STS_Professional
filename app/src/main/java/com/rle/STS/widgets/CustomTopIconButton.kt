@@ -32,7 +32,7 @@ fun CustomTopIconButton(
     borderColor: Color = buttonsTextBorderColor,
     buttonSize: Int = 110,
     enabled: Boolean = true,
-    icon: Int = R.drawable.call_icon
+    icon: Int = R.drawable.correct_icon
 
 ) {
 

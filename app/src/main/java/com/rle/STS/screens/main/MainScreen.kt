@@ -16,12 +16,9 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.rle.STS.R
-import com.rle.STS.logic.json.extractChecklist
 import com.rle.STS.navigation.STSScreens
-import com.rle.STS.repository.ChecklistRepository
 import com.rle.STS.screens.main.MainViewModel
 import com.rle.STS.ui.theme.topBarColor
-import com.rle.STS.utils.GetJsonDataFromAsset
 import com.rle.STS.widgets.CustomButton
 import com.rle.STS.widgets.CustomTopIconButton
 import kotlinx.coroutines.launch
@@ -92,7 +89,7 @@ fun MainScreen(
                 ) {
                     CustomTopIconButton(
                         text = "Proyectos",
-                        icon = R.drawable.pencil_icon,
+                        icon = R.drawable.correct_icon, //pencil_icon
                         onClick = {
                             navController.navigate(STSScreens.ProjectSelectScreen.name)
                         },
@@ -101,7 +98,7 @@ fun MainScreen(
                     )
                     CustomTopIconButton(
                         text = "Llamada",
-                        icon = R.drawable.call_icon,
+                        icon = R.drawable.correct_icon, //call_icon
                         onClick = {
                             val sendIntent = Intent(
                                 Intent.ACTION_VIEW,
@@ -114,7 +111,7 @@ fun MainScreen(
                     )
                     CustomTopIconButton(
                         text = "Estado",
-                        icon = R.drawable.discover_icon,
+                        icon = R.drawable.correct_icon, //discover_icon
                         onClick = {
                             /*TODO - Añadir dirección de estado*/
                             navController.navigate(STSScreens.ProjectSelectScreen.name)

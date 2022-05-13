@@ -15,6 +15,7 @@ import com.rle.STS.R
 import com.rle.STS.viewScreens.data.*
 import com.rle.STS.ui.theme.topBarColor
 import com.rle.STS.screens.CkViewRepository
+import com.rle.STS.utils.GetJsonDataFromAsset
 import com.rle.STS.widgets.BottomButtons
 import com.rle.STS.widgets.CustomButton
 import kotlinx.coroutines.launch

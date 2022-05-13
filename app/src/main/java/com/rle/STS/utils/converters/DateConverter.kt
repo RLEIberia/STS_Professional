@@ -1,4 +1,4 @@
-package com.rle.STS.utils
+package com.rle.STS.utils.converters
 
 import androidx.room.TypeConverter
 import java.util.*
