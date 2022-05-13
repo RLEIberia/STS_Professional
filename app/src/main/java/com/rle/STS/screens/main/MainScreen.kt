@@ -89,7 +89,7 @@ fun MainScreen(
                 ) {
                     CustomTopIconButton(
                         text = "Proyectos",
-                        icon = R.drawable.correct_icon, //pencil_icon
+                        icon = R.drawable.pencil_icon,
                         onClick = {
                             navController.navigate(STSScreens.ProjectSelectScreen.name)
                         },
@@ -98,7 +98,7 @@ fun MainScreen(
                     )
                     CustomTopIconButton(
                         text = "Llamada",
-                        icon = R.drawable.correct_icon, //call_icon
+                        icon = R.drawable.call_icon,
                         onClick = {
                             val sendIntent = Intent(
                                 Intent.ACTION_VIEW,
@@ -111,7 +111,7 @@ fun MainScreen(
                     )
                     CustomTopIconButton(
                         text = "Estado",
-                        icon = R.drawable.correct_icon, //discover_icon
+                        icon = R.drawable.discover_icon,
                         onClick = {
                             /*TODO - Añadir dirección de estado*/
                             navController.navigate(STSScreens.ProjectSelectScreen.name)
