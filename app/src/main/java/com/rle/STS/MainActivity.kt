@@ -2,11 +2,9 @@ package com.rle.STS
 
 import android.content.Context
 import android.content.ContextWrapper
-import android.content.Intent
 import android.os.Bundle
 import android.speech.RecognizerIntent
 import android.speech.tts.TextToSpeech
-import android.speech.tts.TextToSpeechService
 import android.util.Log
 import android.view.KeyEvent
 import androidx.activity.ComponentActivity
@@ -18,23 +16,14 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
-import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import com.rle.STS.items.RWMethod
-import com.rle.STS.logic.json.extractChecklist
+import com.google.gson.Gson
 import com.rle.STS.navigation.STSNavigation
-import com.rle.STS.repository.ChecklistRepository
 import com.rle.STS.ui.theme.STSTheme
-import com.rle.STS.utils.GetJsonDataFromAsset
 import dagger.hilt.android.AndroidEntryPoint
-import dagger.hilt.android.qualifiers.ApplicationContext
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.runBlocking
 import java.util.*
-import javax.inject.Inject
 
 
 @AndroidEntryPoint
@@ -43,15 +32,8 @@ class MainActivity : ComponentActivity() {
 
         super.onCreate(savedInstanceState)
 
+
         setContent {
-
-            val ckJson = GetJsonDataFromAsset(context = applicationContext, fileName = "exampleChecklist.json")
-
-            Log.d("JSON", ckJson.toString())
-
-            val ckData = extractChecklist(ckJson)
-
-            Log.d("CK", ckData.toString())
 
             STSApp()
 

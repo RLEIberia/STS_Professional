@@ -32,7 +32,7 @@ fun CustomSideIconButton(
     borderColor: Color = buttonsTextBorderColor,
     buttonSize: Int = 150,
     enabled: Boolean = true,
-    icon: Int = R.drawable.call_icon
+    icon: Int = R.drawable.correct_icon
 
 ) {
 

@@ -1,7 +1,5 @@
 package com.rle.STS.screens.splash
 
-import android.util.Log
-import android.window.SplashScreen
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.fillMaxSize
@@ -11,14 +9,11 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.rle.STS.R
-import com.rle.STS.logic.json.extractChecklist
 import com.rle.STS.navigation.STSScreens
-import com.rle.STS.utils.GetJsonDataFromAsset
 import kotlinx.coroutines.delay
 
 @Composable

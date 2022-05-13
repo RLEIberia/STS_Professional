@@ -6,8 +6,11 @@ import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.rle.STS.data.DataOrException
+import com.rle.STS.model.APIs.projects.ProjectsResponse
 import com.rle.STS.model.JSON.checklistStructure.Checklist
 import com.rle.STS.repository.ChecklistRepository
+import com.rle.STS.utils.GetJsonDataFromAsset
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -32,7 +35,24 @@ class MainViewModel @Inject constructor(private val checklistRepository: Checkli
             _checklistData.value = checklistRepository.extractChecklist(
                 jsonChecklist = jsonData
             )
+
+
+//            val jsonData = GetJsonDataFromAsset(context = context, fileName)
+//            _checklistData.value = com.rle.STS.logic.json.extractChecklist(jsonData)
+
         }
 
     /* --------------------------------------------- */
+
+    private val _APIprojectResponse: MutableStateFlow<DataOrException<ProjectsResponse, Boolean, Exception>> =
+        MutableStateFlow(DataOrException<ProjectsResponse,Boolean,Exception>())
+
+    val APIprojectResponse = _APIprojectResponse.asStateFlow()
+
+    fun getProjects
+
+
+
+
+
 }
