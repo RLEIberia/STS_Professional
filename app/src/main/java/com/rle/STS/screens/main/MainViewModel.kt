@@ -9,16 +9,18 @@ import androidx.lifecycle.viewModelScope
 import com.rle.STS.data.DataOrException
 import com.rle.STS.model.APIs.projects.ProjectsResponse
 import com.rle.STS.model.JSON.checklistStructure.Checklist
+import com.rle.STS.repository.APIRepository
 import com.rle.STS.repository.ChecklistRepository
 import com.rle.STS.utils.GetJsonDataFromAsset
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class MainViewModel @Inject constructor(private val checklistRepository: ChecklistRepository): ViewModel() {
+class MainViewModel @Inject constructor(private val checklistRepository: ChecklistRepository, private val apiRepository: APIRepository): ViewModel() {
 
 
     /* TODO SACAR ESTO - PRUEBAS */
@@ -45,11 +47,19 @@ class MainViewModel @Inject constructor(private val checklistRepository: Checkli
     /* --------------------------------------------- */
 
     private val _APIprojectResponse: MutableStateFlow<DataOrException<ProjectsResponse, Boolean, Exception>> =
-        MutableStateFlow(DataOrException<ProjectsResponse,Boolean,Exception>())
+        MutableStateFlow(DataOrException(null, true, Exception("")))
 
     val APIprojectResponse = _APIprojectResponse.asStateFlow()
 
-    fun getProjects
+    fun getProjects() {
+        viewModelScope.launch {
+            _APIprojectResponse.value.loading = true
+            _APIprojectResponse.value = apiRepository.getProjects()
+            if(_APIprojectResponse.value.data.toString().isNotEmpty()) {
+                _APIprojectResponse.value.loading = false
+            }
+        }
+    }
 
 
 

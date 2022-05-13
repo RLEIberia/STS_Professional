@@ -6,9 +6,11 @@ import com.rle.STS.model.APIs.projects.ProjectsResponse
 import com.rle.STS.network.StsAPI
 import javax.inject.Inject
 
-class APIRepository @Inject constructor(private val api: StsAPI) {
+class APIRepository @Inject constructor(
+    private val api: StsAPI
+) {
 
-    suspend fun getProjects() : DataOrException<ProjectsResponse, Boolean, Exception> {
+    suspend fun getProjects(): DataOrException<ProjectsResponse, Boolean, Exception> {
 
         val response =
             try {

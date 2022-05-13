@@ -7,7 +7,7 @@ data class Project(
     val description: String,
     val created_at: Long,
     val updated_at: Long,
-    val checklist: ArrayList<Checklist>
+    val checklists: ArrayList<Checklist>
 )
 
 

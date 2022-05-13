@@ -7,8 +7,8 @@ data class Info(
     val projectName: String,
     val projectCode: String,
     val version: Int,
-    val created_at: Long,
-    val updated_at: Long,
+    val created_at: Int,
+    val updated_at: Int,
     val designer: String,
     val manufacturer: String,
     val client: String

@@ -4,11 +4,16 @@ import android.content.Context
 import androidx.room.Room
 import com.rle.STS.data.BBDD.STSDao
 import com.rle.STS.data.BBDD.STSDatabase
+import com.rle.STS.network.StsAPI
+import com.rle.STS.utils.Constants
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
+import retrofit2.Retrofit
+import retrofit2.converter.gson.GsonConverterFactory
+import retrofit2.create
 import javax.inject.Singleton
 
 @Module
@@ -33,7 +38,18 @@ class AppModule {
     fun provideSTSDao(stsDatabase: STSDatabase): STSDao =
         stsDatabase.STSDao()
 
-    //TODO API PROVIDER
+    //Instanciar API Provider
+    @Singleton
+    @Provides
+    fun provideStsAPI(): StsAPI {
+        return Retrofit
+            .Builder()
+            .baseUrl(Constants.BASE_URL)
+            .addConverterFactory(GsonConverterFactory.create())
+            .build()
+            .create(StsAPI::class.java)
+    }
+
 
     //TODO DAO PROVIDER
 }

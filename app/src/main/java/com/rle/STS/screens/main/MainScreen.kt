@@ -16,9 +16,11 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.rle.STS.R
+import com.rle.STS.logic.json.extractChecklistData
 import com.rle.STS.navigation.STSScreens
 import com.rle.STS.screens.main.MainViewModel
 import com.rle.STS.ui.theme.topBarColor
+import com.rle.STS.utils.GetJsonDataFromAsset
 import com.rle.STS.widgets.CustomButton
 import com.rle.STS.widgets.CustomTopIconButton
 import kotlinx.coroutines.launch
@@ -39,9 +41,16 @@ fun MainScreen(
 
 
     /* TODO - SACAR ESTO - PRUEBAS */
+
     val checklistData = mainViewModel.checklistData.collectAsState().value
     mainViewModel.extractChecklist(context = context, fileName = "exampleChecklist.json")
     Log.d("CK", checklistData.toString())
+
+    mainViewModel.getProjects()
+
+
+    val test = mainViewModel.APIprojectResponse
+
     /* -------------------------- */
 
     Scaffold(
