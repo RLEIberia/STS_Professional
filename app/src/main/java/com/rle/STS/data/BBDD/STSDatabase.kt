@@ -9,16 +9,16 @@ import com.rle.STS.utils.converters.UUIDConverter
 
 @Database(
     entities = [
-        CkInstances::class,
+        ExecutionsTable::class,
         ChecklistsTable::class,
-        FilesIn::class,
-        FilesOut::class,
-        Projects::class,
-        Users::class,
-        ViewsPersistence::class
-        //TODO stepsPersistance
+        FilesInTable::class,
+        FilesOutTable::class,
+        ProjectsTable::class,
+        UsersTable::class,
+        StepPersistenceTable::class,
+        ViewsPersistenceTable::class
     ],
-    version = 2,
+    version = 5,
     exportSchema = false
 )
 @TypeConverters(DateConverter::class, UUIDConverter::class)

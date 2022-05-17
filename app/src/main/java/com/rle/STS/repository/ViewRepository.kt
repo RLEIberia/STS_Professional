@@ -10,7 +10,7 @@ import com.rle.STS.viewScreens.data.VideoScreen
 import com.rle.STS.viewScreens.result.MultiOptionScreen
 import com.rle.STS.viewScreens.result.OKKOScreen
 
-class CkViewRepository {
+class ViewRepository {
 
     companion object {
 
@@ -51,7 +51,7 @@ class CkViewRepository {
 
 
         @Composable
-        fun NumberScreen1(check: () -> Unit, viewModel: ChecklistViewModel, nextType: Int) {
+        fun NM1(check: () -> Unit, viewModel: ChecklistViewModel, nextType: Int) {
             NumberScreen(check, viewModel, nextType)
         }
 

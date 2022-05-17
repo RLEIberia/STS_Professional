@@ -3,7 +3,7 @@ package com.rle.STS.screens.projects
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.rle.STS.model.BBDD.Projects
+import com.rle.STS.model.BBDD.ProjectsTable
 import com.rle.STS.repository.DatabaseRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
@@ -16,7 +16,7 @@ import javax.inject.Inject
 @HiltViewModel
 class ProjectsViewModel @Inject constructor(private val DatabaseRepository: DatabaseRepository): ViewModel() {
 
-    private val _projectsList = MutableStateFlow<List<Projects>>(emptyList())
+    private val _projectsList = MutableStateFlow<List<ProjectsTable>>(emptyList())
     val projectsList = _projectsList.asStateFlow()
 
     init{

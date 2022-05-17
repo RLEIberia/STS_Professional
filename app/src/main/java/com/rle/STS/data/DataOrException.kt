@@ -1,10 +1,11 @@
 package com.rle.STS.data
 
-import java.lang.Exception
+import retrofit2.HttpException
+import kotlin.Exception
 
 
-class DataOrException<T, Boolean, E: Exception> (
-
+class DataOrException<T, Boolean, E> (
     var data: T? = null,
     var loading: kotlin.Boolean? = null,
-    var e: E? = null)
+    var e: E? = null
+)

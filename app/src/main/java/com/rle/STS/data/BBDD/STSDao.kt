@@ -8,17 +8,19 @@ import java.util.*
 @Dao
 interface STSDao {
 
+    //TODO - Añadir DAOS de las tablas que faltan y DAOS extras
+
     //ChecklistDao
     @Query("SELECT * from checklists_table")
     fun getChecklists(): Flow<List<ChecklistsTable>>
 
-    @Query("SELECT * from checklists_table where uniqueID =:id")
-    suspend fun getChecklistById(id: UUID): ChecklistsTable
+    @Query("SELECT * from checklists_table where id =:id")
+    suspend fun getChecklistById(id: Int): ChecklistsTable
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertChecklist(checklist: ChecklistsTable)
 
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    @Update(onConflict = OnConflictStrategy.REPLACE)
     suspend fun updateChecklist(checklist: ChecklistsTable)
 
     @Query("DELETE from checklists_table")
@@ -28,121 +30,121 @@ interface STSDao {
     suspend fun deleteChecklist(checklist: ChecklistsTable)
 
     //CkInstanceDao
-    @Query("SELECT * from checklistInstances")
-    fun getCkInstance(): Flow<List<CkInstances>>
+    @Query("SELECT * from executions_table")
+    fun getCkInstance(): Flow<List<ExecutionsTable>>
 
-    @Query("SELECT * from checklistInstances where uniqueID =:id")
-    suspend fun getCkInstanceById(id: UUID): CkInstances
-
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertCkInstance(ckInstance: CkInstances)
+    @Query("SELECT * from executions_table where id =:id")
+    suspend fun getCkInstanceById(id: Int): ExecutionsTable
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun updateCkInstance(ckInstance: CkInstances)
+    suspend fun insertCkInstance(ckInstance: ExecutionsTable)
 
-    @Query("DELETE from checklistInstances")
+    @Update(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun updateCkInstance(ckInstance: ExecutionsTable)
+
+    @Query("DELETE from executions_table")
     suspend fun deleteAllCkInstances()
 
     @Delete
-    suspend fun deleteCkInstance(ckInstance: CkInstances)
+    suspend fun deleteCkInstance(ckInstance: ExecutionsTable)
 
     //FilesInDao
-    @Query("SELECT * from filesIn")
-    fun getFilesIn(): Flow<List<FilesIn>>
+    @Query("SELECT * from file_in_table")
+    fun getFilesIn(): Flow<List<FilesInTable>>
 
-    @Query("SELECT * from filesIn where uniqueID =:id")
-    suspend fun getFilesInById(id: UUID): FilesIn
-
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertFilesIn(fileIn: FilesIn)
+    @Query("SELECT * from file_in_table where id =:id")
+    suspend fun getFilesInById(id: Int): FilesInTable
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun updateFilesIn(fileIn: FilesIn)
+    suspend fun insertFilesIn(fileInTable: FilesInTable)
 
-    @Query("DELETE from filesIn")
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun updateFilesIn(fileInTable: FilesInTable)
+
+    @Query("DELETE from file_in_table")
     suspend fun deleteAllFilesIn()
 
     @Delete
-    suspend fun deleteFilesIn(fileIn: FilesIn)
+    suspend fun deleteFilesIn(fileInTable: FilesInTable)
 
     //FilesOutDao
-    @Query("SELECT * from filesOut")
-    fun getFilesOut(): Flow<List<FilesOut>>
+    @Query("SELECT * from files_out_table")
+    fun getFilesOut(): Flow<List<FilesOutTable>>
 
-    @Query("SELECT * from filesOut where uniqueID =:id")
-    suspend fun getFilesOutById(id: UUID): FilesOut
-
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertFilesOut(fileOut: FilesOut)
+    @Query("SELECT * from files_out_table where id =:id")
+    suspend fun getFilesOutById(id: Int): FilesOutTable
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun updateFilesIn(fileOut: FilesOut)
+    suspend fun insertFilesOut(fileOutTable: FilesOutTable)
 
-    @Query("DELETE from filesOut")
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun updateFilesIn(fileOutTable: FilesOutTable)
+
+    @Query("DELETE from files_out_table")
     suspend fun deleteAllFilesOut()
 
     @Delete
-    suspend fun deleteFilesOut(fileOut: FilesOut)
+    suspend fun deleteFilesOut(fileOutTable: FilesOutTable)
 
     //ProjectsDao
     @Query("SELECT * from projects_table")
-    fun getProjects(): Flow<List<Projects>>
+    fun getProjects(): Flow<List<ProjectsTable>>
 
-    @Query("SELECT * from projects_table where uniqueID =:id")
-    suspend fun getProjectById(id: UUID): Projects
-
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertProject(project: Projects)
+    @Query("SELECT * from projects_table where id =:id")
+    suspend fun getProjectById(id: Int): ProjectsTable
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun updateProject(project: Projects)
+    suspend fun insertProject(project: ProjectsTable)
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun updateProject(project: ProjectsTable)
 
     @Query("DELETE from projects_table")
     suspend fun deleteAllProjects()
 
     @Delete
-    suspend fun deleteProject(project: Projects)
+    suspend fun deleteProject(project: ProjectsTable)
 
     //UsersDao
-    @Query("SELECT * from users")
-    fun getUsers(): Flow<List<Users>>
+    @Query("SELECT * from users_table")
+    fun getUsers(): Flow<List<UsersTable>>
 
-    @Query("SELECT * from users where uniqueID =:id")
-    suspend fun getUserById(id: UUID): Users
-
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertUser(user: Users)
+    @Query("SELECT * from users_table where id =:id")
+    suspend fun getUserById(id: Int): UsersTable
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun updateUser(user: Users)
+    suspend fun insertUser(user: UsersTable)
 
-    @Query("DELETE from users")
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun updateUser(user: UsersTable)
+
+    @Query("DELETE from users_table")
     suspend fun deleteAllUsers()
 
     @Delete
-    suspend fun deleteUser(user: Users)
+    suspend fun deleteUser(user: UsersTable)
 
     //ViewPersistenceDao
-    @Query("SELECT * from viewsPersistence")
-    fun getViewPersistance(): Flow<List<ViewsPersistence>>
+    @Query("SELECT * from views_persistence_table")
+    fun getViewPersistence(): Flow<List<ViewsPersistenceTable>>
 
-    @Query("SELECT * from viewsPersistence where uniqueID =:id")
-    suspend fun getViewPersistenceById(id: UUID): ViewsPersistence
-
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertViewPersistence(viewPersistenceDao: ViewsPersistence)
+    @Query("SELECT * from views_persistence_table where id =:id")
+    suspend fun getViewPersistenceById(id: Int): ViewsPersistenceTable
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun updateViewPersistence(viewPersistenceDao: ViewsPersistence)
+    suspend fun insertViewPersistence(viewPersistenceTableDao: ViewsPersistenceTable)
 
-    @Query("DELETE from viewsPersistence")
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun updateViewPersistence(viewPersistenceTableDao: ViewsPersistenceTable)
+
+    @Query("DELETE from views_persistence_table")
     suspend fun deleteAllViewsPersistence()
 
-    @Query("DELETE from viewsPersistence where idInstance =:ckInstanceID")
-    suspend fun deleteCkInstanceViews(ckInstanceID: UUID) //Eliminar todas las vistas de una instancia de checklist
+    @Query("DELETE from views_persistence_table where execution_id =:executionId")
+    suspend fun deleteCkInstanceViews(executionId: Int) //Eliminar todas las vistas de una instancia de checklist
 
     @Delete
-    suspend fun deleteViewPersistence(viewPersistenceDao: ViewsPersistence)
+    suspend fun deleteViewPersistence(viewPersistenceTableDao: ViewsPersistenceTable)
 
 
 

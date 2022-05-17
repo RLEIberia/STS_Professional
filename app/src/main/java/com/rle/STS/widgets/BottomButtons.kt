@@ -124,26 +124,26 @@ fun BottomButtons(
 @Composable
 fun defaultStepBottomButtons(stepViewModel: ChecklistViewModel, hasValue: Boolean = true, nextType: Int = 1){
 
-    val checkListPosition = stepViewModel.checkListPosition.collectAsState()
-    val checkListSize = stepViewModel.checkListSize.collectAsState()
-
-    BottomButtons(leftFunction = {
-        if (checkListPosition.value > 0) {
-            stepViewModel.setPosition(checkListPosition.value - 1)
-        }
-    }, rightFunction = {
-        if (hasValue || nextType == 0) {
-            if (checkListPosition.value >= checkListSize.value - 1) {
-                //TODO: Terminar checklist
-            } else {
-                stepViewModel.setPosition(checkListPosition.value + 1)
-            }
-        } else {
-            if (nextType == 1){
-                stepViewModel.setConfirmDialog(true)
-            } else {
-
-            }
-        }
-    }) // Manejar botones desde aqui para cargar siguiente vista correctamente mediante metodo de lectura de JSON
+//    val checkListPosition = stepViewModel.checkListPosition.collectAsState()
+//    val checkListSize = stepViewModel.checkListSize.collectAsState()
+//
+//    BottomButtons(leftFunction = {
+//        if (checkListPosition.value > 0) {
+//            stepViewModel.setPosition(checkListPosition.value - 1)
+//        }
+//    }, rightFunction = {
+//        if (hasValue || nextType == 0) {
+//            if (checkListPosition.value >= checkListSize.value - 1) {
+//                //TODO: Terminar checklist
+//            } else {
+//                stepViewModel.setPosition(checkListPosition.value + 1)
+//            }
+//        } else {
+//            if (nextType == 1){
+//                stepViewModel.setConfirmDialog(true)
+//            } else {
+//
+//            }
+//        }
+//    }) // Manejar botones desde aqui para cargar siguiente vista correctamente mediante metodo de lectura de JSON
 }

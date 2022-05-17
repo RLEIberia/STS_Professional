@@ -41,10 +41,10 @@
           {
             "idView": 1,
             "viewOrder": 1,
-            "viewType": "TX1",
+            "viewType": "OP1",
             "viewData": {
-              "text": ["Título de paso"],
-              "audio": "Título de paso reproducido por las gafas"
+              "text": ["Elige entre Correcto, Incorrecto y NSNC"],
+              "audio": "Elige entre las opciones que ve en pantalla"
             }
           },
           {
@@ -57,12 +57,12 @@
             }
           },
           {
-            "idView": 3,
-            "viewOrder": 3,
-            "viewType": "OP1",
+            "idView": 1,
+            "viewOrder": 1,
+            "viewType": "TX1",
             "viewData": {
-              "text": ["Elige entre Correcto, Incorrecto y NSNC"],
-              "audio": "Elige entre las opciones que ve en pantalla"
+              "text": ["Título de paso"],
+              "audio": "Título de paso reproducido por las gafas"
             }
           },
           {

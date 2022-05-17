@@ -17,6 +17,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
+import retrofit2.HttpException
 import javax.inject.Inject
 
 @HiltViewModel
@@ -47,17 +48,23 @@ class MainViewModel @Inject constructor(private val checklistRepository: Checkli
     /* --------------------------------------------- */
 
     private val _APIprojectResponse: MutableStateFlow<DataOrException<ProjectsResponse, Boolean, Exception>> =
-        MutableStateFlow(DataOrException(null, true, Exception("")))
+        MutableStateFlow(DataOrException(null, true, null))
 
     val APIprojectResponse = _APIprojectResponse.asStateFlow()
 
     fun getProjects() {
         viewModelScope.launch {
             _APIprojectResponse.value.loading = true
+            Log.d("API_L", _APIprojectResponse.value.loading.toString())
             _APIprojectResponse.value = apiRepository.getProjects()
-            if(_APIprojectResponse.value.data.toString().isNotEmpty()) {
+            if(_APIprojectResponse.value.data.toString().isNotEmpty()||_APIprojectResponse.value.e.toString().isNotEmpty()) {
                 _APIprojectResponse.value.loading = false
+                Log.d("LOAD", _APIprojectResponse.value.loading.toString())
+                Log.d("EX", _APIprojectResponse.value.e.toString())
             }
+            Log.d("API_L", _APIprojectResponse.value.loading.toString())
+            Log.d("API_E", _APIprojectResponse.value.e.toString())
+            Log.d("API_D", _APIprojectResponse.value.data.toString())
         }
     }
 

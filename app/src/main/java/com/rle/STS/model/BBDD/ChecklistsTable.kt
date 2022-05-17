@@ -5,45 +5,53 @@ import androidx.room.Entity
 import androidx.room.ForeignKey
 import androidx.room.ForeignKey.CASCADE
 import androidx.room.PrimaryKey
-import java.util.*
 
 @Entity(
     tableName = "checklists_table",
     foreignKeys = [ForeignKey(
-        entity = Projects::class,
-        parentColumns = ["projectCode"],
-        childColumns = ["projectCode"],
+        entity = ProjectsTable::class,
+        parentColumns = ["id"],
+        childColumns = ["project_id"],
         onDelete = CASCADE
     )]
 )
 data class ChecklistsTable(
 
-    @PrimaryKey
-    @ColumnInfo(name = "uniqueID")
-    val uniqueID: UUID,
+    @PrimaryKey(autoGenerate = true)
+    @ColumnInfo(name = "id")
+    val id: Int,
 
-    @ColumnInfo(name = "checklistCode")
-    val checklistCode: String,
+    @ColumnInfo(name = "checklist_id")
+    val checklist_id: Int,
 
-    @ColumnInfo(name = "projectCode")
-    val projectCode: String,
+    @ColumnInfo(name = "project_id")
+    val project_id: Int,
 
-    @ColumnInfo(name = "creationDate")
-    val creationDate: Date,
+    @ColumnInfo(name = "name")
+    val name: String,
 
-    @ColumnInfo(name = "updateDate")
-    val updateDate: Date,
+    @ColumnInfo(name = "description")
+    val description: String,
+
+    @ColumnInfo(name = "created_at")
+    val created_at: Long,
+
+    @ColumnInfo(name = "updated_at")
+    val updated_at: Long,
 
     @ColumnInfo(name = "version")
     val version: Int,
 
-    @ColumnInfo(name = "executionsCouter")
-    val executionsCounter: Int,
+    @ColumnInfo(name = "executions_counter")
+    val executions_counter: Int,
 
-    @ColumnInfo(name = "jsonReference")
-    val jsonReference: String,
+    @ColumnInfo(name = "json")
+    val json: String,
+
+    @ColumnInfo(name = "files")
+    val files: String,
 
     @ColumnInfo(name = "state")
-    val state: Int //0, 1, 2, 3
+    val state: Int //0 - Not ready, 1 - Downloading, 2 - Ready, 3 - Delete, 4 - Delete after ending, 99 - Internal
 
 )
