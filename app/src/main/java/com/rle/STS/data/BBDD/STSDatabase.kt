@@ -18,7 +18,7 @@ import com.rle.STS.utils.converters.UUIDConverter
         StepPersistenceTable::class,
         ViewsPersistenceTable::class
     ],
-    version = 5,
+    version = 6,
     exportSchema = false
 )
 @TypeConverters(DateConverter::class, UUIDConverter::class)

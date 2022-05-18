@@ -51,6 +51,6 @@ data class ExecutionsTable(
     val json_result: String,
 
     @ColumnInfo(name = "state")
-    val state: Int
+    val state: Int //1 - En curso, 2 - Finalizada, 3 - "No completada", 4 - Enviada, 5 - Eliminar
 
 )

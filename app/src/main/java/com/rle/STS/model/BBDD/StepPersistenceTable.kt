@@ -28,6 +28,9 @@ data class StepPersistenceTable(
     @ColumnInfo(name = "execution_id")
     val execution_id: Int,
 
+    @ColumnInfo(name = "step_id")
+    val step_id: Int, //Viene desde plataforma
+
     @ColumnInfo(name = "step")
     val step: Int,
 

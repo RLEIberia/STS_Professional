@@ -33,14 +33,17 @@ data class ViewsPersistenceTable(
     @ColumnInfo(name = "execution_id")
     val execution_id: UUID,
 
-    @ColumnInfo(name = "step_persistence_id")
-    val step_persistence_id: UUID,
+    @ColumnInfo(name = "view_id")
+    val view_id: Int, //viene dado desde plataforma
 
     @ColumnInfo(name = "view")
     val view: Int,
 
+    @ColumnInfo(name = "step_persistence_id")
+    val step_persistence_id: UUID,
+
     @ColumnInfo(name = "date")
-    val date: Long,
+    val updated_at: Long,
 
     @ColumnInfo(name = "result")
     val result: String,

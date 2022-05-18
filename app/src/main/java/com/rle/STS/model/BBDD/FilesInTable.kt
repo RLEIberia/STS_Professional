@@ -20,9 +20,12 @@ import java.util.*
 
 data class FilesInTable(
 
-    @PrimaryKey(autoGenerate = true)
+    @PrimaryKey
     @ColumnInfo(name = "id")
-    val id: Int,
+    val id: Int, //Viene desde plataforma
+
+    @ColumnInfo(name = "name")
+    val name: String,
 
     @ColumnInfo(name = "id_ck_version")
     val id_ck_version: Int, //El archivo pertenece a la versión, si los archivos se mantienen entre las versiones se les actualiza el código y los que no se hayan mantenido, al borrar la versión se eliminan

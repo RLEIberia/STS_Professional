@@ -4,11 +4,10 @@ import android.content.Context
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.rle.STS.model.JSON.checklistStructure.Checklist
+import com.rle.STS.model.JSON.checklistStructure.ChecklistJSON
 import com.rle.STS.model.extra.ChecklistPosition
 import com.rle.STS.repository.ChecklistRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
-import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
@@ -25,8 +24,8 @@ class ChecklistViewModel @Inject constructor(
     val currentPosition = _currentPosition.asStateFlow()
 
 
-    private val _checklist: MutableStateFlow<Checklist> = MutableStateFlow(Checklist())
-    val checklist = _checklist.asStateFlow()
+    private val _checklistJSON: MutableStateFlow<ChecklistJSON> = MutableStateFlow(ChecklistJSON())
+    val checklist = _checklistJSON.asStateFlow()
 
     fun extractChecklist(fileName: String, context: Context) =
         viewModelScope.launch {
@@ -35,10 +34,10 @@ class ChecklistViewModel @Inject constructor(
                 fileName = fileName
             )
             Log.d("JSON", jsonData.toString())
-            _checklist.value = checklistRepository.extractChecklist(
+            _checklistJSON.value = checklistRepository.extractChecklist(
                 jsonChecklist = jsonData
             )
-            Log.d("CKVAL", _checklist.value.toString())
+            Log.d("CKVAL", _checklistJSON.value.toString())
 //            val jsonData = GetJsonDataFromAsset(context = context, fileName)
 //            _checklistData.value = com.rle.STS.logic.json.extractChecklist(jsonData)
 

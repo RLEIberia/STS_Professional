@@ -4,11 +4,38 @@ import androidx.room.*
 import com.rle.STS.model.BBDD.*
 import kotlinx.coroutines.flow.Flow
 import java.util.*
+import kotlin.collections.ArrayList
 
 @Dao
 interface STSDao {
 
     //TODO - Añadir DAOS de las tablas que faltan y DAOS extras
+
+    //ProjectsDao
+    @Query("SELECT * from projects_table")
+    fun getProjects(): Flow<List<ProjectsTable>>
+
+    @Query("SELECT * from projects_table where id =:id")
+    suspend fun getProjectById(id: Int): ProjectsTable
+
+//    @Query("SELECT * from projects_table where id=:id")
+//    suspend fun getMultipleProjectsById(id: ArrayList<Int>): ArrayList<ProjectsTable>
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insertProject(project: ProjectsTable)
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insertMultipleProjects(project: ArrayList<ProjectsTable>)
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun updateProject(project: ProjectsTable)
+
+    @Query("DELETE from projects_table")
+    suspend fun deleteAllProjects()
+
+    @Delete
+    suspend fun deleteProject(project: ProjectsTable)
+
 
     //ChecklistDao
     @Query("SELECT * from checklists_table")
@@ -17,8 +44,14 @@ interface STSDao {
     @Query("SELECT * from checklists_table where id =:id")
     suspend fun getChecklistById(id: Int): ChecklistsTable
 
+//    @Query("SELECT * from checklists_table where id =:id")
+//    suspend fun getMultipleChecklistById(id: ArrayList<Int>): ArrayList<ChecklistsTable>
+
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertChecklist(checklist: ChecklistsTable)
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insertMultipleChecklist(checklist: ArrayList<ChecklistsTable>)
 
     @Update(onConflict = OnConflictStrategy.REPLACE)
     suspend fun updateChecklist(checklist: ChecklistsTable)
@@ -29,7 +62,7 @@ interface STSDao {
     @Delete
     suspend fun deleteChecklist(checklist: ChecklistsTable)
 
-    //CkInstanceDao
+    //executionsDao
     @Query("SELECT * from executions_table")
     fun getCkInstance(): Flow<List<ExecutionsTable>>
 
@@ -85,25 +118,6 @@ interface STSDao {
 
     @Delete
     suspend fun deleteFilesOut(fileOutTable: FilesOutTable)
-
-    //ProjectsDao
-    @Query("SELECT * from projects_table")
-    fun getProjects(): Flow<List<ProjectsTable>>
-
-    @Query("SELECT * from projects_table where id =:id")
-    suspend fun getProjectById(id: Int): ProjectsTable
-
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertProject(project: ProjectsTable)
-
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun updateProject(project: ProjectsTable)
-
-    @Query("DELETE from projects_table")
-    suspend fun deleteAllProjects()
-
-    @Delete
-    suspend fun deleteProject(project: ProjectsTable)
 
     //UsersDao
     @Query("SELECT * from users_table")

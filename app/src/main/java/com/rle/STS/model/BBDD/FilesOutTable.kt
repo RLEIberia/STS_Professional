@@ -21,7 +21,7 @@ data class FilesOutTable(
 
     @PrimaryKey
     @ColumnInfo(name = "id")
-    val id: UUID,
+    val id: UUID, //También será el nombre del fichero
 
     @ColumnInfo(name = "execution_id")
     val execution_id: UUID,

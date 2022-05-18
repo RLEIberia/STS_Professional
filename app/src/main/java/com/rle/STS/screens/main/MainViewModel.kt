@@ -2,22 +2,17 @@ package com.rle.STS.screens.main
 
 import android.content.Context
 import android.util.Log
-import androidx.compose.runtime.MutableState
-import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.rle.STS.data.DataOrException
 import com.rle.STS.model.APIs.projects.ProjectsResponse
-import com.rle.STS.model.JSON.checklistStructure.Checklist
+import com.rle.STS.model.JSON.checklistStructure.ChecklistJSON
 import com.rle.STS.repository.APIRepository
 import com.rle.STS.repository.ChecklistRepository
-import com.rle.STS.utils.GetJsonDataFromAsset
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
-import retrofit2.HttpException
 import javax.inject.Inject
 
 @HiltViewModel
@@ -26,8 +21,8 @@ class MainViewModel @Inject constructor(private val checklistRepository: Checkli
 
     /* TODO SACAR ESTO - PRUEBAS */
 
-    private val _checklistData: MutableStateFlow<Checklist> = MutableStateFlow(Checklist())
-    val checklistData = _checklistData.asStateFlow()
+    private val _checklistJSONData: MutableStateFlow<ChecklistJSON> = MutableStateFlow(ChecklistJSON())
+    val checklistData = _checklistJSONData.asStateFlow()
 
     fun extractChecklist(fileName: String, context: Context) =
         viewModelScope.launch {
@@ -35,7 +30,7 @@ class MainViewModel @Inject constructor(private val checklistRepository: Checkli
                 context = context,
                 fileName = fileName
             )
-            _checklistData.value = checklistRepository.extractChecklist(
+            _checklistJSONData.value = checklistRepository.extractChecklist(
                 jsonChecklist = jsonData
             )
 
@@ -56,6 +51,7 @@ class MainViewModel @Inject constructor(private val checklistRepository: Checkli
         viewModelScope.launch {
             _APIprojectResponse.value.loading = true
             Log.d("API_L", _APIprojectResponse.value.loading.toString())
+            Log.d("API_D", _APIprojectResponse.value.data.toString())
             _APIprojectResponse.value = apiRepository.getProjects()
             if(_APIprojectResponse.value.data.toString().isNotEmpty()||_APIprojectResponse.value.e.toString().isNotEmpty()) {
                 _APIprojectResponse.value.loading = false

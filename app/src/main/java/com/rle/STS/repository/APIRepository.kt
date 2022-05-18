@@ -2,7 +2,9 @@ package com.rle.STS.repository
 
 import android.util.Log
 import com.rle.STS.data.DataOrException
+import com.rle.STS.model.APIs.projects.Checklist
 import com.rle.STS.model.APIs.projects.ProjectsResponse
+import com.rle.STS.model.BBDD.ChecklistsTable
 import com.rle.STS.network.StsAPI
 import retrofit2.HttpException
 import javax.inject.Inject

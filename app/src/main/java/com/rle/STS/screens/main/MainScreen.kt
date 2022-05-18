@@ -1,6 +1,5 @@
 package com.rle.STS.screens
 
-import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.util.Log
@@ -16,11 +15,12 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.rle.STS.R
-import com.rle.STS.logic.json.extractChecklistData
+import com.rle.STS.model.BBDD.ProjectsTable
 import com.rle.STS.navigation.STSScreens
 import com.rle.STS.screens.main.MainViewModel
 import com.rle.STS.ui.theme.topBarColor
-import com.rle.STS.utils.GetJsonDataFromAsset
+import com.rle.STS.utils.converters.toChecklistsTable
+import com.rle.STS.utils.converters.toProjectsTable
 import com.rle.STS.widgets.CustomButton
 import com.rle.STS.widgets.CustomTopIconButton
 import kotlinx.coroutines.launch
@@ -46,10 +46,23 @@ fun MainScreen(
     mainViewModel.extractChecklist(context = context, fileName = "exampleChecklist.json")
     Log.d("CK", checklistData.toString())
 
-    mainViewModel.getProjects()
+    LaunchedEffect(true) {
+        Log.d("LAUNCH", "LaunchedEffect executed")
+        mainViewModel.getProjects()
+    }
 
+    val test = mainViewModel.APIprojectResponse.collectAsState().value
 
-    val test = mainViewModel.APIprojectResponse
+    if (test.data != null) {
+        Log.d("CONVER_START", "Conversion start")
+
+        val testProjects = toProjectsTable(test)
+        Log.d("CONVER_PJ", testProjects.toString())
+
+        val testChecklists = toChecklistsTable(test)
+        Log.d("CONVER_CK", testChecklists.toString())
+
+    }
 
     /* -------------------------- */
 

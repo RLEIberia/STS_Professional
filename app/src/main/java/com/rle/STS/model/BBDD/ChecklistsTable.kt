@@ -5,6 +5,7 @@ import androidx.room.Entity
 import androidx.room.ForeignKey
 import androidx.room.ForeignKey.CASCADE
 import androidx.room.PrimaryKey
+import com.rle.STS.model.APIs.projects.Project
 
 @Entity(
     tableName = "checklists_table",
@@ -17,7 +18,7 @@ import androidx.room.PrimaryKey
 )
 data class ChecklistsTable(
 
-    @PrimaryKey(autoGenerate = true)
+    @PrimaryKey
     @ColumnInfo(name = "id")
     val id: Int,
 
@@ -41,6 +42,9 @@ data class ChecklistsTable(
 
     @ColumnInfo(name = "version")
     val version: Int,
+
+    @ColumnInfo(name = "activated")
+    val activated: Int,
 
     @ColumnInfo(name = "executions_counter")
     val executions_counter: Int,
