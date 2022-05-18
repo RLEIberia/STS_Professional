@@ -12,7 +12,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.rle.STS.R
 import com.rle.STS.navigation.STSScreens
-import com.rle.STS.screens.projects.ProjectsViewModel
+import com.rle.STS.screens.projectSelect.ProjectsViewModel
 import com.rle.STS.screens.utils.ListCardView
 import com.rle.STS.screens.utils.ListConfirmDialog
 import com.rle.STS.ui.theme.topBarColor

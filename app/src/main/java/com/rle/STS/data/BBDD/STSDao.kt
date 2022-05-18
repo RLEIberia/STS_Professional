@@ -18,14 +18,14 @@ interface STSDao {
     @Query("SELECT * from projects_table where id =:id")
     suspend fun getProjectById(id: Int): ProjectsTable
 
-//    @Query("SELECT * from projects_table where id=:id")
-//    suspend fun getMultipleProjectsById(id: ArrayList<Int>): ArrayList<ProjectsTable>
+    @Query("SELECT * from projects_table where id=:id")
+    suspend fun getMultipleProjectsById(id: ArrayList<Int>): List<ProjectsTable>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertProject(project: ProjectsTable)
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertMultipleProjects(project: ArrayList<ProjectsTable>)
+    suspend fun insertMultipleProjects(projects: ArrayList<ProjectsTable>)
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun updateProject(project: ProjectsTable)
@@ -51,7 +51,7 @@ interface STSDao {
     suspend fun insertChecklist(checklist: ChecklistsTable)
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertMultipleChecklist(checklist: ArrayList<ChecklistsTable>)
+    suspend fun insertMultipleChecklists(checklists: ArrayList<ChecklistsTable>)
 
     @Update(onConflict = OnConflictStrategy.REPLACE)
     suspend fun updateChecklist(checklist: ChecklistsTable)

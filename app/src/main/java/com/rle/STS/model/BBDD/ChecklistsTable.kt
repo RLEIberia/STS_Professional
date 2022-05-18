@@ -52,9 +52,6 @@ data class ChecklistsTable(
     @ColumnInfo(name = "json")
     val json: String,
 
-    @ColumnInfo(name = "files")
-    val files: String,
-
     @ColumnInfo(name = "state")
     val state: Int //0 - Not ready, 1 - Downloading, 2 - Ready, 3 - Delete, 4 - Delete after ending, 99 - Internal
 

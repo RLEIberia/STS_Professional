@@ -1,10 +1,10 @@
-package com.rle.STS.screens.projects
+package com.rle.STS.screens.projectSelect
 
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.rle.STS.model.BBDD.ProjectsTable
-import com.rle.STS.repository.DatabaseRepository
+import com.rle.STS.repository.DbRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -14,14 +14,14 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class ProjectsViewModel @Inject constructor(private val DatabaseRepository: DatabaseRepository): ViewModel() {
+class ProjectsViewModel @Inject constructor(private val DbRepository: DbRepository): ViewModel() {
 
     private val _projectsList = MutableStateFlow<List<ProjectsTable>>(emptyList())
     val projectsList = _projectsList.asStateFlow()
 
     init{
         viewModelScope.launch(Dispatchers.IO) {
-            DatabaseRepository.getProjects().distinctUntilChanged()
+            DbRepository.getProjects().distinctUntilChanged()
                 .collect() { listOfProjects ->
                     if (listOfProjects.isNullOrEmpty()) {
                         Log.d("TAG", ":Empty list")

@@ -6,17 +6,40 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.rle.STS.data.DataOrException
 import com.rle.STS.model.APIs.projects.ProjectsResponse
+import com.rle.STS.model.BBDD.ChecklistsTable
+import com.rle.STS.model.BBDD.ProjectsTable
 import com.rle.STS.model.JSON.checklistStructure.ChecklistJSON
 import com.rle.STS.repository.APIRepository
 import com.rle.STS.repository.ChecklistRepository
+import com.rle.STS.repository.DbRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class MainViewModel @Inject constructor(private val checklistRepository: ChecklistRepository, private val apiRepository: APIRepository): ViewModel() {
+class MainViewModel @Inject constructor(private val checklistRepository: ChecklistRepository, private val apiRepository: APIRepository, private val dbRepository: DbRepository): ViewModel() {
+
+
+    private val _projectsList = MutableStateFlow<List<ProjectsTable>>(emptyList())
+    val projectsList = _projectsList.asStateFlow()
+
+    init{
+        viewModelScope.launch(Dispatchers.IO) {
+            dbRepository.getProjects().distinctUntilChanged()
+                .collect() { listOfProjects ->
+                    if (listOfProjects.isNullOrEmpty()) {
+                        Log.d("TAG", ":Empty list")
+                    } else {
+                        _projectsList.value = listOfProjects
+                    }
+
+                }
+        }
+    }
 
 
     /* TODO SACAR ESTO - PRUEBAS */
@@ -62,6 +85,20 @@ class MainViewModel @Inject constructor(private val checklistRepository: Checkli
             Log.d("API_E", _APIprojectResponse.value.e.toString())
             Log.d("API_D", _APIprojectResponse.value.data.toString())
         }
+    }
+
+    fun insertMultipleChecklists(checklists: ArrayList<ChecklistsTable>) {
+        viewModelScope.launch { dbRepository.insertMultipleChecklists(checklists) }
+    }
+    fun insertMultipleProjects(projects: ArrayList<ProjectsTable>) {
+        viewModelScope.launch { dbRepository.insertMultipleProjects(projects) }
+    }
+    fun insertChecklist(checklist: ChecklistsTable) {
+        viewModelScope.launch { dbRepository.insertChecklist(checklist) }
+    }
+
+    fun insertProject(project: ProjectsTable) {
+        viewModelScope.launch { dbRepository.insertProject(project) }
     }
 
 

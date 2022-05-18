@@ -17,6 +17,7 @@ import androidx.navigation.NavController
 import com.rle.STS.R
 import com.rle.STS.model.BBDD.ProjectsTable
 import com.rle.STS.navigation.STSScreens
+import com.rle.STS.repository.DbRepository
 import com.rle.STS.screens.main.MainViewModel
 import com.rle.STS.ui.theme.topBarColor
 import com.rle.STS.utils.converters.toChecklistsTable
@@ -54,6 +55,7 @@ fun MainScreen(
     val test = mainViewModel.APIprojectResponse.collectAsState().value
 
     if (test.data != null) {
+
         Log.d("CONVER_START", "Conversion start")
 
         val testProjects = toProjectsTable(test)
@@ -61,6 +63,11 @@ fun MainScreen(
 
         val testChecklists = toChecklistsTable(test)
         Log.d("CONVER_CK", testChecklists.toString())
+
+        mainViewModel.insertMultipleProjects(testProjects)
+        mainViewModel.insertMultipleChecklists(testChecklists)
+        //mainViewModel.insertProject(testProjects[0])
+        //mainViewModel.insertChecklist(testChecklists[0])
 
     }
 

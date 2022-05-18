@@ -48,7 +48,6 @@ fun toChecklistsTable(apiProjectsResponse: DataOrException<ProjectsResponse, Boo
                     updated_at = checklist.updated_at,
                     executions_counter = 0,
                     json = "", //TODO - Cambiar inicialización de nombre de JSON - Definir formato interno
-                    files = "",
                     state = 0
                 )
             })
