@@ -11,14 +11,18 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.rle.STS.R
 import com.rle.STS.navigation.STSScreens
+import com.rle.STS.repository.DbRepository
 import kotlinx.coroutines.delay
+import javax.inject.Inject
 
 @Composable
 fun SplashScreen(
-    navController: NavController
+    navController: NavController,
+    splashViewModel: SplashViewModel = hiltViewModel()
 ) {
 
     LaunchedEffect(
@@ -30,7 +34,6 @@ fun SplashScreen(
             }
         }
     )
-
 
     Surface(
         modifier = Modifier

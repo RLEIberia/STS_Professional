@@ -12,7 +12,7 @@ data class UsersTable(
 
 
     //TODO - En un futuro nos tendrá que venir dado de la plataforma
-    @PrimaryKey(autoGenerate = true)
+    @PrimaryKey
     @ColumnInfo(name = "id")
     val id: Int,
 

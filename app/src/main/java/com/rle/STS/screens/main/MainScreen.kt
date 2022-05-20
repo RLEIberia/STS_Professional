@@ -14,10 +14,9 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
+import com.rle.STS.ActivityViewModel
 import com.rle.STS.R
-import com.rle.STS.model.BBDD.ProjectsTable
 import com.rle.STS.navigation.STSScreens
-import com.rle.STS.repository.DbRepository
 import com.rle.STS.screens.main.MainViewModel
 import com.rle.STS.ui.theme.topBarColor
 import com.rle.STS.utils.converters.toChecklistsTable
@@ -30,7 +29,8 @@ import kotlinx.coroutines.launch
 @Composable
 fun MainScreen(
     navController: NavController,
-    mainViewModel: MainViewModel = hiltViewModel()
+    mainViewModel: MainViewModel = hiltViewModel(),
+    activityViewModel: ActivityViewModel = hiltViewModel()
 ) {
 
     //rememberSaveable for composition change
@@ -49,10 +49,11 @@ fun MainScreen(
 
     LaunchedEffect(true) {
         Log.d("LAUNCH", "LaunchedEffect executed")
-        mainViewModel.getProjects()
+        mainViewModel.apiGetProjects()
     }
 
-    val test = mainViewModel.APIprojectResponse.collectAsState().value
+
+    val test = mainViewModel.APIprojectResponse.collectAsState().value //TODO QUITAR COMO TEST
 
     if (test.data != null) {
 
@@ -70,6 +71,26 @@ fun MainScreen(
         //mainViewModel.insertChecklist(testChecklists[0])
 
     }
+
+
+
+    mainViewModel.getMultipleProjectsByIds(arrayOf(1,2))
+    val multiP = mainViewModel.multipleProjectsByIds.collectAsState().value
+    if(multiP.isNotEmpty()){
+        Log.d("MULTIP", multiP.toString())
+    }
+
+
+//    activityViewModel.saveUserData(
+//        userData = UserData(
+//            userCode = 1,
+//            token = "2d4b6637bfaa6224cd08f31a79ebf9ab"
+//        )
+//    )
+//
+//    activityViewModel.getUserData()
+//    Log.d("USER2", activityViewModel.userData.toString())
+
 
     /* -------------------------- */
 

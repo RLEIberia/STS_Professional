@@ -9,8 +9,9 @@ import com.rle.STS.viewScreens.data.QRScreen
 import com.rle.STS.viewScreens.data.VideoScreen
 import com.rle.STS.viewScreens.result.MultiOptionScreen
 import com.rle.STS.viewScreens.result.OKKOScreen
+import javax.inject.Inject
 
-class ViewRepository {
+class ViewRepository @Inject constructor(){
 
     companion object {
 

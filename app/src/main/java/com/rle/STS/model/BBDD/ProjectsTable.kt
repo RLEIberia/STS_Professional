@@ -5,7 +5,7 @@ import com.rle.STS.model.APIs.projects.Project
 
 @Entity(
     tableName = "projects_table",
-    indices = [Index(value = ["id"], unique = true)]
+    //indices = [Index(value = ["id"], unique = true)]
 )
 data class ProjectsTable(
 

@@ -4,32 +4,37 @@ import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.rle.STS.model.BBDD.ProjectsTable
+import com.rle.STS.model.BBDD.UsersTable
 import com.rle.STS.repository.DbRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class ProjectsViewModel @Inject constructor(private val DbRepository: DbRepository): ViewModel() {
+class ProjectsViewModel @Inject constructor(
+    private val dbRepository: DbRepository,
+) : ViewModel() {
 
-    private val _projectsList = MutableStateFlow<List<ProjectsTable>>(emptyList())
-    val projectsList = _projectsList.asStateFlow()
+    private val _userProjects: MutableStateFlow<List<ProjectsTable>> =
+        MutableStateFlow(emptyList())
+    val userProjects = _userProjects.asStateFlow()
 
-    init{
+
+//    fun getMultipleProjectsByIds(ids: Array<Int>) {
+//        viewModelScope.launch {
+//            _userProjects.value = dbRepository.getMultipleProjectsByIds(ids)
+//        }
+//    }
+
+    fun getUserProjects(user: UsersTable) {
         viewModelScope.launch(Dispatchers.IO) {
-            DbRepository.getProjects().distinctUntilChanged()
-                .collect() { listOfProjects ->
-                    if (listOfProjects.isNullOrEmpty()) {
-                        Log.d("TAG", ":Empty list")
-                    } else {
-                        _projectsList.value = listOfProjects
-                    }
-
-                }
+            _userProjects.value =
+                dbRepository.getMultipleProjectsByIds(
+                    user.projects_id.split(",").map { it.toInt() }.toTypedArray()
+                )
         }
     }
 

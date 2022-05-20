@@ -5,6 +5,7 @@ import androidx.room.Room
 import com.rle.STS.data.BBDD.STSDao
 import com.rle.STS.data.BBDD.STSDatabase
 import com.rle.STS.network.StsAPI
+import com.rle.STS.repository.DataStoreRepository
 import com.rle.STS.utils.Constants
 import dagger.Module
 import dagger.Provides
@@ -50,6 +51,9 @@ class AppModule {
             .create(StsAPI::class.java)
     }
 
+    //Instanciar DataStore Provider
+    @Singleton
+    @Provides
+    fun provideDataStoreRepository(@ApplicationContext context: Context) = DataStoreRepository(context)
 
-    //TODO DAO PROVIDER
 }

@@ -1,0 +1,30 @@
+package com.rle.STS.screens.splash
+
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import com.rle.STS.repository.DbRepository
+import com.rle.STS.utils.TableInserts
+import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import javax.inject.Inject
+
+@HiltViewModel
+class SplashViewModel @Inject constructor(
+    private val dbRepository: DbRepository
+) : ViewModel(){
+
+    //Lo usamos para hacer añadidos extra en caso de no poder desde plataforma o que haya cualquier problema
+
+    init {
+        viewModelScope.launch(Dispatchers.IO){
+            dbRepository.insertUser(TableInserts.user1)
+            dbRepository.insertUser(TableInserts.user2)
+
+            //Si la base de datos no está creada no va bien
+            dbRepository.insertChecklist(TableInserts.checklistExtra1)
+        }
+
+    }
+
+}

@@ -18,13 +18,13 @@ interface STSDao {
     @Query("SELECT * from projects_table where id =:id")
     suspend fun getProjectById(id: Int): ProjectsTable
 
-    @Query("SELECT * from projects_table where id=:id")
-    suspend fun getMultipleProjectsById(id: ArrayList<Int>): List<ProjectsTable>
+    @Query("SELECT * FROM projects_table WHERE id IN (:ids)")
+    suspend fun getMultipleProjectsByIds(ids: Array<Int>): List<ProjectsTable>
 
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun insertProject(project: ProjectsTable)
 
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun insertMultipleProjects(projects: ArrayList<ProjectsTable>)
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
@@ -44,13 +44,15 @@ interface STSDao {
     @Query("SELECT * from checklists_table where id =:id")
     suspend fun getChecklistById(id: Int): ChecklistsTable
 
-//    @Query("SELECT * from checklists_table where id =:id")
-//    suspend fun getMultipleChecklistById(id: ArrayList<Int>): ArrayList<ChecklistsTable>
+    @Query("SELECT * from checklists_table where id =:id")
+    suspend fun getMultipleChecklistById(id: Array<Int>): List<ChecklistsTable>
 
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    //TODO add checklist by id and user
+
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun insertChecklist(checklist: ChecklistsTable)
 
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    @Insert(onConflict = OnConflictStrategy.IGNORE) //Ignore ignora si hay algo que ya esté introducido con esa primary key
     suspend fun insertMultipleChecklists(checklists: ArrayList<ChecklistsTable>)
 
     @Update(onConflict = OnConflictStrategy.REPLACE)

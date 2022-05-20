@@ -19,17 +19,19 @@ import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.datastore.core.DataStore
 import com.google.gson.Gson
 import com.rle.STS.navigation.STSNavigation
 import com.rle.STS.ui.theme.STSTheme
 import dagger.hilt.android.AndroidEntryPoint
 import java.util.*
+import java.util.prefs.Preferences
 
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
-    override fun onCreate(savedInstanceState: Bundle?) {
 
+    override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
 

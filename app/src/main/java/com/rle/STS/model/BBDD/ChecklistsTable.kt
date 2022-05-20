@@ -1,13 +1,13 @@
 package com.rle.STS.model.BBDD
 
-import androidx.room.ColumnInfo
-import androidx.room.Entity
-import androidx.room.ForeignKey
+import androidx.annotation.NonNull
+import androidx.room.*
 import androidx.room.ForeignKey.CASCADE
-import androidx.room.PrimaryKey
+import androidx.room.util.TableInfo
 import com.rle.STS.model.APIs.projects.Project
 
 @Entity(
+    //indices = [Index(value = ["id"], unique = true)],
     tableName = "checklists_table",
     foreignKeys = [ForeignKey(
         entity = ProjectsTable::class,
@@ -19,6 +19,7 @@ import com.rle.STS.model.APIs.projects.Project
 data class ChecklistsTable(
 
     @PrimaryKey
+    @NonNull
     @ColumnInfo(name = "id")
     val id: Int,
 

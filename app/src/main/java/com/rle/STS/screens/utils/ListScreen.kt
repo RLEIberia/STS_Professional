@@ -41,9 +41,8 @@ fun ListScreen(
     val context = LocalContext.current
 
     //TODO DATOS DESDE DB
-    val projectsFromDb = ProjectsViewModel.projectsList.collectAsState().value
-
-    Log.d("Projects", "$projectsFromDb")
+    //val projectsFromDb = ProjectsViewModel.projectsList.collectAsState().value
+    //Log.d("Projects", "$projectsFromDb")
 
     Scaffold(
         scaffoldState = scaffoldState,
