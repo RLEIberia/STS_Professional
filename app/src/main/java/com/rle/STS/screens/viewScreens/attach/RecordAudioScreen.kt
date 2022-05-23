@@ -1,4 +1,4 @@
-package com.rle.STS.viewScreens.attach
+package com.rle.STS.screens.viewScreens.attach
 
 import android.Manifest.permission.RECORD_AUDIO
 import android.content.Context
@@ -214,6 +214,9 @@ fun createAudioFile(context: Context, project: String, checklist: String, user: 
     val storageDirS =
         context.filesDir.path + File.separator + "Audios" + File.separator + "recordings"
     val storageDir = File(storageDirS)
+
+    if (!storageDir.exists())
+        storageDir.mkdirs()
 
     return File.createTempFile(
         "MP3_${title}_",

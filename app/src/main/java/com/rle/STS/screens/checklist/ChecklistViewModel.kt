@@ -4,9 +4,11 @@ import android.content.Context
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.rle.STS.model.JSON.checklistStructure.ChecklistJSON
 import com.rle.STS.model.extra.ChecklistPosition
 import com.rle.STS.repository.ChecklistRepository
+import com.rle.STS.screens.viewScreens.ViewScreens
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -64,6 +66,30 @@ class ChecklistViewModel @Inject constructor(
             Log.d("POS_", _currentView.value.toString())
             Log.d("POS", _currentView.value.toString())
         }
+
+    fun centerButton(context: Context){
+        viewModelScope.launch(Dispatchers.IO) {
+
+            when(_checklistJSON.value.checklistData!!.steps[currentStep.value].views[currentView.value].viewType){
+
+                ViewScreens.IM1.name, ViewScreens.IM2.name, ViewScreens.IM3.name ->
+                    checklistRepository.openImage(
+                        context = context,
+                        fileName = _checklistJSON.value.checklistData!!.steps[currentStep.value].views[currentView.value].viewData.files[0].file
+                    )
+
+                ViewScreens.VD1.name ->
+                    checklistRepository.openVideo(
+                        context = context,
+                        fileName = _checklistJSON.value.checklistData!!.steps[currentStep.value].views[currentView.value].viewData.files[0].file
+                    )
+
+            }
+
+        }
+
+    }
+
 }
 
 //private val _checkListSize = MutableStateFlow<Int>(0)

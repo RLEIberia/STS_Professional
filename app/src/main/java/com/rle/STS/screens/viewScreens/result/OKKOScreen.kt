@@ -1,13 +1,10 @@
-package com.rle.STS.viewScreens.result
+package com.rle.STS.screens.viewScreens.result
 
 import android.Manifest
 import android.content.pm.PackageManager
-import android.media.MediaPlayer
 import android.media.MediaRecorder
-import android.net.Uri
 import android.os.Build
 import android.util.Log
-import android.widget.Toast
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.layout.*
@@ -22,13 +19,10 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.core.content.ContextCompat
 import com.rle.STS.R
-import com.rle.STS.viewScreens.attach.createAudioFile
+import com.rle.STS.screens.viewScreens.attach.createAudioFile
 import com.rle.STS.screens.checklist.ChecklistViewModel
 import com.rle.STS.widgets.CustomButton
-import com.rle.STS.widgets.defaultStepBottomButtons
 import java.io.File
-import java.io.IOException
-import java.lang.Exception
 
 @Composable
 fun OKKOScreen(checklistViewModel: ChecklistViewModel) {
@@ -110,6 +104,7 @@ fun OKKOScreen(checklistViewModel: ChecklistViewModel) {
 
     Column(
         modifier = Modifier
+            .padding(10.dp)
             .fillMaxSize(),
         verticalArrangement = Arrangement.SpaceEvenly
     ) {

@@ -1,4 +1,4 @@
-package com.rle.STS.viewScreens
+package com.rle.STS.screens.viewScreens
 
 enum class ViewScreens {
     //Image

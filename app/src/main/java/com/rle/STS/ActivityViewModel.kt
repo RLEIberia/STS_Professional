@@ -44,7 +44,7 @@ class ActivityViewModel @Inject constructor(
     )
 
     init {
-        saveUserData(userData = UserData(), context = context)
+//        saveUserData(userData = UserData())
         getUserData(context = context)
         getUserById(context = context)
     }
@@ -52,25 +52,23 @@ class ActivityViewModel @Inject constructor(
     //TODO guardar userData dependiendo del Login
     fun saveUserData(
         userData: UserData,
-        context: Context
     ) {
         viewModelScope.launch(Dispatchers.IO) {
             dataStoreRepository.saveUserData(
                 userData = userData,
-                context = context
             )
         }
     }
 
     fun getUserData(context: Context) {
         viewModelScope.launch(Dispatchers.IO) {
-            _userSimple.value = dataStoreRepository.getUserData(context = context)
+            _userSimple.value = dataStoreRepository.getUserData()
         }
     }
 
     fun getUserById(context: Context) {
         viewModelScope.launch(Dispatchers.IO) {
-            _userDbData.value = dbRepository.getUserById(dataStoreRepository.getUserData(context = context).userCode)
+            _userDbData.value = dbRepository.getUserById(dataStoreRepository.getUserData().userCode)
         }
     }
 

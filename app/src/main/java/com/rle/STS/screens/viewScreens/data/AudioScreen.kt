@@ -1,4 +1,4 @@
-package com.rle.STS.viewScreens.data
+package com.rle.STS.screens.viewScreens.data
 
 import android.media.MediaPlayer
 import android.net.Uri

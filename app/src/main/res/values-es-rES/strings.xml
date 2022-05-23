@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="back">IR ATRÁS</string>
+    <string name="navigate_back">IR ATRÁS</string>
+    <string name="back">ANTERIOR</string>
     <string name="next">SIGUIENTE</string>
     <string name="menu">MENU</string>
     <string name="audio">AUDIO</string>

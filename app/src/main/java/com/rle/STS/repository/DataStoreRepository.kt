@@ -17,7 +17,7 @@ const val DATASTORE_NAME = "USER_DATASTORE"
 
 val Context.datastore: DataStore<Preferences> by preferencesDataStore(name = DATASTORE_NAME)
 
-class DataStoreRepository @Inject constructor() {
+class DataStoreRepository @Inject constructor(private val context: Context) {
 
     companion object {
         val USER_CODE = intPreferencesKey("userCode")
@@ -25,10 +25,7 @@ class DataStoreRepository @Inject constructor() {
     }
 
 
-    suspend fun saveUserData(
-        userData: UserData,
-        context: Context
-    ) {
+    suspend fun saveUserData(userData: UserData) {
         context.datastore.edit { user ->
             user[USER_CODE] = userData.userCode
             user[TOKEN] = userData.token
@@ -42,9 +39,7 @@ class DataStoreRepository @Inject constructor() {
 //        )
 //    }
 
-    suspend fun getUserData(
-        context: Context
-    ): UserData {
+    suspend fun getUserData(): UserData {
         val user = context.datastore.data.first()
         return (UserData(
             userCode = user[USER_CODE]!!,

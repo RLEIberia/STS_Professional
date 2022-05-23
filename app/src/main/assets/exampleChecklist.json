@@ -43,17 +43,24 @@
             "viewOrder": 1,
             "viewType": "OP1",
             "viewData": {
-              "text": ["Elige entre Correcto, Incorrecto y NSNC"],
+              "text": ["Elige entre Correcto, Incorrecto y NSNC asdfasdfasdf asdfasdf sdfasdf asdfasdf asdf"],
               "audio": "Elige entre las opciones que ve en pantalla"
             }
           },
           {
             "idView": 2,
             "viewOrder": 2,
-            "viewType": "OP1",
+            "viewType": "VD1",
             "viewData": {
-              "text": ["Elige la patata caliente"],
-              "audio": "Elige entre las opciones que ve en pantalla"
+              "text": ["Elige la patata calienteasdfasdfasdfasdfasdf asdfadsfasdfasdfasdf assdfasdfasdfasdf adfadf"],
+              "audio": "Elige entre las opciones que ve en pantalla",
+              "files":[
+                {
+                  "name": "",
+                  "description": "",
+                  "file": "seoul.mp4"
+                }
+              ]
             }
           },
           {
@@ -61,7 +68,7 @@
             "viewOrder": 3,
             "viewType": "TX1",
             "viewData": {
-              "text": ["Título de paso"],
+              "text": ["Título de pasoasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfadsfadsfasdfasdfasdfasdfasdfasdfasdfasdf"],
               "audio": "Título de paso reproducido por las gafas"
             }
           },

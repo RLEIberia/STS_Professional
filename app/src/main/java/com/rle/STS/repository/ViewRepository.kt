@@ -1,14 +1,11 @@
 package com.rle.STS.screens
 
 import androidx.compose.runtime.Composable
-import com.rle.STS.viewScreens.attach.*
+import com.rle.STS.screens.viewScreens.attach.*
 import com.rle.STS.screens.checklist.ChecklistViewModel
-import com.rle.STS.viewScreens.data.AudioScreen
-import com.rle.STS.viewScreens.data.ImageScreen
-import com.rle.STS.viewScreens.data.QRScreen
-import com.rle.STS.viewScreens.data.VideoScreen
-import com.rle.STS.viewScreens.result.MultiOptionScreen
-import com.rle.STS.viewScreens.result.OKKOScreen
+import com.rle.STS.screens.viewScreens.data.*
+import com.rle.STS.screens.viewScreens.result.MultiOptionScreen
+import com.rle.STS.screens.viewScreens.result.OKKOScreen
 import javax.inject.Inject
 
 class ViewRepository @Inject constructor(){
@@ -18,15 +15,15 @@ class ViewRepository @Inject constructor(){
 
         //Imágenes
         @Composable
-        fun IM1(file: String, viewModel: ChecklistViewModel) { ImageScreen(file = file, type = 0, stepViewModel = viewModel) }
+        fun IM1(viewModel: ChecklistViewModel) { ImageScreen(type = 0, checklistViewModel = viewModel) }
         @Composable
-        fun IM2(file: String, viewModel: ChecklistViewModel) { ImageScreen(file = file, type = 1, stepViewModel = viewModel) }
+        fun IM2(viewModel: ChecklistViewModel) { ImageScreen(type = 1, checklistViewModel = viewModel) }
         @Composable
-        fun IM3(file: String, viewModel: ChecklistViewModel) { ImageScreen(file = file, type = 2, stepViewModel = viewModel) }
+        fun IM3(viewModel: ChecklistViewModel) { ImageScreen(type = 2, checklistViewModel = viewModel) }
 
         //Vídeo
         @Composable
-        fun VD1(file: String, viewModel: ChecklistViewModel) { VideoScreen(file = "The RealWear HMT-1.mp4", stepViewModel = viewModel) }
+        fun VD1(checklistViewModel: ChecklistViewModel) { VideoScreen(checklistViewModel = checklistViewModel) }
 
         //QR
         @Composable
@@ -46,9 +43,9 @@ class ViewRepository @Inject constructor(){
 
         //Cámara
         @Composable
-        fun CM1(viewModel: ChecklistViewModel, nextType: Int) { TakePictureScreen(viewModel, nextType) }
+        fun CM1(checklistViewModel: ChecklistViewModel) { TakePictureScreen(checklistViewModel) }
         @Composable
-        fun CM2(viewModel: ChecklistViewModel, nextType: Int) { TakeVideoScreen(viewModel, nextType) }
+        fun CM2(checklistViewModel: ChecklistViewModel) { TakeVideoScreen(checklistViewModel) }
 
 
         @Composable
@@ -56,7 +53,21 @@ class ViewRepository @Inject constructor(){
             NumberScreen(check, viewModel, nextType)
         }
 
+        //Text
+        @Composable
+        fun TX1(checklistViewModel: ChecklistViewModel){
+            Text1(checklistViewModel = checklistViewModel)
+        }
+        @Composable
+        fun TX2(checklistViewModel: ChecklistViewModel){
+            Text2(checklistViewModel = checklistViewModel)
+        }
+        @Composable
+        fun TX3(checklistViewModel: ChecklistViewModel){
+            Text3(checklistViewModel = checklistViewModel)
+        }
 
+        //Options
         @Composable
         fun OP1(viewModel: ChecklistViewModel) {
             OKKOScreen(viewModel)

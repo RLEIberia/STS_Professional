@@ -73,17 +73,6 @@ fun MainScreen(
 //    }
 
 
-    activityViewModel.saveUserData(
-        userData = UserData(
-            userCode = 1,
-            token = "2d4b6637bfaa6224cd08f31a79ebf9ab"
-        ),
-        context = context
-    )
-
-    activityViewModel.getUserData(
-        context = context
-    )
 
 
     /* -------------------------- */

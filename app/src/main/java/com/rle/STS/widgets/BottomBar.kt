@@ -44,13 +44,6 @@ fun BottomBar(
     rightSize: Int = 150
 ) {
 
-
-//        Column(
-//            modifier = Modifier
-//                .background(Color.Gray)
-//                .fillMaxWidth()
-//                .height(20.dp),
-//        ){}
     BottomAppBar(
         modifier = modifierBottomBar,
         backgroundColor = bottomBarColor,
@@ -70,7 +63,7 @@ fun BottomBar(
                     CustomSideIconButton(
                         text = leftText,
                         buttonColor = leftColor,
-                        icon = leftIcon!!,
+                        icon = leftIcon,
                         buttonSize = leftSize,
                         onClick = { leftOnClick() },
                     )

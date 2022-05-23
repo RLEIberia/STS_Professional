@@ -91,8 +91,8 @@ class MainViewModel @Inject constructor(
                     .isNotEmpty() || _APIprojectResponse.value.e.toString().isNotEmpty()
             ) {
                 _APIprojectResponse.value.loading = false
-                dbRepository.insertMultipleChecklists(toChecklistsTable(_APIprojectResponse.value))
                 dbRepository.insertMultipleProjects(toProjectsTable(_APIprojectResponse.value))
+                dbRepository.insertMultipleChecklists(toChecklistsTable(_APIprojectResponse.value))
             }
         }
     }

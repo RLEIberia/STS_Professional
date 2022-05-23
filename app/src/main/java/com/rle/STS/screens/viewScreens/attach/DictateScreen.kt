@@ -1,4 +1,4 @@
-package com.rle.STS.viewScreens.attach
+package com.rle.STS.screens.viewScreens.attach
 
 import android.content.Intent
 import androidx.activity.compose.rememberLauncherForActivityResult
@@ -7,7 +7,6 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
@@ -15,14 +14,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import com.rle.STS.MainActivity
 import com.rle.STS.R
 import com.rle.STS.items.RWMethod
 import com.rle.STS.screens.checklist.ChecklistViewModel
-import com.rle.STS.utils.tts
 import com.rle.STS.widgets.CustomButton
 import com.rle.STS.widgets.defaultStepBottomButtons
-import dagger.hilt.android.qualifiers.ApplicationContext
 
 @Composable
 fun DictateScreen(

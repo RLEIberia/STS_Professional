@@ -19,7 +19,7 @@ import java.io.File
 
 
 @Composable
-fun VideoThumbnail(video: File, width: Int = 450, height: Int = 253){
+fun VideoThumbnail(video: File){
 
     AndroidView(
         factory = { context: Context ->
@@ -44,9 +44,7 @@ fun VideoThumbnail(video: File, width: Int = 450, height: Int = 253){
             view
         },
         modifier = Modifier
-            .width(width.dp)
-            .height(height.dp)
-            .clip(RoundedCornerShape(10)),
+            .clip(RoundedCornerShape(5)),
     )
 
 }

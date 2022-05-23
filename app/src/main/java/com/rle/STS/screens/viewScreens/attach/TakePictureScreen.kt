@@ -1,4 +1,4 @@
-package com.rle.STS.viewScreens.attach
+package com.rle.STS.screens.viewScreens.attach
 
 import android.annotation.SuppressLint
 import android.content.Context
@@ -36,7 +36,7 @@ import java.io.File
 
 @SuppressLint("RestrictedApi")
 @Composable
-fun TakePictureScreen(stepViewModel: ChecklistViewModel, nextType: Int) {
+fun TakePictureScreen(stepViewModel: ChecklistViewModel) {
 
     val context = LocalContext.current
 
@@ -193,9 +193,9 @@ fun TakePictureScreen(stepViewModel: ChecklistViewModel, nextType: Int) {
         Spacer(modifier = Modifier.height(10.dp))
 
         if (fileList.isEmpty()){
-            defaultStepBottomButtons(stepViewModel, hasValue = false, nextType = nextType)
+            defaultStepBottomButtons(stepViewModel, hasValue = false,)
         } else {
-            defaultStepBottomButtons(stepViewModel, hasValue = true, nextType = nextType)
+            defaultStepBottomButtons(stepViewModel, hasValue = true)
         }
 
         Spacer(modifier = Modifier.height(10.dp))
@@ -368,7 +368,7 @@ fun ImagesListDialog(
                     rightVisible = imagen.value < fileList.size - 1,
                     rightText = stringResource(id = R.string.next),
                     rightFunction = { imagen.value++ },
-                    middleText = stringResource(id = R.string.back),
+                    middleText = stringResource(id = R.string.navigate_back),
                     middleFunction = { openDialog.value = false }
                 )
 
@@ -451,7 +451,7 @@ fun ImagesActionDialog(
                 Spacer(modifier = Modifier.weight(1f))
 
                 CustomButton(
-                    text = stringResource(id = R.string.back),
+                    text = stringResource(id = R.string.navigate_back),
                     buttonSize = 250,
                     onClick = {
                         openDialog2.value = false

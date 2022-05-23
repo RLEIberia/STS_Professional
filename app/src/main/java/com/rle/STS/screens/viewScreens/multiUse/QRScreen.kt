@@ -1,26 +1,16 @@
-package com.rle.STS.viewScreens.data
+package com.rle.STS.screens.viewScreens.data
 
-import android.content.Intent
-import androidx.activity.compose.rememberLauncherForActivityResult
-import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.AlertDialog
-import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.*
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.DialogProperties
 import com.rle.STS.R
-import com.rle.STS.items.RWMethod
 import com.rle.STS.screens.checklist.ChecklistViewModel
-import com.rle.STS.widgets.BottomButtons
 import com.rle.STS.widgets.CustomButton
 
 

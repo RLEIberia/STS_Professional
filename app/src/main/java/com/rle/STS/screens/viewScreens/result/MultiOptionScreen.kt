@@ -1,4 +1,4 @@
-package com.rle.STS.viewScreens.result
+package com.rle.STS.screens.viewScreens.result
 
 import android.util.Log
 import androidx.compose.foundation.clickable

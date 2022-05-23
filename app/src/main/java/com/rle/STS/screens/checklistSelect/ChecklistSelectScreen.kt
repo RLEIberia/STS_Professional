@@ -14,6 +14,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.rle.STS.ActivityViewModel
+import com.rle.STS.R
 import com.rle.STS.navigation.STSScreens
 import com.rle.STS.screens.Drawer
 import com.rle.STS.ui.theme.specialButtonColor
@@ -55,13 +56,13 @@ fun ChecklistSelectScreen(
             Drawer(scaffoldState = scaffoldState, scope = scope)
         },
         bottomBar = {
-            var indexCounter = remember {
+            val indexCounter = remember {
                 mutableStateOf(0)
             }
             BottomBar(
                 modifierBottomBar = Modifier,
                 leftActive = (indexCounter.value - 4 >= 0),
-                leftText = "SUBIR",
+                leftText = context.getString(R.string.up),
                 leftSize = buttonWidth,
                 leftOnClick = {
                     indexCounter.value = indexCounter.value - 4
@@ -72,12 +73,12 @@ fun ChecklistSelectScreen(
                     }
                 },
                 centerActive = true,
-                centerText = "IR ATRÁS",
+                centerText = context.getString(R.string.navigate_back),
                 centerSize = buttonWidth,
                 centerColor = specialButtonColor,
                 centerOnClick = { navController.popBackStack() },
                 rightActive = (indexCounter.value + 4 < checklistList.size),
-                rightText = "BAJAR",
+                rightText = context.getString(R.string.down),
                 rightSize = buttonWidth,
                 rightOnClick = {
                     indexCounter.value = indexCounter.value + 4

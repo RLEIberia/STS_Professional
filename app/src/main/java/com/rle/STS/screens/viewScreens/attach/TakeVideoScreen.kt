@@ -1,4 +1,4 @@
-package com.rle.STS.viewScreens.attach
+package com.rle.STS.screens.viewScreens.attach
 
 import android.annotation.SuppressLint
 import android.content.Context
@@ -30,12 +30,11 @@ import com.rle.STS.ui.theme.cardsColor
 import com.rle.STS.widgets.BottomButtons
 import com.rle.STS.widgets.CustomButton
 import com.rle.STS.widgets.VideoThumbnail
-import com.rle.STS.widgets.defaultStepBottomButtons
 import java.io.File
 
 @SuppressLint("RestrictedApi")
 @Composable
-fun TakeVideoScreen(stepViewModel: ChecklistViewModel, nextType: Int) {
+fun TakeVideoScreen(stepViewModel: ChecklistViewModel) {
 
     val context = LocalContext.current
 
@@ -190,11 +189,11 @@ fun TakeVideoScreen(stepViewModel: ChecklistViewModel, nextType: Int) {
 
         Spacer(modifier = Modifier.height(10.dp))
 
-        if (fileList.isEmpty()){
-            defaultStepBottomButtons(stepViewModel, hasValue = false, nextType = nextType)
-        } else {
-            defaultStepBottomButtons(stepViewModel, hasValue = true, nextType = nextType)
-        }
+//        if (fileList.isEmpty()){
+//            defaultStepBottomButtons(stepViewModel, hasValue = false, nextType = nextType)
+//        } else {
+//            defaultStepBottomButtons(stepViewModel, hasValue = true, nextType = nextType)
+//        }
 
         Spacer(modifier = Modifier.height(10.dp))
 
@@ -374,7 +373,7 @@ fun videosListDialog(
                     rightVisible = video.value < fileList.size - 1,
                     rightText = stringResource(id = R.string.next),
                     rightFunction = { video.value++ },
-                    middleText = stringResource(id = R.string.back),
+                    middleText = stringResource(id = R.string.navigate_back),
                     middleFunction = { openDialog.value = false }
                 )
 
@@ -457,7 +456,7 @@ fun VideosActionDialog(
                 Spacer(modifier = Modifier.weight(1f))
 
                 CustomButton(
-                    text = stringResource(id = R.string.back),
+                    text = stringResource(id = R.string.navigate_back),
                     buttonSize = 250,
                     onClick = {
                         openDialog2.value = false

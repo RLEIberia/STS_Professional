@@ -3,7 +3,9 @@ package com.rle.STS.screens.splash
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.NavController
+import com.rle.STS.model.DataStore.UserData
 import com.rle.STS.navigation.STSScreens
+import com.rle.STS.repository.DataStoreRepository
 import com.rle.STS.repository.DbRepository
 import com.rle.STS.utils.TableInserts
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -14,8 +16,9 @@ import javax.inject.Inject
 
 @HiltViewModel
 class SplashViewModel @Inject constructor(
-    private val dbRepository: DbRepository
-) : ViewModel(){
+    private val dbRepository: DbRepository,
+    private val dataStoreRepository: DataStoreRepository
+    ) : ViewModel(){
 
     //Lo usamos para hacer añadidos extra en caso de no poder desde plataforma o que haya cualquier problema
 
@@ -25,7 +28,9 @@ class SplashViewModel @Inject constructor(
             dbRepository.insertUser(TableInserts.user2)
 
             //Si la base de datos no está creada no va bien
-            //dbRepository.insertChecklist(TableInserts.checklistExtra1)
+            dbRepository.insertChecklist(TableInserts.checklistExtra1)
+
+            saveUserData(userData = UserData(1, "2d4b6637bfaa6224cd08f31a79ebf9ab"))
 
             dbRepository.insertProject(TableInserts.projectExtra1)
             dbRepository.insertProject(TableInserts.projectExtra2)
@@ -44,6 +49,16 @@ class SplashViewModel @Inject constructor(
             delay(2000L)
             navController.navigate(STSScreens.MainScreen.name){
             }
+        }
+    }
+
+    fun saveUserData(
+        userData: UserData,
+    ) {
+        viewModelScope.launch(Dispatchers.IO) {
+            dataStoreRepository.saveUserData(
+                userData = userData,
+            )
         }
     }
 

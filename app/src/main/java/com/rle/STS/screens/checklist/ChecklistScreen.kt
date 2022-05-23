@@ -4,25 +4,18 @@ import android.util.Log
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
 import androidx.compose.runtime.*
-import androidx.compose.ui.Alignment
-import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
-import androidx.compose.ui.window.DialogProperties
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.rle.STS.R
-import com.rle.STS.viewScreens.data.*
 import com.rle.STS.ui.theme.topBarColor
 import com.rle.STS.screens.ViewRepository
 import com.rle.STS.ui.theme.specialButtonColor
-import com.rle.STS.viewScreens.ViewScreens
-import com.rle.STS.widgets.BottomBar
+import com.rle.STS.screens.viewScreens.ViewScreens
 import com.rle.STS.widgets.BottomBarChecklist
-import com.rle.STS.widgets.BottomButtons
 import com.rle.STS.widgets.CustomButton
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
@@ -97,36 +90,36 @@ fun ChecklistScreen(
                     //Image
                     ViewScreens.IM1.name -> ViewRepository.IM1(
                         viewModel = checklistViewModel,
-                        file = ""
                     )
                     ViewScreens.IM2.name -> ViewRepository.IM2(
                         viewModel = checklistViewModel,
-                        file = ""
                     )
                     ViewScreens.IM3.name -> ViewRepository.IM3(
-                        viewModel = checklistViewModel,
-                        file = ""
+                        viewModel = checklistViewModel
                     )
 
                     //Video
                     ViewScreens.VD1.name -> ViewRepository.VD1(
-                        viewModel = checklistViewModel,
-                        file = ""
+                        checklistViewModel = checklistViewModel
                     )
 
                     //Text TODO -> ADD TO REPOSITORY
-                    ViewScreens.TX1.name -> {}//ViewRepository.TX1(viewModel = checklistViewModel)
-                    ViewScreens.TX2.name -> {}//ViewRepository.TX2(viewModel = checklistViewModel)
-                    ViewScreens.TX3.name -> {}//ViewRepository.TX3(viewModel = checklistViewModel)
+                    ViewScreens.TX1.name -> {
+                        ViewRepository.TX1(checklistViewModel = checklistViewModel)
+                    }
+                    ViewScreens.TX2.name -> {
+                        ViewRepository.TX2(checklistViewModel = checklistViewModel)
+                    }
+                    ViewScreens.TX3.name -> {
+                        ViewRepository.TX3(checklistViewModel = checklistViewModel)
+                    }
 
                     //Camera
                     ViewScreens.CM1.name -> ViewRepository.CM1(
-                        viewModel = checklistViewModel,
-                        nextType = 0
+                        checklistViewModel = checklistViewModel
                     )
                     ViewScreens.CM2.name -> ViewRepository.CM2(
-                        viewModel = checklistViewModel,
-                        nextType = 0
+                        checklistViewModel = checklistViewModel,
                     )
 
                     //Number
