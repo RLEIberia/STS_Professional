@@ -1,7 +1,9 @@
 package com.rle.STS.logic.checklist
 
+import com.rle.STS.screens.checklist.ChecklistViewModel
+
 fun back(
-    //TODO - Implementar viewModel
+    checklistViewModel: ChecklistViewModel
 ) {
 
     var viewPosition: Int = 0

@@ -22,7 +22,7 @@ import javax.inject.Inject
 @Composable
 fun SplashScreen(
     navController: NavController,
-    splashViewModel: SplashViewModel = hiltViewModel()
+    splashViewModel: SplashViewModel
 ) {
 
     LaunchedEffect(
@@ -43,4 +43,9 @@ fun SplashScreen(
     ) {
         Image(painter = painterResource(id = R.drawable.sts_logo), contentDescription = "STS Logo")
     }
+
+//    splashViewModel.navigate(
+//        navController = navController
+//    )
+
 }

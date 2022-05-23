@@ -58,8 +58,8 @@ class ViewRepository @Inject constructor(){
 
 
         @Composable
-        fun OP1(viewModel: ChecklistViewModel, nextType: Int) {
-            OKKOScreen(viewModel, nextType)
+        fun OP1(viewModel: ChecklistViewModel) {
+            OKKOScreen(viewModel)
         }
 
 

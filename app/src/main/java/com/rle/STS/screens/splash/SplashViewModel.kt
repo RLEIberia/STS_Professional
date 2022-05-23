@@ -2,10 +2,13 @@ package com.rle.STS.screens.splash
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import androidx.navigation.NavController
+import com.rle.STS.navigation.STSScreens
 import com.rle.STS.repository.DbRepository
 import com.rle.STS.utils.TableInserts
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -22,7 +25,7 @@ class SplashViewModel @Inject constructor(
             dbRepository.insertUser(TableInserts.user2)
 
             //Si la base de datos no está creada no va bien
-            dbRepository.insertChecklist(TableInserts.checklistExtra1)
+            //dbRepository.insertChecklist(TableInserts.checklistExtra1)
 
             dbRepository.insertProject(TableInserts.projectExtra1)
             dbRepository.insertProject(TableInserts.projectExtra2)
@@ -34,6 +37,14 @@ class SplashViewModel @Inject constructor(
 
         }
 
+    }
+
+    fun navigate(navController: NavController){
+        viewModelScope.launch(Dispatchers.IO) {
+            delay(2000L)
+            navController.navigate(STSScreens.MainScreen.name){
+            }
+        }
     }
 
 }

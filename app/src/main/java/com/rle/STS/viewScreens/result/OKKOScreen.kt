@@ -31,11 +31,17 @@ import java.io.IOException
 import java.lang.Exception
 
 @Composable
-fun OKKOScreen(stepViewModel: ChecklistViewModel, nextType: Int) {
+fun OKKOScreen(checklistViewModel: ChecklistViewModel) {
 
     var estado = remember {
         mutableStateOf(-1)
     }
+
+    val currentStep = checklistViewModel.currentStep.collectAsState()
+    val currentView = checklistViewModel.currentView.collectAsState()
+    val viewData =
+        checklistViewModel.checklist.collectAsState().value.checklistData!!.steps[currentStep.value]
+            .views[currentView.value].viewData
 
     val context = LocalContext.current
 
@@ -102,23 +108,25 @@ fun OKKOScreen(stepViewModel: ChecklistViewModel, nextType: Int) {
         remember { mutableStateOf(context.getString(R.string.start_recording)) }
 
 
-    Column() {
-
-        Spacer(modifier = Modifier.weight(1f))
+    Column(
+        modifier = Modifier
+            .fillMaxSize(),
+        verticalArrangement = Arrangement.SpaceEvenly
+    ) {
 
         Text(
             modifier = Modifier
                 .fillMaxWidth(),
             style = MaterialTheme.typography.h4,
-            text = "Elige entre respuesta correcta, incorrecta o no responder",
+            text = viewData.text[0],
             textAlign = TextAlign.Center
         )
 
-        Spacer(modifier = Modifier.weight(1f))
-
-
-        Row() {
-            Spacer(modifier = Modifier.weight(1f))
+        Row(
+            modifier = Modifier
+                .fillMaxWidth(),
+            horizontalArrangement = Arrangement.SpaceEvenly
+        ) {
             CustomButton(
                 buttonSize = 160,
                 text = stringResource(id = R.string.correct),
@@ -133,8 +141,6 @@ fun OKKOScreen(stepViewModel: ChecklistViewModel, nextType: Int) {
                     }
                 )
             )
-
-            Spacer(modifier = Modifier.weight(1f))
             CustomButton(
                 buttonSize = 160,
                 text = stringResource(id = R.string.nsnc),
@@ -148,9 +154,7 @@ fun OKKOScreen(stepViewModel: ChecklistViewModel, nextType: Int) {
                         Color.LightGray
                     }
                 )
-
             )
-            Spacer(modifier = Modifier.weight(1f))
             CustomButton(
                 buttonSize = 160,
                 text = stringResource(id = R.string.incorrect),
@@ -165,10 +169,7 @@ fun OKKOScreen(stepViewModel: ChecklistViewModel, nextType: Int) {
                     }
                 )
             )
-            Spacer(modifier = Modifier.weight(1f))
         }
-
-        Spacer(modifier = Modifier.weight(1f))
 
 //        Row() {
 //
@@ -248,16 +249,6 @@ fun OKKOScreen(stepViewModel: ChecklistViewModel, nextType: Int) {
 
 //        Spacer(modifier = Modifier.weight(1f))
 
-        Spacer(modifier = Modifier.height(10.dp))
-
-        if (true) {
-            defaultStepBottomButtons(stepViewModel, hasValue = true, nextType = nextType)
-        } else {
-            defaultStepBottomButtons(stepViewModel, hasValue = false, nextType = nextType)
-        }
-
-        Spacer(modifier = Modifier.height(10.dp))
     }
-
 
 }

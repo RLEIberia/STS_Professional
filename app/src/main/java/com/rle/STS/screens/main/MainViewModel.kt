@@ -14,6 +14,8 @@ import com.rle.STS.model.JSON.checklistStructure.ChecklistJSON
 import com.rle.STS.repository.APIRepository
 import com.rle.STS.repository.ChecklistRepository
 import com.rle.STS.repository.DbRepository
+import com.rle.STS.utils.converters.toChecklistsTable
+import com.rle.STS.utils.converters.toProjectsTable
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -31,47 +33,47 @@ class MainViewModel @Inject constructor(
 ) : ViewModel() {
 
 
-    private val _projectsList = MutableStateFlow<List<ProjectsTable>>(emptyList())
-    val projectsList = _projectsList.asStateFlow()
+//    private val _projectsList = MutableStateFlow<List<ProjectsTable>>(emptyList())
+//    val projectsList = _projectsList.asStateFlow()
+//
+//
+//    init {
+//        viewModelScope.launch(Dispatchers.IO) {
+//            dbRepository.getProjects().distinctUntilChanged()
+//                .collect() { listOfProjects ->
+//                    if (listOfProjects.isNullOrEmpty()) {
+//                        Log.d("TAG", ":Empty list")
+//                    } else {
+//                        _projectsList.value = listOfProjects
+//                        Log.d("PROJECTS", _projectsList.toString())
+//                    }
+//                }
+//
+//        }
+//    }
 
 
-    init {
-        viewModelScope.launch(Dispatchers.IO) {
-            dbRepository.getProjects().distinctUntilChanged()
-                .collect() { listOfProjects ->
-                    if (listOfProjects.isNullOrEmpty()) {
-                        Log.d("TAG", ":Empty list")
-                    } else {
-                        _projectsList.value = listOfProjects
-                        Log.d("PROJECTS", _projectsList.toString())
-                    }
-                }
-
-        }
-    }
-
-
-    /* TODO SACAR ESTO - PRUEBAS */
-
-    private val _checklistJSONData: MutableStateFlow<ChecklistJSON> =
-        MutableStateFlow(ChecklistJSON())
-    val checklistData = _checklistJSONData.asStateFlow()
-
-    fun extractChecklist(fileName: String, context: Context) =
-        viewModelScope.launch {
-            val jsonData = checklistRepository.getJson(
-                context = context,
-                fileName = fileName
-            )
-            _checklistJSONData.value = checklistRepository.extractChecklist(
-                jsonChecklist = jsonData
-            )
-
-
-//            val jsonData = GetJsonDataFromAsset(context = context, fileName)
-//            _checklistData.value = com.rle.STS.logic.json.extractChecklist(jsonData)
-
-        }
+//    /* TODO SACAR ESTO - PRUEBAS */
+//
+//    private val _checklistJSONData: MutableStateFlow<ChecklistJSON> =
+//        MutableStateFlow(ChecklistJSON())
+//    val checklistData = _checklistJSONData.asStateFlow()
+//
+//    fun extractChecklist(fileName: String, context: Context) =
+//        viewModelScope.launch(Dispatchers.IO) {
+//            val jsonData = checklistRepository.getJson(
+//                context = context,
+//                fileName = fileName
+//            )
+//            _checklistJSONData.value = checklistRepository.extractChecklist(
+//                jsonChecklist = jsonData
+//            )
+//
+//
+////            val jsonData = GetJsonDataFromAsset(context = context, fileName)
+////            _checklistData.value = com.rle.STS.logic.json.extractChecklist(jsonData)
+//
+//        }
 
     /* --------------------------------------------- */
 
@@ -84,36 +86,34 @@ class MainViewModel @Inject constructor(
     fun apiGetProjects() {
         viewModelScope.launch(Dispatchers.IO) {
             _APIprojectResponse.value.loading = true
-            Log.d("API_L", _APIprojectResponse.value.loading.toString())
-            Log.d("API_D", _APIprojectResponse.value.data.toString())
             _APIprojectResponse.value = apiRepository.getProjects()
             if (_APIprojectResponse.value.data.toString()
                     .isNotEmpty() || _APIprojectResponse.value.e.toString().isNotEmpty()
             ) {
                 _APIprojectResponse.value.loading = false
-                Log.d("LOAD", _APIprojectResponse.value.loading.toString())
-                Log.d("EX", _APIprojectResponse.value.e.toString())
+                dbRepository.insertMultipleChecklists(toChecklistsTable(_APIprojectResponse.value))
+                dbRepository.insertMultipleProjects(toProjectsTable(_APIprojectResponse.value))
             }
-            Log.d("API_L", _APIprojectResponse.value.loading.toString())
-            Log.d("API_E", _APIprojectResponse.value.e.toString())
-            Log.d("API_D", _APIprojectResponse.value.data.toString())
         }
     }
 
-    fun insertMultipleChecklists(checklists: ArrayList<ChecklistsTable>) {
-        viewModelScope.launch { dbRepository.insertMultipleChecklists(checklists) }
+    fun insertMultipleChecklists(apiProjectsResponse: DataOrException<ProjectsResponse, Boolean, Exception>) {
+        viewModelScope.launch(Dispatchers.IO) {
+            dbRepository.insertMultipleChecklists(toChecklistsTable(apiProjectsResponse)) }
     }
 
-    fun insertMultipleProjects(projects: ArrayList<ProjectsTable>) {
-        viewModelScope.launch { dbRepository.insertMultipleProjects(projects) }
+    fun insertMultipleProjects(apiProjectsResponse: DataOrException<ProjectsResponse, Boolean, Exception>) {
+        viewModelScope.launch(Dispatchers.IO) {
+
+            dbRepository.insertMultipleProjects(toProjectsTable(apiProjectsResponse)) }
     }
 
     fun insertChecklist(checklist: ChecklistsTable) {
-        viewModelScope.launch { dbRepository.insertChecklist(checklist) }
+        viewModelScope.launch(Dispatchers.IO) { dbRepository.insertChecklist(checklist) }
     }
 
     fun insertProject(project: ProjectsTable) {
-        viewModelScope.launch { dbRepository.insertProject(project) }
+        viewModelScope.launch(Dispatchers.IO) { dbRepository.insertProject(project) }
     }
 
     fun getProjectById(id: Int) {
@@ -127,7 +127,7 @@ class MainViewModel @Inject constructor(
         MutableStateFlow(emptyList())
     val multipleProjectsByIds = _multipleProjectsByIds.asStateFlow()
     fun getMultipleProjectsByIds(ids: Array<Int>) {
-        viewModelScope.launch {
+        viewModelScope.launch (Dispatchers.IO){
             _multipleProjectsByIds.value = dbRepository.getMultipleProjectsByIds(ids)
         }
     }

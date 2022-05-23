@@ -38,7 +38,8 @@ fun ChecklistScreen(
     val openConfirmDialog = remember { mutableStateOf(false) }
 
     val context = LocalContext.current
-    val currentPosition = checklistViewModel.currentPosition.collectAsState().value
+    val currentStep = checklistViewModel.currentStep.collectAsState()
+    val currentView = checklistViewModel.currentView.collectAsState()
 
     val checklist = checklistViewModel.checklist.collectAsState().value
 
@@ -70,7 +71,6 @@ fun ChecklistScreen(
                 centerText = "TEST",
                 centerOnClick = { /*TODO*/ },
                 rightActive = true,
-                nextOnClick = { /*TODO*/ },
                 centerColor = specialButtonColor
             )
         },
@@ -83,12 +83,16 @@ fun ChecklistScreen(
         //ESPERAMOS A QUE EL VIEWMODEL HAYA CARGADO LOS DATOS
         if (checklist.checklistData != null) {
 
+            Log.d("POS", currentView.value.toString())
+
+
             Surface(
                 modifier = Modifier
                     .padding(it)
             ) {
 
-                when (checklist.checklistData.steps[currentPosition.step].views[currentPosition.view].viewType) {
+                when (checklist.checklistData.steps[currentStep.value].views[currentView.value].viewType) {
+
 
                     //Image
                     ViewScreens.IM1.name -> ViewRepository.IM1(
@@ -134,9 +138,8 @@ fun ChecklistScreen(
 
                     //Option
                     ViewScreens.OP1.name -> ViewRepository.OP1(
-                        viewModel = checklistViewModel,
-                        nextType = 0
-                    ) //TODO -> Quitar nextType
+                        viewModel = checklistViewModel
+                    )
                     ViewScreens.OP2.name -> {} //ViewRepository.OP2(viewModel = checklistViewModel)
 
                     //QR

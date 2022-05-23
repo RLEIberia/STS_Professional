@@ -16,6 +16,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.rle.STS.ActivityViewModel
 import com.rle.STS.R
+import com.rle.STS.model.DataStore.UserData
 import com.rle.STS.navigation.STSScreens
 import com.rle.STS.screens.main.MainViewModel
 import com.rle.STS.ui.theme.topBarColor
@@ -31,8 +32,8 @@ import kotlinx.coroutines.launch
 @Composable
 fun MainScreen(
     navController: NavController,
-    mainViewModel: MainViewModel = hiltViewModel(),
-    activityViewModel: ActivityViewModel = hiltViewModel()
+    mainViewModel: MainViewModel,
+    activityViewModel: ActivityViewModel
 ) {
 
     //rememberSaveable for composition change
@@ -45,53 +46,44 @@ fun MainScreen(
 
     /* TODO - SACAR ESTO - PRUEBAS */
 
-    val checklistData = mainViewModel.checklistData.collectAsState().value
-    mainViewModel.extractChecklist(context = context, fileName = "exampleChecklist.json")
-    Log.d("CK", checklistData.toString())
-
     LaunchedEffect(true) {
         Log.d("LAUNCH", "LaunchedEffect executed")
         mainViewModel.apiGetProjects()
     }
 
 
-    val test = mainViewModel.APIprojectResponse.collectAsState().value //TODO QUITAR COMO TEST
 
-    if (test.data != null) {
+//    val test = mainViewModel.APIprojectResponse.collectAsState().value //TODO QUITAR COMO TEST
 
-        Log.d("CONVER_START", "Conversion start")
-
-        val testProjects = toProjectsTable(test)
-        Log.d("CONVER_PJ", testProjects.toString())
-
-        val testChecklists = toChecklistsTable(test)
-        Log.d("CONVER_CK", testChecklists.toString())
-
-        mainViewModel.insertMultipleProjects(testProjects)
-        mainViewModel.insertMultipleChecklists(testChecklists)
-        //mainViewModel.insertProject(testProjects[0])
-        //mainViewModel.insertChecklist(testChecklists[0])
-
-    }
-
-
-
-    mainViewModel.getMultipleProjectsByIds(arrayOf(1,2))
-    val multiP = mainViewModel.multipleProjectsByIds.collectAsState().value
-    if(multiP.isNotEmpty()){
-        Log.d("MULTIP", multiP.toString())
-    }
-
-
-//    activityViewModel.saveUserData(
-//        userData = UserData(
-//            userCode = 1,
-//            token = "2d4b6637bfaa6224cd08f31a79ebf9ab"
-//        )
-//    )
+//    if (test.data != null) {
 //
-//    activityViewModel.getUserData()
-//    Log.d("USER2", activityViewModel.userData.toString())
+//        mainViewModel.insertMultipleProjects(test)
+//        mainViewModel.insertMultipleChecklists(test)
+//        //mainViewModel.insertProject(testProjects[0])
+//        //mainViewModel.insertChecklist(testChecklists[0])
+//
+//    }
+
+
+
+//    mainViewModel.getMultipleProjectsByIds(arrayOf(1,2))
+//    val multiP = mainViewModel.multipleProjectsByIds.collectAsState().value
+//    if(multiP.isNotEmpty()){
+//        Log.d("MULTIP", multiP.toString())
+//    }
+
+
+    activityViewModel.saveUserData(
+        userData = UserData(
+            userCode = 1,
+            token = "2d4b6637bfaa6224cd08f31a79ebf9ab"
+        ),
+        context = context
+    )
+
+    activityViewModel.getUserData(
+        context = context
+    )
 
 
     /* -------------------------- */
