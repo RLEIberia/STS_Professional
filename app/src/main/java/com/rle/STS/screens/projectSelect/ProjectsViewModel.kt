@@ -21,7 +21,8 @@ class ProjectsViewModel @Inject constructor(
     private val _userProjects: MutableStateFlow<List<ProjectsTable>> =
         MutableStateFlow(emptyList())
     val userProjects = _userProjects.asStateFlow()
-
+    private val _index: MutableStateFlow<Int> = MutableStateFlow(0)
+    val index = _index.asStateFlow()
 
 //    fun getMultipleProjectsByIds(ids: Array<Int>) {
 //        viewModelScope.launch {
@@ -35,6 +36,11 @@ class ProjectsViewModel @Inject constructor(
                 dbRepository.getMultipleProjectsByIds(
                     user.projects_id.split(",").map { it.toInt() }.toTypedArray()
                 )
+        }
+    }
+    fun indexMove(value: Int) {
+        viewModelScope.launch(Dispatchers.IO) {
+            _index.value = _index.value+value
         }
     }
 

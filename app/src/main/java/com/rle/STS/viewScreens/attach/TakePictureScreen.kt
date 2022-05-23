@@ -368,7 +368,7 @@ fun ImagesListDialog(
                     rightVisible = imagen.value < fileList.size - 1,
                     rightText = stringResource(id = R.string.next),
                     rightFunction = { imagen.value++ },
-                    middleText = stringResource(id = R.string.go_back),
+                    middleText = stringResource(id = R.string.back),
                     middleFunction = { openDialog.value = false }
                 )
 
@@ -451,7 +451,7 @@ fun ImagesActionDialog(
                 Spacer(modifier = Modifier.weight(1f))
 
                 CustomButton(
-                    text = stringResource(id = R.string.go_back),
+                    text = stringResource(id = R.string.back),
                     buttonSize = 250,
                     onClick = {
                         openDialog2.value = false

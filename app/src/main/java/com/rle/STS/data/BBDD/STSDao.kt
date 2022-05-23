@@ -47,6 +47,9 @@ interface STSDao {
     @Query("SELECT * from checklists_table where id =:id")
     suspend fun getMultipleChecklistById(id: Array<Int>): List<ChecklistsTable>
 
+    @Query("SELECT * from checklists_table where project_id=:projectId")
+    suspend fun getMultipleChecklistsByProject(projectId: Int): List<ChecklistsTable>
+
     //TODO add checklist by id and user
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)

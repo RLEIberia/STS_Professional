@@ -21,39 +21,39 @@ data class ChecklistsTable(
     @PrimaryKey
     @NonNull
     @ColumnInfo(name = "id")
-    val id: Int,
+    val id: Int = -1,
 
     @ColumnInfo(name = "checklist_id")
-    val checklist_id: Int,
+    val checklist_id: Int = -1,
 
     @ColumnInfo(name = "project_id")
-    val project_id: Int,
+    val project_id: Int = -1,
 
     @ColumnInfo(name = "name")
-    val name: String,
+    val name: String = "",
 
     @ColumnInfo(name = "description")
-    val description: String,
+    val description: String = "",
 
     @ColumnInfo(name = "created_at")
-    val created_at: Long,
+    val created_at: Long = -1,
 
     @ColumnInfo(name = "updated_at")
-    val updated_at: Long,
+    val updated_at: Long = -1,
 
     @ColumnInfo(name = "version")
-    val version: Int,
+    val version: Int = -1,
 
     @ColumnInfo(name = "activated")
-    val activated: Int,
+    val activated: Int = -1,
 
     @ColumnInfo(name = "executions_counter")
-    val executions_counter: Int,
+    val executions_counter: Int = -1,
 
     @ColumnInfo(name = "json")
-    val json: String,
+    val json: String = "",
 
     @ColumnInfo(name = "state")
-    val state: Int //0 - Not ready, 1 - Downloading, 2 - Ready, 3 - Delete, 4 - Delete after ending, 99 - Internal
+    val state: Int = -1 //0 - Not ready, 1 - Downloading, 2 - Ready, 3 - Delete, 4 - Delete after ending, 99 - Internal
 
 )

@@ -23,6 +23,8 @@ import com.rle.STS.utils.converters.toChecklistsTable
 import com.rle.STS.utils.converters.toProjectsTable
 import com.rle.STS.widgets.CustomButton
 import com.rle.STS.widgets.CustomTopIconButton
+import com.rle.STS.widgets.SimpleTopBar
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 
 
@@ -97,25 +99,7 @@ fun MainScreen(
     Scaffold(
         scaffoldState = scaffoldState,
         topBar = {
-            TopAppBar(
-                backgroundColor = topBarColor,
-                modifier = Modifier.height(60.dp)
-            ) {
-                Column() {
-                    Spacer(modifier = Modifier.weight(1f))
-                    Row() {
-                        Spacer(modifier = Modifier.width(10.dp))
-                        CustomButton(text = stringResource(R.string.menu), onClick = {
-                            scope.launch {
-                                scaffoldState.drawerState.open()
-                            }
-                        })
-                        Spacer(modifier = Modifier.weight(1f))
-                    }
-                    Spacer(modifier = Modifier.weight(1f))
-                }
-
-            }
+            SimpleTopBar(scope, scaffoldState)
         },
         drawerContent = {
             Drawer(scaffoldState = scaffoldState, scope = scope)

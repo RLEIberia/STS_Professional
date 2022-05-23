@@ -11,27 +11,27 @@ data class ProjectsTable(
 
     @PrimaryKey
     @ColumnInfo(name = "id")
-    val id: Int,
+    val id: Int = -1,
 
     @ColumnInfo(name = "name")
-    val name: String,
+    val name: String = "",
 
     @ColumnInfo(name = "description")
-    val description: String,
+    val description: String = "",
 
     @ColumnInfo(name = "version")
-    val version: Int,
+    val version: Int = -1,
 
     @ColumnInfo(name = "activated")
-    val activated: Int,
+    val activated: Int = -1,
 
     @ColumnInfo(name = "created_at")
-    val created_at: Long,
+    val created_at: Long = -1,
 
     @ColumnInfo(name = "updated_at")
-    val updated_at: Long,
+    val updated_at: Long = -1,
 
     @ColumnInfo(name = "state")
-    val state: Int,
+    val state: Int = -1
 
 )

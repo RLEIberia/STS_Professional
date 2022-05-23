@@ -22,7 +22,7 @@ fun XMLText(
     textColorParameter: Color = textColor,
     textSize: Float = 25.0f,
     borderColor: Color = textBorderColor,
-    enabled: Boolean
+    enabled: Boolean = true
 ) {
     val selectedItem = remember { mutableStateOf(0) }
 

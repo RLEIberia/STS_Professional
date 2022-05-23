@@ -23,6 +23,7 @@ class DbRepository @Inject constructor(private val STSDao: STSDao) {
     //Checklists Dao
     fun getChecklists(): Flow<List<ChecklistsTable>> = STSDao.getChecklists()
     suspend fun getChecklistById(id: Int) = STSDao.getChecklistById(id)
+    suspend fun getMultipleChecklistsByProject (projectId: Int) = STSDao.getMultipleChecklistsByProject(projectId)
     suspend fun insertChecklist(checklist: ChecklistsTable) = STSDao.insertChecklist(checklist)
     suspend fun insertMultipleChecklists(checklists: ArrayList<ChecklistsTable>) = STSDao.insertMultipleChecklists(checklists)
     suspend fun updateChecklist(checklist: ChecklistsTable) = STSDao.updateChecklist(checklist)

@@ -18,7 +18,10 @@ import com.rle.STS.R
 import com.rle.STS.viewScreens.data.*
 import com.rle.STS.ui.theme.topBarColor
 import com.rle.STS.screens.ViewRepository
+import com.rle.STS.ui.theme.specialButtonColor
 import com.rle.STS.viewScreens.ViewScreens
+import com.rle.STS.widgets.BottomBar
+import com.rle.STS.widgets.BottomBarChecklist
 import com.rle.STS.widgets.BottomButtons
 import com.rle.STS.widgets.CustomButton
 import kotlinx.coroutines.CoroutineScope
@@ -59,7 +62,17 @@ fun ChecklistScreen(
             )
         },
         bottomBar = {
-            //TODO
+            BottomBarChecklist(
+                modifier = Modifier,
+                checklistViewModel = checklistViewModel,
+                backOnClick = { /*TODO*/ },
+                centerActive = true,
+                centerText = "TEST",
+                centerOnClick = { /*TODO*/ },
+                rightActive = true,
+                nextOnClick = { /*TODO*/ },
+                centerColor = specialButtonColor
+            )
         },
         drawerContent = {
             //TODO
@@ -68,7 +81,7 @@ fun ChecklistScreen(
         // Cargar JSON y seleccionar vista actual, Crear metodo que lea JSON y devuelva siguiente vista
 
         //ESPERAMOS A QUE EL VIEWMODEL HAYA CARGADO LOS DATOS
-        if(checklist.checklistData != null) {
+        if (checklist.checklistData != null) {
 
             Surface(
                 modifier = Modifier

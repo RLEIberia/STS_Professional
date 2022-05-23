@@ -3,7 +3,6 @@ package com.rle.STS.widgets
 import android.widget.Toast
 import androidx.compose.foundation.layout.*
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
@@ -43,7 +42,7 @@ fun BottomButtons() {
 fun BottomButtons(
     leftFunction: () -> Unit,
     rightFunction: () -> Unit,
-    leftText: String = stringResource(R.string.go_back),
+    leftText: String = stringResource(R.string.back),
     rightText: String = stringResource(R.string.next),
     leftVisible: Boolean = true,
     rightVisible: Boolean = true
@@ -80,7 +79,7 @@ fun BottomButtons(
     middleFunction: () -> Unit,
     middleColor: Color = buttonExtraColor,
     middleInteractable: Boolean = true,
-    leftText: String = stringResource(R.string.go_back),
+    leftText: String = stringResource(R.string.back),
     rightText: String = stringResource(R.string.next),
     leftFunction: () -> Unit = {},
     rightFunction: () -> Unit = {},

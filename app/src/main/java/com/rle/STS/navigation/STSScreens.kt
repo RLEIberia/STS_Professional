@@ -5,5 +5,5 @@ enum class STSScreens {
     MainScreen,
     ProjectSelectScreen,
     ChecklistSelectScreen,
-    Checklist
+    ChecklistScreen
 }

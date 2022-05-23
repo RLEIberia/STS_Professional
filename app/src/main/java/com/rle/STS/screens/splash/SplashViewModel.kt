@@ -23,6 +23,15 @@ class SplashViewModel @Inject constructor(
 
             //Si la base de datos no está creada no va bien
             dbRepository.insertChecklist(TableInserts.checklistExtra1)
+
+            dbRepository.insertProject(TableInserts.projectExtra1)
+            dbRepository.insertProject(TableInserts.projectExtra2)
+            dbRepository.insertProject(TableInserts.projectExtra3)
+            dbRepository.insertProject(TableInserts.projectExtra4)
+            dbRepository.insertProject(TableInserts.projectExtra5)
+            dbRepository.insertProject(TableInserts.projectExtra6)
+
+
         }
 
     }

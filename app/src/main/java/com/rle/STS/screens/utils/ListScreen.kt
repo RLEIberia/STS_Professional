@@ -1,6 +1,5 @@
 package com.rle.STS.screens
 
-import android.util.Log
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
 import androidx.compose.runtime.*
@@ -15,10 +14,8 @@ import com.rle.STS.navigation.STSScreens
 import com.rle.STS.screens.projectSelect.ProjectsViewModel
 import com.rle.STS.screens.utils.ListCardView
 import com.rle.STS.screens.utils.ListConfirmDialog
-import com.rle.STS.ui.theme.topBarColor
 import com.rle.STS.widgets.BottomButtons
-import com.rle.STS.widgets.CustomButton
-import kotlinx.coroutines.launch
+import com.rle.STS.widgets.SimpleTopBar
 
 
 @Composable
@@ -47,29 +44,11 @@ fun ListScreen(
     Scaffold(
         scaffoldState = scaffoldState,
         topBar = {
-            TopAppBar(
-                backgroundColor = topBarColor,
-                modifier = Modifier.height(60.dp)
-            ) {
-                Column() {
-                    Spacer(modifier = Modifier.weight(1f))
-                    Row() {
-                        Spacer(modifier = Modifier.width(10.dp))
-                        CustomButton(text = stringResource(R.string.menu), onClick = {
-                            scope.launch {
-                                scaffoldState.drawerState.open()
-                            }
-                        })
-                        Spacer(modifier = Modifier.weight(1f))
-                    }
-                    Spacer(modifier = Modifier.weight(1f))
-                }
-
-            }
+            SimpleTopBar(scope = scope, scaffoldState = scaffoldState)
         },
         drawerContent = {
             Drawer(scaffoldState = scaffoldState, scope = scope)
-        },
+        }
     ) { contentPadding ->
 
         // Screen content
@@ -123,6 +102,8 @@ fun ListScreen(
 
             Spacer(modifier = Modifier.weight(1f))
 
+            //TODO SACAR BOTONES DE BOTTOMBUTTONS A BOTTOMBAR
+
             BottomButtons(
                 leftFunction = {
                     if (page > 1) {
@@ -136,7 +117,7 @@ fun ListScreen(
                     }
                 },
                 rightText = stringResource(id = R.string.down),
-                middleText = stringResource(id = R.string.go_back),
+                middleText = stringResource(id = R.string.back),
                 middleFunction = { }, // ir atras
                 middleInteractable = false,
                 leftVisible = page != 1,
@@ -152,7 +133,7 @@ fun ListScreen(
     if (openConfirmDialog.value) {
         ListConfirmDialog(
             openConfirmDialog = openConfirmDialog,
-            onListClick = {navController.navigate(STSScreens.Checklist.name)},
+            onListClick = {navController.navigate(STSScreens.ChecklistScreen.name)},
             clickedList = clickedList
         )
     }
@@ -186,3 +167,48 @@ fun ListScreen(
 //        ListScreen({ }, itemsList = itemsList, title = "", letter = "P")
 //    }
 //}
+
+//val localList: MutableList<String>
+//
+//if (itemsList.size >= page * 4 + 1) {
+//    limitPage = false
+//    localList = itemsList.subList((page - 1) * 4, page * 4)
+//} else {
+//    limitPage = true
+//    localList = itemsList.subList((page - 1) * 4, itemsList.size)
+//}
+//
+//Spacer(modifier = Modifier.height(3.dp))
+//
+//for (item in localList) {
+//    val index = localList.indexOf(item)
+//
+//    Row(
+//        Modifier.fillMaxWidth()
+//    ) {
+//        val number = letter + ((page - 1) * 4 + index + 1)
+//        Spacer(modifier = Modifier.width(10.dp))
+//
+//        Box(modifier = Modifier.weight(1.1f)) {
+//            ListCardView(
+//                text = number,
+//                clickable = true,
+//                onListClick = {
+//                    if (letter == "P") {
+//                        navController.navigate(STSScreens.ChecklistSelectScreen.name)
+//                    } else {
+//                        openConfirmDialog.value = true
+//                        clickedList.value = number
+//                    }
+//                }
+//            )
+//        }
+//        Box(modifier = Modifier.weight(8.9f)) {
+//            ListCardView(
+//                text = item,
+//                clickable = false,
+//            )
+//        }
+//        Spacer(modifier = Modifier.width(10.dp))
+//
+//    }

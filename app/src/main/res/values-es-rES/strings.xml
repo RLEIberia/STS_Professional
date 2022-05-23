@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="go_back">Ir atras</string>
-    <string name="next">Siguiente</string>
+    <string name="back">IR ATRÁS</string>
+    <string name="next">SIGUIENTE</string>
     <string name="menu">MENU</string>
     <string name="audio">AUDIO</string>
-    <string name="previous">Anterior</string>
+    <string name="previous">ANTERIOR</string>
     <string name="take_picture">Tomar Foto</string>
     <string name="open_list">Ver Lista</string>
     <string name="select">Seleccionar</string>

@@ -374,7 +374,7 @@ fun videosListDialog(
                     rightVisible = video.value < fileList.size - 1,
                     rightText = stringResource(id = R.string.next),
                     rightFunction = { video.value++ },
-                    middleText = stringResource(id = R.string.go_back),
+                    middleText = stringResource(id = R.string.back),
                     middleFunction = { openDialog.value = false }
                 )
 
@@ -457,7 +457,7 @@ fun VideosActionDialog(
                 Spacer(modifier = Modifier.weight(1f))
 
                 CustomButton(
-                    text = stringResource(id = R.string.go_back),
+                    text = stringResource(id = R.string.back),
                     buttonSize = 250,
                     onClick = {
                         openDialog2.value = false
