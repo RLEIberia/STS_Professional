@@ -40,7 +40,7 @@ class ViewRepository @Inject constructor(){
         @Composable
         fun AU1(checklistViewModel: ChecklistViewModel) { AU1Screen(checklistViewModel = checklistViewModel) }
         @Composable
-        fun AU2(file: String, viewModel: ChecklistViewModel) { AudioScreen(file = "Grabacion.m4a", viewModel) }
+        fun AU2(checklistViewModel: ChecklistViewModel) { AU2Screen(checklistViewModel = checklistViewModel) }
         @Composable
         fun AU3(viewModel: ChecklistViewModel, nextType: Int) { RecordAudioScreen(viewModel, nextType) }
 

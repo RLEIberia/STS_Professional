@@ -34,7 +34,6 @@ class MainViewModel @Inject constructor(
 ) : ViewModel() {
 
 
-
 //    private val _projectsList = MutableStateFlow<List<ProjectsTable>>(emptyList())
 //    val projectsList = _projectsList.asStateFlow()
 //
@@ -88,7 +87,7 @@ class MainViewModel @Inject constructor(
     fun apiGetProjects(context: Context) {
         viewModelScope.launch(Dispatchers.IO) {
 
-            if(apiRepository.checkForInternet(context = context)) {
+            if (apiRepository.checkForInternet(context = context)) {
 
                 Log.d("INTERNET", "Internet connection detected")
 
@@ -98,9 +97,13 @@ class MainViewModel @Inject constructor(
                         .isNotEmpty() || _APIprojectResponse.value.e.toString().isNotEmpty()
                 ) {
                     _APIprojectResponse.value.loading = false
-                    dbRepository.insertMultipleProjects(toProjectsTable(_APIprojectResponse.value))
-                    dbRepository.insertMultipleChecklists(toChecklistsTable(_APIprojectResponse.value))
+                    if (_APIprojectResponse.value.data != null) {
+                        Log.d("API", _APIprojectResponse.value.data.toString())
+                        dbRepository.insertMultipleProjects(toProjectsTable(_APIprojectResponse.value))
+                        dbRepository.insertMultipleChecklists(toChecklistsTable(_APIprojectResponse.value))
+                    }
                 }
+
             } else {
                 Log.d("INTERNET", "No internet conenection")
             }
@@ -109,13 +112,15 @@ class MainViewModel @Inject constructor(
 
     fun insertMultipleChecklists(apiProjectsResponse: DataOrException<ProjectsResponse, Boolean, Exception>) {
         viewModelScope.launch(Dispatchers.IO) {
-            dbRepository.insertMultipleChecklists(toChecklistsTable(apiProjectsResponse)) }
+            dbRepository.insertMultipleChecklists(toChecklistsTable(apiProjectsResponse))
+        }
     }
 
     fun insertMultipleProjects(apiProjectsResponse: DataOrException<ProjectsResponse, Boolean, Exception>) {
         viewModelScope.launch(Dispatchers.IO) {
 
-            dbRepository.insertMultipleProjects(toProjectsTable(apiProjectsResponse)) }
+            dbRepository.insertMultipleProjects(toProjectsTable(apiProjectsResponse))
+        }
     }
 
     fun insertChecklist(checklist: ChecklistsTable) {
@@ -137,7 +142,7 @@ class MainViewModel @Inject constructor(
         MutableStateFlow(emptyList())
     val multipleProjectsByIds = _multipleProjectsByIds.asStateFlow()
     fun getMultipleProjectsByIds(ids: Array<Int>) {
-        viewModelScope.launch (Dispatchers.IO){
+        viewModelScope.launch(Dispatchers.IO) {
             _multipleProjectsByIds.value = dbRepository.getMultipleProjectsByIds(ids)
         }
     }

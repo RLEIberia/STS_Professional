@@ -32,19 +32,21 @@ fun VideoScreen(checklistViewModel: ChecklistViewModel) {
 
     val context = LocalContext.current
 
+    //ViewModel variables
     val currentStep = checklistViewModel.currentStep.collectAsState()
     val currentView = checklistViewModel.currentView.collectAsState()
     val viewData =
         checklistViewModel.checklist.collectAsState().value.checklistData!!.steps[currentStep.value]
             .views[currentView.value].viewData
 
+    //File variables
     val directoryStr = context.filesDir.path + File.separator + "Videos" + File.separator + "In"
     val directory = File(directoryStr)
     val videoFile = File(directory, viewData.files[0].file)
 
+    //Test if the directory exists, if not, create it
     if (!directory.exists())
         directory.mkdirs()
-    val intent = Intent()
 
     Column(
         modifier = Modifier
@@ -64,11 +66,10 @@ fun VideoScreen(checklistViewModel: ChecklistViewModel) {
             ) {
 
                 VideoThumbnail(video = videoFile)
-
             }
-
         }
-
+    }
+}
 
 //        Row() {
 //
@@ -101,7 +102,3 @@ fun VideoScreen(checklistViewModel: ChecklistViewModel) {
 //                })
 //
 //            Spacer(modifier = Modifier.weight(1f))
-
-    }
-
-}

@@ -19,22 +19,28 @@
         "position": 1,
         "idStep": 1,
         "stepName": "Paso 1",
-        "numViews": 5,
+        "numViews": 6,
         "path": [
           {
             "actionCode": "100",
             "message": "",
-            "nextStep": [2]
+            "nextStep": [
+              2
+            ]
           },
           {
             "actionCode": "100",
             "message": "",
-            "nextStep": [2]
+            "nextStep": [
+              2
+            ]
           },
           {
             "actionCode": "100",
             "message": "",
-            "nextStep": [2]
+            "nextStep": [
+              2
+            ]
           }
         ],
         "views": [
@@ -43,7 +49,9 @@
             "viewOrder": 1,
             "viewType": "QR1",
             "viewData": {
-              "text": ["Elige entre Correcto, Incorrecto y NSNC asdfasdfasdf asdfasdf sdfasdf asdfasdf asdf"],
+              "text": [
+                "Elige entre Correcto, Incorrecto y NSNC asdfasdfasdf asdfasdf sdfasdf asdfasdf asdf"
+              ],
               "audio": "Elige entre las opciones que ve en pantalla"
             }
           },
@@ -52,9 +60,11 @@
             "viewOrder": 2,
             "viewType": "AU1",
             "viewData": {
-              "text": ["Elige la patata calienteasdfasdfasdfasdfasdf asdfadsfasdfasdfasdf assdfasdfasdfasdf adfadf"],
+              "text": [
+                "Elige la patata calienteasdfasdfasdfasdfasdf asdfadsfasdfasdfasdf assdfasdfasdfasdf adfadf"
+              ],
               "audio": "Elige entre las opciones que ve en pantalla",
-              "files":[
+              "files": [
                 {
                   "name": "",
                   "description": "",
@@ -68,28 +78,56 @@
             "viewOrder": 3,
             "viewType": "TX1",
             "viewData": {
-              "text": ["Título de pasoasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfadsfadsfasdfasdfasdfasdfasdfasdfasdfasdf"],
+              "text": [
+                "Título de pasoasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfadsfadsfasdfasdfasdfasdfasdfasdfasdfasdf"
+              ],
               "audio": "Título de paso reproducido por las gafas"
             }
           },
           {
             "idView": 4,
             "viewOrder": 4,
-            "viewType": "OP2",
+            "viewType": "OP1",
             "viewData": {
-              "text": ["Selecciona la respuesta correcta"],
-              "options": ["Azul", "Rojo", "Amarillo", "Verde"]
+              "text": [
+                "Selecciona la respuesta correcta"
+              ],
+              "options": [
+                "Azul",
+                "Rojo",
+                "Amarillo",
+                "Verde"
+              ]
             }
           },
           {
             "idView": 5,
             "viewOrder": 5,
-            "viewType": "TX2",
+            "viewType": "AU2",
             "viewData": {
               "text": [
                 "Descripción del paso"
               ],
-              "audio": "Descripción del paso leído por las gafas"
+              "audio": "Descripción del paso leído por las gafas",
+              "files": [
+                {
+                  "name": "",
+                  "description": "",
+                  "file": "piano-melody.wav"
+                }
+              ]
+            }
+          },
+          {
+            "idView": 6,
+            "viewOrder": 6,
+            "viewType": "TX3",
+            "viewData": {
+              "text": [
+                "Título potato",
+                "Potato test description"
+              ],
+              "audio": "Título de paso reproducido por las gafas"
             }
           }
         ]

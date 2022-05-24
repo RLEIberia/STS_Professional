@@ -156,8 +156,7 @@ fun ChecklistScreen(
                         checklistViewModel = checklistViewModel,
                     )
                     ViewScreens.AU2.name -> ViewRepository.AU2(
-                        viewModel = checklistViewModel,
-                        file = ""
+                        checklistViewModel = checklistViewModel,
                     )
                     ViewScreens.AU3.name -> ViewRepository.AU3(
                         viewModel = checklistViewModel,

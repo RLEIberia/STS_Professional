@@ -23,6 +23,9 @@
     <string name="play_recording">Reproducir Grabacion</string>
     <string name="stop_recording">Detener Grabacion</string>
     <string name="record_video">Grabar Video</string>
+    <string name="play">REPRODUCIR</string>
+    <string name="pause">PAUSAR</string>
+    <string name="stop">DETENER</string>
     <string name="clear">Limpiar</string>
     <string name="total_fotos">Total fotos:</string>
     <string name="total_videos">Total videos:</string>

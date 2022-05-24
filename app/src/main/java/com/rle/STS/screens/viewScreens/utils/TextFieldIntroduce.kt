@@ -86,7 +86,6 @@ fun TextFieldIntroduce(
                         if (result.isEmpty()) {
                             Column(
                                 modifier = Modifier
-//                                    .padding(5.dp)
                                     .fillMaxWidth()
                                     .fillMaxHeight()
                                     .background(cardTextColor),

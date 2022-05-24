@@ -24,7 +24,8 @@ val buttonOkColor = Color(0xFF00FF00)
 val correctAnswer = Color(0xFF86E986)
 val buttonKoColor = Color(0xFFFF0000)
 val buttonAlertColor = Color(0xFFFF0000)
-val buttonNsNcColor = Color(0xFF757171)
+val grayedButton = Color(0xFF757171)
+val buttonStop = Color(0xFFFF0000)
 
 
 

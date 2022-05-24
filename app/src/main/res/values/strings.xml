@@ -24,6 +24,9 @@
     <string name="start_recording">Start Recording</string>
     <string name="play_recording">Play Recording</string>
     <string name="stop_recording">Stop Recording</string>
+    <string name="play">PLAY</string>
+    <string name="pause">PAUSE</string>
+    <string name="stop">STOP</string>
     <string name="record_video">Record Video</string>
     <string name="clear">Clear</string>
     <string name="total_fotos">Total photos:</string>
