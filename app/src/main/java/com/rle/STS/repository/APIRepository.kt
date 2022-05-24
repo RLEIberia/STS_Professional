@@ -1,11 +1,13 @@
 package com.rle.STS.repository
 
+import android.content.Context
 import android.util.Log
 import com.rle.STS.data.DataOrException
 import com.rle.STS.model.APIs.projects.Checklist
 import com.rle.STS.model.APIs.projects.ProjectsResponse
 import com.rle.STS.model.BBDD.ChecklistsTable
 import com.rle.STS.network.StsAPI
+import com.rle.STS.utils.checkForInternet
 import retrofit2.HttpException
 import javax.inject.Inject
 
@@ -24,5 +26,8 @@ class APIRepository @Inject constructor(
         Log.d("INSIDE", "getProjects: $response")
         return DataOrException(data = response)
     }
+
+    fun checkForInternet(context: Context) =
+        com.rle.STS.utils.checkForInternet(context = context)
 
 }

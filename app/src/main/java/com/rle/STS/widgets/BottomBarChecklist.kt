@@ -41,21 +41,24 @@ fun BottomBarChecklist(
         mutableStateOf(R.drawable.options)
     }
 
-    when (checklist.value.checklistData!!.steps[currentStep.value].views[currentView.value].viewType) {
+    if (checklist.value.checklistData != null) {
 
-        ViewScreens.IM1.name, ViewScreens.IM2.name, ViewScreens.IM3.name  -> {
-            centerActiveView.value = true
-            centerTextView.value = "AMPLIAR"
-        }
-        ViewScreens.VD1.name -> {
-            centerActiveView.value = true
-            centerTextView.value = "REPRODUCIR"
-        }
+        when (checklist.value.checklistData!!.steps[currentStep.value].views[currentView.value].viewType) {
 
-        else -> {
-            centerActiveView.value = false
-        }
+            ViewScreens.IM1.name, ViewScreens.IM2.name, ViewScreens.IM3.name -> {
+                centerActiveView.value = true
+                centerTextView.value = "AMPLIAR"
+            }
+            ViewScreens.VD1.name -> {
+                centerActiveView.value = true
+                centerTextView.value = "REPRODUCIR"
+            }
 
+            else -> {
+                centerActiveView.value = false
+            }
+
+        }
     }
 
     BottomBar(
@@ -68,7 +71,7 @@ fun BottomBarChecklist(
         centerActive = centerActiveView.value,
         centerText = centerTextView.value,
         centerIcon = centerIconView.value,
-        centerOnClick = {checklistViewModel.centerButton(context = context)},
+        centerOnClick = { checklistViewModel.centerButton(context = context) },
         centerColor = centerColor,
         centerSize = 250,
         rightActive = rightActive,

@@ -41,7 +41,7 @@
           {
             "idView": 1,
             "viewOrder": 1,
-            "viewType": "OP1",
+            "viewType": "QR1",
             "viewData": {
               "text": ["Elige entre Correcto, Incorrecto y NSNC asdfasdfasdf asdfasdf sdfasdf asdfasdf asdf"],
               "audio": "Elige entre las opciones que ve en pantalla"
@@ -50,7 +50,7 @@
           {
             "idView": 2,
             "viewOrder": 2,
-            "viewType": "VD1",
+            "viewType": "AU1",
             "viewData": {
               "text": ["Elige la patata calienteasdfasdfasdfasdfasdf asdfadsfasdfasdfasdf assdfasdfasdfasdf adfadf"],
               "audio": "Elige entre las opciones que ve en pantalla",

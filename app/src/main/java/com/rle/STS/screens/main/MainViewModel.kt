@@ -3,6 +3,7 @@ package com.rle.STS.screens.main
 import android.content.Context
 import android.graphics.Insets.add
 import android.util.Log
+import androidx.compose.ui.platform.LocalContext
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.lifecycle.viewmodel.compose.viewModel
@@ -31,6 +32,7 @@ class MainViewModel @Inject constructor(
     private val apiRepository: APIRepository,
     private val dbRepository: DbRepository
 ) : ViewModel() {
+
 
 
 //    private val _projectsList = MutableStateFlow<List<ProjectsTable>>(emptyList())
@@ -83,16 +85,24 @@ class MainViewModel @Inject constructor(
     val APIprojectResponse = _APIprojectResponse.asStateFlow()
 
     //Cogemos respuesta de proyectos de la API
-    fun apiGetProjects() {
+    fun apiGetProjects(context: Context) {
         viewModelScope.launch(Dispatchers.IO) {
-            _APIprojectResponse.value.loading = true
-            _APIprojectResponse.value = apiRepository.getProjects()
-            if (_APIprojectResponse.value.data.toString()
-                    .isNotEmpty() || _APIprojectResponse.value.e.toString().isNotEmpty()
-            ) {
-                _APIprojectResponse.value.loading = false
-                dbRepository.insertMultipleProjects(toProjectsTable(_APIprojectResponse.value))
-                dbRepository.insertMultipleChecklists(toChecklistsTable(_APIprojectResponse.value))
+
+            if(apiRepository.checkForInternet(context = context)) {
+
+                Log.d("INTERNET", "Internet connection detected")
+
+                _APIprojectResponse.value.loading = true
+                _APIprojectResponse.value = apiRepository.getProjects()
+                if (_APIprojectResponse.value.data.toString()
+                        .isNotEmpty() || _APIprojectResponse.value.e.toString().isNotEmpty()
+                ) {
+                    _APIprojectResponse.value.loading = false
+                    dbRepository.insertMultipleProjects(toProjectsTable(_APIprojectResponse.value))
+                    dbRepository.insertMultipleChecklists(toChecklistsTable(_APIprojectResponse.value))
+                }
+            } else {
+                Log.d("INTERNET", "No internet conenection")
             }
         }
     }

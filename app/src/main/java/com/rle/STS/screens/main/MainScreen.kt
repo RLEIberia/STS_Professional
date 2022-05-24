@@ -48,7 +48,7 @@ fun MainScreen(
 
     LaunchedEffect(true) {
         Log.d("LAUNCH", "LaunchedEffect executed")
-        mainViewModel.apiGetProjects()
+        mainViewModel.apiGetProjects(context = context)
     }
 
 

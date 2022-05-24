@@ -60,47 +60,47 @@ class MainActivity : ComponentActivity() {
 
 
     //Text to Speech Android
-    private val startForResult = registerForActivityResult(
-        ActivityResultContracts.StartActivityForResult()
-    ) { result ->
-        if (result.resultCode == RESULT_OK) {
-            val spokenText: String? =
-                result.data?.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS)
-                    .let { text -> text?.get(0) }
-            Log.d("TEST",spokenText.toString())
-        }
-    }
+//    private val startForResult = registerForActivityResult(
+//        ActivityResultContracts.StartActivityForResult()
+//    ) { result ->
+//        if (result.resultCode == RESULT_OK) {
+//            val spokenText: String? =
+//                result.data?.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS)
+//                    .let { text -> text?.get(0) }
+//            Log.d("TEST",spokenText.toString())
+//        }
+//    }
+//
+//    private val textToSpeechEngine: TextToSpeech by lazy {
+//        TextToSpeech(this) {
+//            if (it == TextToSpeech.SUCCESS) textToSpeechEngine.language = Locale("es_ES")
+//        }
+//    }
 
-    private val textToSpeechEngine: TextToSpeech by lazy {
-        TextToSpeech(this) {
-            if (it == TextToSpeech.SUCCESS) textToSpeechEngine.language = Locale("es_ES")
-        }
-    }
 
-
-    //Para que funcione hay que añadir la siguiente contentDescription a algun elemento de la pantalla: hf_no_ptt_home
-    private val ActionBtnKeyCode = 500
-    override fun onKeyDown(keyCode: Int, event: KeyEvent?): Boolean {
-        when (keyCode) {
-            ActionBtnKeyCode ->                     // Action key is down - return true to stop default behavior
-            {
-                onBackPressed()
-                return true
-            }
-        }
-        return super.onKeyDown(keyCode, event)
-    }
-
-    override fun onKeyUp(keyCode: Int, event: KeyEvent?): Boolean {
-        when (keyCode) {
-            ActionBtnKeyCode ->                     // Action key has been released - return true to stop default behavior
-            {
-                onBackPressed()
-                return true
-            }
-        }
-        return super.onKeyUp(keyCode, event)
-    }
+//    //Para que funcione hay que añadir la siguiente contentDescription a algun elemento de la pantalla: hf_no_ptt_home
+//    private val ActionBtnKeyCode = 500
+//    override fun onKeyDown(keyCode: Int, event: KeyEvent?): Boolean {
+//        when (keyCode) {
+//            ActionBtnKeyCode ->                     // Action key is down - return true to stop default behavior
+//            {
+//                onBackPressed()
+//                return true
+//            }
+//        }
+//        return super.onKeyDown(keyCode, event)
+//    }
+//
+//    override fun onKeyUp(keyCode: Int, event: KeyEvent?): Boolean {
+//        when (keyCode) {
+//            ActionBtnKeyCode ->                     // Action key has been released - return true to stop default behavior
+//            {
+//                onBackPressed()
+//                return true
+//            }
+//        }
+//        return super.onKeyUp(keyCode, event)
+//    }
 
 }
 

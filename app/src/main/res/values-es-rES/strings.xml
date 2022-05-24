@@ -18,7 +18,6 @@
     <string name="result">Resultado: %1$s</string>
     <string name="correct">Correcto</string>
     <string name="incorrect">Incorrecto</string>
-    <string name="dictate">Dictar</string>
     <string name="introduce_number">Introducir</string>
     <string name="start_recording">Iniciar Grabacion</string>
     <string name="play_recording">Reproducir Grabacion</string>
@@ -37,4 +36,6 @@
     <string name="data_incorrect">La informacion introducida es incorrecta</string>
     <string name="down">BAJAR</string>
     <string name="up">SUBIR</string>
+    <string name="scanner">LECTOR</string>
+    <string name="dictate">DICTAR</string>
 </resources>

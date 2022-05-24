@@ -44,7 +44,7 @@ class ActivityViewModel @Inject constructor(
     )
 
     init {
-//        saveUserData(userData = UserData())
+        saveUserData(userData = UserData())
         getUserData(context = context)
         getUserById(context = context)
     }

@@ -27,15 +27,17 @@ class ViewRepository @Inject constructor(){
 
         //QR
         @Composable
-        fun QR1(viewModel: ChecklistViewModel, nextType: Int) { QRScreen(type = 0, { true }, stepViewModel = viewModel, nextType) }
+        fun QR1(checklistViewModel: ChecklistViewModel) {
+            QR1Screen(checklistViewModel = checklistViewModel)
+        }
         @Composable
-        fun QR2(viewModel: ChecklistViewModel, nextType: Int) { QRScreen(type = 1, { true }, stepViewModel = viewModel, nextType) }
+        fun QR2(checklistViewModel: ChecklistViewModel, nextType: Int) { QRScreen(type = 1, { true }, checklistViewModel = checklistViewModel) }
         @Composable
-        fun QR3(viewModel: ChecklistViewModel, nextType: Int) { QRScreen(type = 2, { true }, stepViewModel = viewModel, nextType) }
+        fun QR3(checklistViewModel: ChecklistViewModel, nextType: Int) { QRScreen(type = 2, { true }, checklistViewModel = checklistViewModel) }
 
         //Audio
         @Composable
-        fun AU1(viewModel: ChecklistViewModel, nextType: Int) { DictateScreen(viewModel, nextType) }
+        fun AU1(checklistViewModel: ChecklistViewModel) { AU1Screen(checklistViewModel = checklistViewModel) }
         @Composable
         fun AU2(file: String, viewModel: ChecklistViewModel) { AudioScreen(file = "Grabacion.m4a", viewModel) }
         @Composable

@@ -137,23 +137,21 @@ fun ChecklistScreen(
 
                     //QR
                     ViewScreens.QR1.name -> ViewRepository.QR1(
-                        viewModel = checklistViewModel,
-                        nextType = 0
+                        checklistViewModel = checklistViewModel,
                     )
-                    ViewScreens.QR2.name -> ViewRepository.QR2(
-                        viewModel = checklistViewModel,
-                        nextType = 0
-                    )
-                    ViewScreens.QR3.name -> ViewRepository.QR3(
-                        viewModel = checklistViewModel,
-                        nextType = 0
-                    )
+//                    ViewScreens.QR2.name -> ViewRepository.QR2(
+//                        viewModel = checklistViewModel,
+//                        nextType = 0
+//                    )
+//                    ViewScreens.QR3.name -> ViewRepository.QR3(
+//                        viewModel = checklistViewModel,
+//                        nextType = 0
+//                    )
                     ViewScreens.QR4.name -> {} //ViewRepository.QR4(viewModel = checklistViewModel, nextType =
 
                     //Audio
                     ViewScreens.AU1.name -> ViewRepository.AU1(
-                        viewModel = checklistViewModel,
-                        nextType = 0
+                        checklistViewModel = checklistViewModel,
                     )
                     ViewScreens.AU2.name -> ViewRepository.AU2(
                         viewModel = checklistViewModel,
