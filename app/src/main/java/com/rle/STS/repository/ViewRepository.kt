@@ -6,6 +6,7 @@ import com.rle.STS.screens.checklist.ChecklistViewModel
 import com.rle.STS.screens.viewScreens.data.*
 import com.rle.STS.screens.viewScreens.result.MultiOptionScreen
 import com.rle.STS.screens.viewScreens.result.OKKOScreen
+import com.rle.STS.screens.viewScreens.result.OP2Screen
 import javax.inject.Inject
 
 class ViewRepository @Inject constructor(){
@@ -71,20 +72,14 @@ class ViewRepository @Inject constructor(){
 
         //Options
         @Composable
-        fun OP1(viewModel: ChecklistViewModel) {
-            OKKOScreen(viewModel)
+        fun OP1(checklistViewModel: ChecklistViewModel) {
+            OKKOScreen(checklistViewModel)
         }
 
 
         @Composable
-        fun MultiOption2(viewModel: ChecklistViewModel, nextType: Int) {
-            MultiOptionScreen(
-                option1 = "Tomar el camino de la derecha",
-                option2 = "Tomar el camino de la izquierda",
-                option3 = "Tomar el camino central",
-                stepViewModel = viewModel,
-                nextType = 0
-            )
+        fun OP2(checklistViewModel: ChecklistViewModel){
+            OP2Screen(checklistViewModel = checklistViewModel)
         }
 
         @Composable

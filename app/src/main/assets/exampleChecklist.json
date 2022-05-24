@@ -75,10 +75,10 @@
           {
             "idView": 4,
             "viewOrder": 4,
-            "viewType": "CM1",
+            "viewType": "OP2",
             "viewData": {
-              "text": ["Saca una foto"],
-              "audio": "Tienes que sacar una o varias fotos"
+              "text": ["Selecciona la respuesta correcta"],
+              "options": ["Azul", "Rojo", "Amarillo", "Verde"]
             }
           },
           {

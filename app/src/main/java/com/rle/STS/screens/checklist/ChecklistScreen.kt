@@ -131,9 +131,11 @@ fun ChecklistScreen(
 
                     //Option
                     ViewScreens.OP1.name -> ViewRepository.OP1(
-                        viewModel = checklistViewModel
+                        checklistViewModel = checklistViewModel
                     )
-                    ViewScreens.OP2.name -> {} //ViewRepository.OP2(viewModel = checklistViewModel)
+                    ViewScreens.OP2.name ->  ViewRepository.OP2(
+                        checklistViewModel = checklistViewModel
+                    )
 
                     //QR
                     ViewScreens.QR1.name -> ViewRepository.QR1(

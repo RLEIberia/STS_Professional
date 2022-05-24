@@ -104,7 +104,7 @@ fun ChecklistSelectScreen(
                     itemsIndexed(items = checklistList) { index, item ->
                         ListRow(
                             buttonLetter = "C",
-                            buttonColor = Color(0xffff8000),
+                            buttonColor = specialButtonColor,
                             rowColor = Color.White,
                             textColor = Color.Black,
                             number = index,
