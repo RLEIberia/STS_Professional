@@ -2,10 +2,13 @@ package com.rle.STS.repository
 
 import com.rle.STS.data.BBDD.STSDao
 import com.rle.STS.model.BBDD.ChecklistsTable
+import com.rle.STS.model.BBDD.ExecutionsTable
 import com.rle.STS.model.BBDD.ProjectsTable
 import com.rle.STS.model.BBDD.UsersTable
 import kotlinx.coroutines.flow.Flow
+import java.util.*
 import javax.inject.Inject
+import kotlin.collections.ArrayList
 
 class DbRepository @Inject constructor(private val STSDao: STSDao) {
 
@@ -37,6 +40,15 @@ class DbRepository @Inject constructor(private val STSDao: STSDao) {
     suspend fun updateUser(user: UsersTable) = STSDao.updateUser(user)
     suspend fun deleteAllUsers() = STSDao.deleteAllUsers()
     suspend fun deleteUser(user: UsersTable) = STSDao.deleteUser(user)
+
+    //Executions Dao
+    fun getExecutions(): Flow<List<ExecutionsTable>> = STSDao.getExecutions()
+    fun getExecutionFlowById(id: UUID): Flow<List<ExecutionsTable>> = STSDao.getExecutionFlowById(id = id)
+    suspend fun insertExecution(executionsTable: ExecutionsTable) = STSDao.insertExecution(executionsTable = executionsTable)
+    suspend fun updateExecution(executionsTable: ExecutionsTable) = STSDao.updateExecution(executionsTable = executionsTable)
+    suspend fun deleteAllExecutions() = STSDao.deleteAllExecutions()
+    suspend fun deleteExecutionsById(id: UUID) = STSDao.deleteExecutionById(id = id)
+    suspend fun deleteExecution(executionsTable: ExecutionsTable) = STSDao.deleteExecution(executionsTable = executionsTable)
 
     //ViewPersistenceDao
 

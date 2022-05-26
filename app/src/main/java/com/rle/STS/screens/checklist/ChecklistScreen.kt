@@ -4,6 +4,7 @@ import android.util.Log
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
 import androidx.compose.runtime.*
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
@@ -19,6 +20,8 @@ import com.rle.STS.widgets.BottomBarChecklist
 import com.rle.STS.widgets.CustomButton
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
+import java.util.*
+import kotlin.collections.ArrayList
 
 @Composable
 fun ChecklistScreen(
@@ -36,16 +39,22 @@ fun ChecklistScreen(
 
     val checklist = checklistViewModel.checklist.collectAsState().value
 
+    val executionData = checklistViewModel.executionData.observeAsState(emptyList())
 
-    checklistViewModel.extractChecklist(fileName = "exampleChecklist.json", context = context)
+    LaunchedEffect(true) {
+        Log.d("LAUNCH", "LaunchedEffect finished")
+        //Recogemos la información del archivo JSON
+        checklistViewModel.extractChecklist(fileName = "exampleChecklist.json", context = context)
+        checklistViewModel.startChecklistExecution(UUID.fromString("00000000-0000-0000-0000-000000000000"))
+        //TODO cargar datos si existía
+        //TODO Que se reciba el json como parámetro
+    }
 
-//    LaunchedEffect(true) {
-//        Log.d("LAUNCH", "LaunchedEffect finished")
-//        //Recogemos la información del archivo JSON
-//        checklistViewModel.extractChecklist(fileName = "exampleChecklist.json", context = context)
-//        //TODO cargar datos si existía
-//        //TODO Que se reciba el json como parámetro
-//    }
+    if(executionData.value.isNullOrEmpty()){
+        Log.d("EXECUT", ": Null")
+    } else {
+        Log.d("EXECUT", ": Initialized, $executionData")
+    }
 
     Scaffold(
         topBar = {

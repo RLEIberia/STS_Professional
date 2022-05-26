@@ -19,7 +19,7 @@
         "position": 1,
         "idStep": 1,
         "stepName": "Paso 1",
-        "numViews": 6,
+        "numViews": 9,
         "path": [
           {
             "actionCode": "100",
@@ -58,10 +58,10 @@
           {
             "idView": 2,
             "viewOrder": 2,
-            "viewType": "AU1",
+            "viewType": "VD1",
             "viewData": {
               "text": [
-                "Elige la patata calienteasdfasdfasdfasdfasdf asdfadsfasdfasdfasdf assdfasdfasdfasdf adfadf"
+                "Mira el vídeo que sale por pantalla, pulsa a reproducir"
               ],
               "audio": "Elige entre las opciones que ve en pantalla",
               "files": [
@@ -79,7 +79,7 @@
             "viewType": "TX1",
             "viewData": {
               "text": [
-                "Título de pasoasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfadsfadsfasdfasdfasdfasdfasdfasdfasdfasdf"
+                "Título de test"
               ],
               "audio": "Título de paso reproducido por las gafas"
             }
@@ -106,7 +106,7 @@
             "viewType": "AU2",
             "viewData": {
               "text": [
-                "Descripción del paso"
+                "Escucha el audio, puedes reproducir, pausar y detener"
               ],
               "audio": "Descripción del paso leído por las gafas",
               "files": [
@@ -124,10 +124,60 @@
             "viewType": "TX3",
             "viewData": {
               "text": [
-                "Título potato",
+                "Título test",
                 "Potato test description"
               ],
               "audio": "Título de paso reproducido por las gafas"
+            }
+          },
+          {
+            "idView": 7,
+            "viewOrder": 7,
+            "viewType": "OP2",
+            "viewData": {
+              "text": [
+                "Selecciona la respuesta correcta"
+              ],
+              "options": [
+                "Azul",
+                "Rojo",
+                "Amarillo",
+                "Verde"
+              ]
+            }
+          },
+          {
+            "idView": 8,
+            "viewOrder": 8,
+            "viewType": "IM1",
+            "viewData": {
+              "text": [
+                "Mira la imagen, puedes ampliar"
+              ],
+              "files": [
+                {
+                  "name": "",
+                  "description": "",
+                  "file": "ford.jpeg"
+                }
+              ]
+            }
+          },
+          {
+            "idView": 9,
+            "viewOrder": 9,
+            "viewType": "IM2",
+            "viewData": {
+              "text": [
+                "Mira la imagen correcta, puedes ampliar"
+              ],
+              "files": [
+                {
+                  "name": "",
+                  "description": "",
+                  "file": "ford.jpeg"
+                }
+              ]
             }
           }
         ]

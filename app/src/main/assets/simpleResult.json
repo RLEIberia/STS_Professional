@@ -1,0 +1,100 @@
+{
+  "result": {
+    "execution_id": "21c9e577-5d80-4e47-8008-a38f04fe54f5",
+    "ck_version_id": 5,
+    "ck_id": 5,
+    "project_id": 5,
+    "user": 1,
+    "created_at": 1653447086,
+    "updated_at": 1653447386,
+    "result": [
+      { 
+        "step_id": 10,
+        "step_number": 1,
+        "last_step_id": 0,
+        "step_iterations": [
+          {
+            "id": "8bf4089f-8101-4a9b-b828-0076edc789d1",
+            "result_code": 1,
+            "finished": 1,
+            "iteration": 1,
+            "last_iteration": true,
+            "created_at": 1653447086,
+            "updated_at": 1653447386,
+            "next_step_id": 11,
+            "views": [
+              {
+                "id": "31436659-d739-49a5-8dc8-059ebc5ff2be",
+                "view_id": 10,
+                "updated_at": 1653447386,
+                "result": [
+                  5
+                ],
+                "extra_data": [],
+                "extra_file": []
+              },
+              {
+                "id": "4df275a1-e281-4cd4-a067-f322916d397a",
+                "view_id": 11,
+                "updated_at": 1653447386,
+                "result": [
+                  "ef844066-408e-4693-adaa-adaccf18cf3e"
+                ],
+                "extra_data": [],
+                "extra_file": []
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "step_id": 11,
+        "step_number": 2,
+        "last_step_id": 10,
+        "step_iterations": [
+          {
+            "id": "8bf4089f-8101-4a9b-b828-0076edc789d1",
+            "result_code": 1,
+            "finished": 1,
+            "iteration": 1,
+            "last_iteration": true,
+            "created_at": 1653447086,
+            "updated_at": 1653447386,
+            "next_step_id": 12,
+            "views": [
+              {
+                "id": "31436659-d739-49a5-8dc8-059ebc5ff2be",
+                "view_id": 10,
+                "updated_at": 1653447386,
+                "result": [
+                  5
+                ],
+                "extra_data": [],
+                "extra_file": []
+              },
+              {
+                "id": "4df275a1-e281-4cd4-a067-f322916d397a",
+                "view_id": 11,
+                "updated_at": 1653447386,
+                "result": [
+                  "ef844066-408e-4693-adaa-adaccf18cf3e"
+                ],
+                "extra_data": [],
+                "extra_file": []
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "files": [
+    {
+      "id": "ef844066-408e-4693-adaa-adaccf18cf3e",
+      "execution_id": "21c9e577-5d80-4e47-8008-a38f04fe54f5",
+      "step_id": 10,
+      "type": 1,
+      "size": 50
+    }
+  ]
+}

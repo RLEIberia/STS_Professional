@@ -3,6 +3,7 @@ package com.rle.STS
 import android.app.Application
 import android.content.Context
 import android.util.Log
+import android.widget.Toast
 import androidx.compose.ui.platform.LocalContext
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.ViewModel
@@ -20,6 +21,7 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import okhttp3.internal.wait
+import java.io.File
 import javax.inject.Inject
 
 @HiltViewModel
@@ -39,14 +41,28 @@ class ActivityViewModel @Inject constructor(
     private val _selectedProject: MutableStateFlow<ProjectsTable> = MutableStateFlow(ProjectsTable())
     val selectedProject = _selectedProject.asStateFlow()
 
+    private val _toastAction: MutableStateFlow<Boolean> = MutableStateFlow(false)
+    val toastAction = _toastAction.asStateFlow()
+
     private val _selectedChecklist: MutableStateFlow<ChecklistsTable> = MutableStateFlow(
         ChecklistsTable()
     )
 
     init {
-        saveUserData(userData = UserData())
-        getUserData(context = context)
-        getUserById(context = context)
+        saveUserData(userData = UserData(1, "2d4b6637bfaa6224cd08f31a79ebf9ab"))
+
+        try{
+            getUserData(context = context)
+            getUserById(context = context)
+        } catch (e: Exception) {
+            viewModelScope.launch(Dispatchers.IO) {
+                //TODO Montar como LiveEvent
+                _toastAction.value = true
+                delay(100)
+                _toastAction.value = false
+            }
+        }
+
     }
 
     //TODO guardar userData dependiendo del Login
@@ -82,6 +98,29 @@ class ActivityViewModel @Inject constructor(
     fun getChecklistById(id: Int) {
         viewModelScope.launch(Dispatchers.IO) {
             _selectedChecklist.value = dbRepository.getChecklistById(id = id)
+        }
+    }
+
+    fun createDirectories(
+        context: Context
+    ){
+        viewModelScope.launch(Dispatchers.IO) {
+            //Directory paths
+            val audioInPath = context.filesDir.path + File.separator + "Audios" + File.separator + "In"
+            val audioInDirectory = File(audioInPath)
+            val videoInPath = context.filesDir.path + File.separator + "Videos" + File.separator + "In"
+            val videoInDirectory = File(videoInPath)
+            val imageInPath = context.filesDir.path + File.separator + "Images" + File.separator + "In"
+            val imageInDirectory = File(imageInPath)
+
+            //Check if directory exists, if not create it
+            if (!audioInDirectory.exists())
+                audioInDirectory.mkdirs()
+            if (!videoInDirectory.exists())
+                videoInDirectory.mkdirs()
+            if (!imageInDirectory.exists())
+                imageInDirectory.mkdirs()
+
         }
     }
 

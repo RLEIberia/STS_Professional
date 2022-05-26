@@ -6,5 +6,4 @@ object Constants {
     const val TOKEN = "2d4b6637bfaa6224cd08f31a79ebf9ab" //TODO Meterlo en DataStorage
     const val TOKEN2 = "2d4b6637bfaa6224cd08f31a79ebf9ac" //TODO Meterlo en DataStorage
 
-
 }

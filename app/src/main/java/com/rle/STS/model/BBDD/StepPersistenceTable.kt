@@ -26,7 +26,7 @@ data class StepPersistenceTable(
     val id: UUID,
 
     @ColumnInfo(name = "execution_id")
-    val execution_id: Int,
+    val execution_id: UUID,
 
     @ColumnInfo(name = "step_id")
     val step_id: Int, //Viene desde plataforma

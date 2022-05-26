@@ -38,7 +38,8 @@ fun STSNavigation() {
         composable(STSScreens.SplashScreen.name) {
             SplashScreen(
                 navController = navController,
-                splashViewModel = splashViewModel
+                splashViewModel = splashViewModel,
+                activityViewModel = activityViewModel
             )
             //TODO FadeOut
         }

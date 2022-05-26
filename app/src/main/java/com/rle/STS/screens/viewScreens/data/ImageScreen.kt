@@ -43,7 +43,6 @@ fun ImageScreen(type: Int, checklistViewModel: ChecklistViewModel) {
         checklistViewModel.checklist.collectAsState().value.checklistData!!.steps[currentStep.value]
             .views[currentView.value].viewData
 
-    val imagePath = File(context.getFilesDir(), "Images")
 
     val directoryStr = context.filesDir.path + File.separator + "Images" + File.separator + "In"
 

@@ -64,9 +64,9 @@ fun BottomBarChecklist(
     BottomBar(
         modifierBottomBar = modifier,
         leftActive = !(currentStep.value == 0 && currentView.value == 0),
-        leftText = stringResource(id = R.string.navigate_back),
+        leftText = stringResource(id = R.string.back),
         leftIcon = R.drawable.back,
-        leftOnClick = { },
+        leftOnClick = { checklistViewModel.back() },
         leftSize = 250,
         centerActive = centerActiveView.value,
         centerText = centerTextView.value,

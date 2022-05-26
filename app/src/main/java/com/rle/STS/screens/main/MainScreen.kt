@@ -3,6 +3,7 @@ package com.rle.STS.screens
 import android.content.Intent
 import android.net.Uri
 import android.util.Log
+import android.widget.Toast
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
 import androidx.compose.runtime.*
@@ -40,6 +41,7 @@ fun MainScreen(
     val scaffoldState = rememberScaffoldState(rememberDrawerState(DrawerValue.Closed))
     val scope = rememberCoroutineScope()
 
+    val toastAction = activityViewModel.toastAction.collectAsState()
 
     val context = LocalContext.current
 
@@ -49,6 +51,10 @@ fun MainScreen(
     LaunchedEffect(true) {
         Log.d("LAUNCH", "LaunchedEffect executed")
         mainViewModel.apiGetProjects(context = context)
+    }
+
+    if(toastAction.value) {
+        Toast.makeText(context, "UserData not found, please, restart the device", Toast.LENGTH_LONG).show()
     }
 
 

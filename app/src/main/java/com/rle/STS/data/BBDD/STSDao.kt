@@ -115,7 +115,7 @@ interface STSDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertFilesOut(fileOutTable: FilesOutTable)
 
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    @Update(onConflict = OnConflictStrategy.REPLACE)
     suspend fun updateFilesIn(fileOutTable: FilesOutTable)
 
     @Query("DELETE from files_out_table")
@@ -143,6 +143,7 @@ interface STSDao {
     @Delete
     suspend fun deleteUser(user: UsersTable)
 
+
     //ViewPersistenceDao
     @Query("SELECT * from views_persistence_table")
     fun getViewPersistence(): Flow<List<ViewsPersistenceTable>>
@@ -166,5 +167,49 @@ interface STSDao {
     suspend fun deleteViewPersistence(viewPersistenceTableDao: ViewsPersistenceTable)
 
 
+    //ExecutionsDao
+    @Query("SELECT * from executions_table")
+    fun getExecutions(): Flow<List<ExecutionsTable>>
+
+    @Query("SELECT * from executions_table where id =:id")
+    fun getExecutionFlowById(id: UUID): Flow<List<ExecutionsTable>> //Sólo hay uno
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insertExecution(executionsTable: ExecutionsTable)
+
+    @Update(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun updateExecution(executionsTable: ExecutionsTable)
+
+    @Query("DELETE from executions_table")
+    suspend fun deleteAllExecutions()
+
+    @Query("DELETE from executions_table where id =:id")
+    suspend fun deleteExecutionById(id: UUID)
+
+    @Delete
+    suspend fun deleteExecution(executionsTable: ExecutionsTable)
+
+
+    //StepPersistenceDao
+    @Query("SELECT * from steps_persistence_table")
+    fun getStepsList(): Flow<List<StepPersistenceTable>>
+
+    @Query("SELECT * from steps_persistence_table WHERE execution_id =:executionId AND step_id =:stepId ")
+    fun getCurrentStep(executionId: UUID, stepId: Int): Flow<List<StepPersistenceTable>>
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insertStep(stepPersistenceTable: StepPersistenceTable)
+
+    @Update(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun updateStep(stepPersistenceTable: StepPersistenceTable)
+
+    @Query("DELETE from steps_persistence_table")
+    suspend fun deleteAllSteps()
+
+    @Query("DELETE from steps_persistence_table where id =:id")
+    suspend fun deleteStepById(id: UUID)
+
+    @Delete
+    suspend fun deleteStep(stepPersistenceTable: StepPersistenceTable)
 
 }

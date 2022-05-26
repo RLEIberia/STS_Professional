@@ -9,10 +9,12 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
+import com.rle.STS.ActivityViewModel
 import com.rle.STS.R
 import com.rle.STS.navigation.STSScreens
 import com.rle.STS.repository.DbRepository
@@ -22,8 +24,11 @@ import javax.inject.Inject
 @Composable
 fun SplashScreen(
     navController: NavController,
-    splashViewModel: SplashViewModel
+    splashViewModel: SplashViewModel,
+    activityViewModel: ActivityViewModel
 ) {
+
+    val context = LocalContext.current
 
     LaunchedEffect(
         key1 = true,
@@ -34,6 +39,9 @@ fun SplashScreen(
             }
         }
     )
+
+    activityViewModel.createDirectories(context = context)
+//    splashViewModel.sendResult(context = context, fileName = "simpleResult.json")
 
     Surface(
         modifier = Modifier
