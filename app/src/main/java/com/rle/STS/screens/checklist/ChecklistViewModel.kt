@@ -1,6 +1,8 @@
 package com.rle.STS.screens.checklist
 
 import android.content.Context
+import android.media.MediaPlayer
+import android.net.Uri
 import android.util.Log
 import androidx.compose.runtime.collectAsState
 import androidx.lifecycle.ViewModel
@@ -21,6 +23,7 @@ import dagger.hilt.android.scopes.ViewModelScoped
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
+import java.io.File
 import java.util.*
 import javax.inject.Inject
 
@@ -41,9 +44,10 @@ class ChecklistViewModel @Inject constructor(
     private val _currentView: MutableStateFlow<Int> = MutableStateFlow(-1)
     val currentView = _currentView.asStateFlow()
 
-
     private val _executionId: MutableStateFlow<Long> = MutableStateFlow(-1)
     val executionId = _executionId.asStateFlow()
+
+
 
     private val _executionDataFlow = _executionId.flatMapLatest { id ->
         if (id.equals(0)) {
@@ -155,8 +159,6 @@ class ChecklistViewModel @Inject constructor(
 
             }
             Log.d("POS_", _currentView.value.toString())
-
-
         }
 
     fun centerButton(context: Context) {

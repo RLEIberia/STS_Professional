@@ -146,6 +146,14 @@ object TableInserts {
         type = 0,
         date = 1653761813
     )
+    val fileExtra6 = FilesInTable(
+        id = 1006,
+        name = "Piano Melody",
+        description = "Prueba de reproducción de sonido",
+        file = "piano-melody.wav",
+        type = 2,
+        date = 1653856775
+    )
 
 
 }

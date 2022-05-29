@@ -23,6 +23,7 @@ import com.rle.STS.screens.viewScreens.utils.DescriptionRow
 import com.rle.STS.ui.theme.buttonOkColor
 import com.rle.STS.ui.theme.buttonStop
 import com.rle.STS.ui.theme.grayedButton
+import com.rle.STS.utils.checklistUtils.openAudio
 import com.rle.STS.widgets.CustomSideIconButton
 import kotlinx.coroutines.delay
 import java.io.File
@@ -62,12 +63,15 @@ fun AU2Screen(
     val audioFile = File(directory, viewData.files[0].file)
 
     //MediaPlayer
-    var mp: MediaPlayer = MediaPlayer()
+//    val mutableMediaPlayer = remember {
+//        mutableStateOf(MediaPlayer())
+//    }
+//    var mp: MediaPlayer = MediaPlayer()
 
     //Check if AudioFile exists
-    if (audioFile.exists()) {
-        mp = MediaPlayer.create(context, Uri.fromFile(audioFile))
-    }
+//    if (audioFile.exists()) {
+//        mutableMediaPlayer.value = MediaPlayer.create(context, Uri.fromFile(audioFile))
+//    }
 
     val audioState = remember {
         mutableStateOf(false)
@@ -100,6 +104,7 @@ fun AU2Screen(
         ) {
 
             DescriptionRow(viewData = viewData)
+
             Row(
                 modifier = Modifier
                     .fillMaxWidth(0.6f)
@@ -137,8 +142,13 @@ fun AU2Screen(
                                 horizontalArrangement = Arrangement.Center,
                                 verticalAlignment = Alignment.CenterVertically
                             ){
+//                                Text(
+//                                    text = "${mutableMediaPlayer.value.currentPosition} / ${mutableMediaPlayer.value.duration}",
+//                                    fontSize = 25.sp,
+//                                    fontWeight = FontWeight.SemiBold
+//                                )
                                 Text(
-                                    text = "$audioPosition.value / ${mp.duration}",
+                                    text = viewData.files[0].file,
                                     fontSize = 25.sp,
                                     fontWeight = FontWeight.SemiBold
                                 )
@@ -153,50 +163,60 @@ fun AU2Screen(
                         modifier = Modifier
                             .fillMaxSize(),
                         verticalAlignment = Alignment.CenterVertically,
-                        horizontalArrangement = Arrangement.SpaceBetween
+                        horizontalArrangement = Arrangement.Center
 
                     ) {
+
+                        CustomSideIconButton(
+                            text = stringResource(id = R.string.play),
+                            onClick = {
+                                openAudio(file = viewData.files[0].file, context = context)
+                            },
+                            buttonColor = buttonOkColor,
+                            buttonSize = 220,
+                            icon = R.drawable.play
+                        )
 
                         //TODO STOP WHEN CHANGE
 
                         //Play/Pause Button
-                        CustomSideIconButton(
-                            text = when (audioState.value) {
-                                false -> stringResource(id = R.string.play)
-                                true -> stringResource(id = R.string.pause)
-                            },
-                            onClick = {
-                                when (audioState.value) {
-                                    false -> {
-                                        mp.start()
-                                    }
-                                    true -> mp.pause()
-                                }
-                                audioState.value = mp.isPlaying
-                            },
-                            buttonColor = when (audioState.value) {
-                                false -> buttonOkColor
-                                true -> grayedButton
-                            },
-                            buttonSize = 220,
-                            icon = when (audioState.value) {
-                                false -> R.drawable.play
-                                true -> R.drawable.pause
-                            },
-                        )
-
-                        //Stop Button
-                        CustomSideIconButton(
-                            text = stringResource(id = R.string.stop),
-                            onClick = {
-                                mp.pause()
-                                mp.seekTo(0)
-                                audioState.value = mp.isPlaying
-                            },
-                            buttonColor = buttonStop,
-                            buttonSize = 220,
-                            icon = R.drawable.stop
-                        )
+//                        CustomSideIconButton(
+//                            text = when (audioState.value) {
+//                                false -> stringResource(id = R.string.play)
+//                                true -> stringResource(id = R.string.pause)
+//                            },
+//                            onClick = {
+//                                when (audioState.value) {
+//                                    false -> {
+//                                        mutableMediaPlayer.value.start()
+//                                    }
+//                                    true -> mutableMediaPlayer.value.pause()
+//                                }
+//                                audioState.value = mutableMediaPlayer.value.isPlaying
+//                            },
+//                            buttonColor = when (audioState.value) {
+//                                false -> buttonOkColor
+//                                true -> grayedButton
+//                            },
+//                            buttonSize = 220,
+//                            icon = when (audioState.value) {
+//                                false -> R.drawable.play
+//                                true -> R.drawable.pause
+//                            },
+//                        )
+//
+//                        //Stop Button
+//                        CustomSideIconButton(
+//                            text = stringResource(id = R.string.stop),
+//                            onClick = {
+//                                mutableMediaPlayer.value.pause()
+//                                mutableMediaPlayer.value.seekTo(0)
+//                                audioState.value = mutableMediaPlayer.value.isPlaying
+//                            },
+//                            buttonColor = buttonStop,
+//                            buttonSize = 220,
+//                            icon = R.drawable.stop
+//                        )
 
 
                     }

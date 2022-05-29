@@ -59,6 +59,7 @@ class SplashViewModel @Inject constructor(
             dbRepository.insertFileIn(TableInserts.fileExtra3)
             dbRepository.insertFileIn(TableInserts.fileExtra4)
             dbRepository.insertFileIn(TableInserts.fileExtra5)
+            dbRepository.insertFileIn(TableInserts.fileExtra6)
         }
 
     }

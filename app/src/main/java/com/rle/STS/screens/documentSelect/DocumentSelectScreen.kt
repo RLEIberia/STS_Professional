@@ -23,6 +23,7 @@ import com.rle.STS.ui.theme.buttonOkColor
 import com.rle.STS.ui.theme.buttonStop
 import com.rle.STS.ui.theme.grayedButton
 import com.rle.STS.ui.theme.specialButtonColor
+import com.rle.STS.utils.checklistUtils.openAudio
 import com.rle.STS.utils.checklistUtils.openImage
 import com.rle.STS.utils.checklistUtils.openPdf
 import com.rle.STS.utils.checklistUtils.openVideo
@@ -144,7 +145,7 @@ fun DocumentSelectScreen(
                                 when (item.type) {
                                     0 -> openImage(file = item.file, context = context)
                                     1 -> openVideo(file = item.file, context = context)
-                                    2 -> {}
+                                    2 -> openAudio(file = item.file, context = context)
                                     3 -> {}
                                     4 -> openPdf(file = item.file, context = context)
                                     else -> {}
