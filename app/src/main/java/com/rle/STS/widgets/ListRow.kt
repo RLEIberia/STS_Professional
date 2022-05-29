@@ -9,6 +9,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
@@ -113,13 +115,10 @@ private fun DateRow(
             color = textColor,
             fontWeight = FontWeight.Bold,
         )
-        Text(
-            text = date.format(dateTimeStamp * 1000).toString(),
-            color = textColor,
-            style = MaterialTheme.typography.subtitle1,
-        )
+        dateText(date, dateTimeStamp, textColor)
     }
 }
+
 
 @Composable
 private fun ListButton(

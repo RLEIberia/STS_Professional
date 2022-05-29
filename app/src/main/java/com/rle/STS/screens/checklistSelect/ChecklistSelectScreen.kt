@@ -50,7 +50,11 @@ fun ChecklistSelectScreen(
     Scaffold(
         scaffoldState = scaffoldState,
         topBar = {
-            SimpleTopBar(scope, scaffoldState)
+            SimpleTopBar(
+                scope,
+                scaffoldState,
+                text = selectedProject.name
+            )
         },
         drawerContent = {
             Drawer(scaffoldState = scaffoldState, scope = scope)

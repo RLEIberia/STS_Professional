@@ -11,29 +11,22 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.unit.dp
-import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.rle.STS.ActivityViewModel
 import com.rle.STS.R
-import com.rle.STS.model.DataStore.UserData
 import com.rle.STS.navigation.STSScreens
 import com.rle.STS.screens.main.MainViewModel
-import com.rle.STS.ui.theme.topBarColor
-import com.rle.STS.utils.converters.toChecklistsTable
-import com.rle.STS.utils.converters.toProjectsTable
-import com.rle.STS.widgets.CustomButton
+import com.rle.STS.screens.scanner.ScannerScreen
+import com.rle.STS.screens.scanner.ScannerViewModel
 import com.rle.STS.widgets.CustomTopIconButton
 import com.rle.STS.widgets.SimpleTopBar
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.launch
 
 
 @Composable
 fun MainScreen(
     navController: NavController,
     mainViewModel: MainViewModel,
+    scannerViewModel: ScannerViewModel,
     activityViewModel: ActivityViewModel
 ) {
 
@@ -57,28 +50,19 @@ fun MainScreen(
         Toast.makeText(context, "UserData not found, please, restart the device", Toast.LENGTH_LONG).show()
     }
 
+    val openScanner = remember {
+        mutableStateOf(false)
+    }
 
-
-//    val test = mainViewModel.APIprojectResponse.collectAsState().value //TODO QUITAR COMO TEST
-
-//    if (test.data != null) {
-//
-//        mainViewModel.insertMultipleProjects(test)
-//        mainViewModel.insertMultipleChecklists(test)
-//        //mainViewModel.insertProject(testProjects[0])
-//        //mainViewModel.insertChecklist(testChecklists[0])
-//
-//    }
-
-
-
-//    mainViewModel.getMultipleProjectsByIds(arrayOf(1,2))
-//    val multiP = mainViewModel.multipleProjectsByIds.collectAsState().value
-//    if(multiP.isNotEmpty()){
-//        Log.d("MULTIP", multiP.toString())
-//    }
-
-
+    if(openScanner.value){
+        ScannerScreen(
+            navController = navController,
+            openScanner = openScanner,
+            mainViewModel = mainViewModel,
+            scannerViewModel = scannerViewModel,
+            activityViewModel = activityViewModel
+        )
+    }
 
 
     /* -------------------------- */
@@ -86,7 +70,11 @@ fun MainScreen(
     Scaffold(
         scaffoldState = scaffoldState,
         topBar = {
-            SimpleTopBar(scope, scaffoldState)
+            SimpleTopBar(
+                scope,
+                scaffoldState,
+                text = "MENÚ PRINCIPAL",
+            )
         },
         drawerContent = {
             Drawer(scaffoldState = scaffoldState, scope = scope)
@@ -100,7 +88,7 @@ fun MainScreen(
             Column(
                 modifier = Modifier
                     .fillMaxSize(),
-                verticalArrangement = Arrangement.Center
+                verticalArrangement = Arrangement.SpaceEvenly
             ) {
                 Row(
                     modifier = Modifier
@@ -132,6 +120,42 @@ fun MainScreen(
                     )
                     CustomTopIconButton(
                         text = "Estado",
+                        icon = R.drawable.discover_icon,
+                        onClick = {
+                            /*TODO - Añadir dirección de estado*/
+                            navController.navigate(STSScreens.ProjectSelectScreen.name)
+                        },
+                        buttonColor = Color(0xFFF44336),
+                        buttonSize = 180
+                    )
+                }
+
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth(),
+                    horizontalArrangement = Arrangement.SpaceEvenly,
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    CustomTopIconButton(
+                        text = "Scanner",
+                        icon = R.drawable.scan_qr,
+                        onClick = {
+                            openScanner.value = true
+                        },
+                        buttonColor = Color(0xFF9E1CAC),
+                        buttonSize = 180
+                    )
+                    CustomTopIconButton(
+                        text = "Documentos",
+                        icon = R.drawable.call_icon,
+                        onClick = {
+                            navController.navigate(STSScreens.DocumentSelectScreen.name)
+                        },
+                        buttonColor = Color(0xFF533A36),
+                        buttonSize = 180
+                    )
+                    CustomTopIconButton(
+                        text = "Reporter",
                         icon = R.drawable.discover_icon,
                         onClick = {
                             /*TODO - Añadir dirección de estado*/

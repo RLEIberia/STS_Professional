@@ -55,7 +55,11 @@ fun ProjectSelectScreen(
         Scaffold(
             scaffoldState = scaffoldState,
             topBar = {
-                SimpleTopBar(scope, scaffoldState)
+                SimpleTopBar(
+                    scope,
+                    scaffoldState,
+                    text = "PROYECTOS"
+                )
             },
             drawerContent = {
                 Drawer(scaffoldState = scaffoldState, scope = scope)
@@ -122,9 +126,7 @@ fun ProjectSelectScreen(
                         )
                     }
                 }
-
             }
         }
-
     }
 }

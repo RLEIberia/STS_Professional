@@ -19,7 +19,7 @@
         "position": 1,
         "idStep": 1,
         "stepName": "Paso 1",
-        "numViews": 9,
+        "numViews": 14,
         "path": [
           {
             "actionCode": "100",
@@ -125,7 +125,7 @@
             "viewData": {
               "text": [
                 "Título test",
-                "Potato test description"
+                "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
               ],
               "audio": "Título de paso reproducido por las gafas"
             }
@@ -178,6 +178,67 @@
                   "file": "ford.jpeg"
                 }
               ]
+            }
+          },
+          {
+            "idView": 10,
+            "viewOrder": 10,
+            "viewType": "IM3",
+            "viewData": {
+              "text": [
+                "Mira la imagen incorrecta, puedes ampliar"
+              ],
+              "files": [
+                {
+                  "name": "",
+                  "description": "",
+                  "file": "ford.jpeg"
+                }
+              ]
+            }
+          },
+          {
+            "idView": 11,
+            "viewOrder": 11,
+            "viewType": "AU1",
+            "viewData": {
+              "text": [
+                "Realiza una prueba de dictado con el dispositivo"
+              ],
+              "audio": "Elige entre las opciones que ve en pantalla"
+            }
+          },
+          {
+            "idView": 12,
+            "viewOrder": 12,
+            "viewType": "CM1",
+            "viewData": {
+              "text": [
+                "Realiza una prueba de dictado con el dispositivo"
+              ],
+              "audio": "Elige entre las opciones que ve en pantalla"
+            }
+          },
+          {
+            "idView": 13,
+            "viewOrder": 13,
+            "viewType": "CM2",
+            "viewData": {
+              "text": [
+                "Realiza una prueba de dictado con el dispositivo"
+              ],
+              "audio": "Elige entre las opciones que ve en pantalla"
+            }
+          },
+          {
+            "idView": 14,
+            "viewOrder": 14,
+            "viewType": "NM1",
+            "viewData": {
+              "text": [
+                "Realiza una prueba de dictado con el dispositivo"
+              ],
+              "audio": "Elige entre las opciones que ve en pantalla"
             }
           }
         ]

@@ -8,6 +8,7 @@ import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.rle.STS.model.BBDD.ExecutionsTable
+import com.rle.STS.model.BBDD.StepPersistenceTable
 import com.rle.STS.model.JSON.checklistStructure.ChecklistJSON
 import com.rle.STS.model.extra.ChecklistPosition
 import com.rle.STS.repository.ChecklistRepository
@@ -34,81 +35,100 @@ class ChecklistViewModel @Inject constructor(
     val checklist = _checklistJSON.asStateFlow()
 
     //Position
-    private val _currentStep: MutableStateFlow<Int> = MutableStateFlow(0)
+    private val _currentStep: MutableStateFlow<Int> = MutableStateFlow(-1)
     val currentStep = _currentStep.asStateFlow()
-    private val _currentView: MutableStateFlow<Int> = MutableStateFlow(0)
+    private val _currentView: MutableStateFlow<Int> = MutableStateFlow(-1)
     val currentView = _currentView.asStateFlow()
 
-    //Execution data
+    //Execution
+    //Flow query execution
     //null UUID 00000000-0000-0000-0000-000000000000
     private val _executionId: MutableStateFlow<UUID> =
         MutableStateFlow(UUID.fromString("00000000-0000-0000-0000-000000000000"))
     val executionId = _executionId.asStateFlow()
-//    private val _executionData = MutableStateFlow<List<ExecutionsTable>>(emptyList())
-//    val executionData = _executionData.asStateFlow()
 
     private val _executionDataFlow = executionId.flatMapLatest { id ->
-        if(id == UUID.fromString("00000000-0000-0000-0000-000000000000")){
+        if (id == UUID.fromString("00000000-0000-0000-0000-000000000000")) {
             Log.d("EXEC", ": Null")
             emptyFlow()
-        }
-        else{
+        } else {
             Log.d("EXEC", ": $id")
             dbRepository.getExecutionFlowById(id).distinctUntilChanged()
-
         }
-    }
-
+    }.flowOn(Dispatchers.IO)
     val executionData = _executionDataFlow.asLiveData()
 
+    //Flow query step
+
+    private val _stepPersistenceId: MutableStateFlow<UUID> =
+        MutableStateFlow(UUID.fromString("00000000-0000-0000-0000-000000000000"))
+    val stepPersistenceId = _stepPersistenceId.asStateFlow()
+
+    private val _stepPersistenceFlow = currentStep.flatMapLatest { step ->
+        Log.d("STEPFLOW", ": Executed with $step and ${executionId.value}")
+        if(step == -1){
+            Log.d("STEP", ": Null")
+            emptyFlow()
+        } else {
+            dbRepository.getCurrentStep(executionId = executionId.value, step = step+1)
+                .distinctUntilChanged()
+        }
+    }.flowOn(Dispatchers.IO)
+    val stepPersistenceFlow = _stepPersistenceFlow.asLiveData()
+
+    private val _viewPersistenceListFlow = stepPersistenceId.flatMapLatest { stepPersistenceId ->
+        dbRepository.getCurrentStepViews(stepPersistenceId = stepPersistenceId)
+    }.flowOn(Dispatchers.IO)
+    val viewPersistenceListFlow = _viewPersistenceListFlow.asLiveData()
+
     //Start
-    fun startChecklistExecution(selectedExecutionId: UUID) =
+    fun startChecklistExecution(
+        selectedExecutionId: UUID,
+        context: Context,
+        fileName: String,
+        userId: Int,
+        idCkVersion: Int
+    ) =
         viewModelScope.launch(Dispatchers.IO) {
+
+            chargeJsonData(context, fileName)
+
             if (selectedExecutionId == UUID.fromString("00000000-0000-0000-0000-000000000000")) {
+
+                //Execution first insert
                 _executionId.value = UUID.randomUUID()
+                _currentStep.value = 0
+                _currentView.value = 0
                 dbRepository.insertExecution(
-                    ExecutionsTable(
-                        id = _executionId.value,
-                        user_id = 1, //TODO cambiar para que venga por navegación
-                        id_ck_version = 1, //TODO cambiar para que venga por navegación
-                        created_at = getCurrentUnix(),
-                        updated_at = getCurrentUnix(),
-                        current_step = 0,
-                        current_view = 0,
-                        json_result = "",
-                        state = 0
+                    checklistRepository.executionsInit(
+                        executionId.value,
+                        user_id = userId,
+                        id_ck_version = idCkVersion
                     )
                 )
-            }
-            else {
+                //Step first insert
+                _stepPersistenceId.value = UUID.randomUUID()
+                dbRepository.insertStep(
+                    checklistRepository.stepInit(
+                        id = stepPersistenceId.value,
+                        execution_id = executionId.value,
+                        steps = checklist.value.checklistData!!.steps[currentStep.value]
+                    )
+                )
+                //Views for Step first insert
+                dbRepository.inserMutlipleViewPersistence(
+                    checklistRepository.viewListInit(
+                        stepData = checklist.value.checklistData!!.steps[currentStep.value],
+                        executionId = executionId.value,
+                        step_persistence_id = stepPersistenceId.value
+                    )
+                )
+            } else {
                 //TODO - Cargar lo que ya haya e ir al paso que toca
                 //Los pasos podrían venir de esto directamente y nos cargamos los otros dos campos
             }
         }
 
-
-
-
-    fun extractChecklist(fileName: String, context: Context) =
-        viewModelScope.launch(Dispatchers.IO) {
-            val jsonData = checklistRepository.getJson(
-                context = context,
-                fileName = fileName
-            )
-            Log.d("JSON", jsonData.toString())
-            _checklistJSON.value = checklistRepository.extractChecklist(
-                jsonChecklist = jsonData
-            )
-            Log.d("CKVAL", _checklistJSON.value.toString())
-//            val jsonData = GetJsonDataFromAsset(context = context, fileName)
-//            _checklistData.value = com.rle.STS.logic.json.extractChecklist(jsonData)
-
-            Log.d(
-                "CKVIEWMODEL",
-                checklist.value.checklistData!!.steps[_currentStep.value].views[_currentView.value].viewType
-            )
-
-        }
 
     fun next() =
         viewModelScope.launch(Dispatchers.IO) {
@@ -124,7 +144,7 @@ class ChecklistViewModel @Inject constructor(
 
     fun back() =
         viewModelScope.launch(Dispatchers.IO) {
-            if(_currentView.value>0){
+            if (_currentView.value > 0) {
                 _currentView.value = _currentView.value - 1
                 Log.d("BACK", _currentView.value.toString())
             } else {
@@ -135,10 +155,10 @@ class ChecklistViewModel @Inject constructor(
 
         }
 
-    fun centerButton(context: Context){
+    fun centerButton(context: Context) {
         viewModelScope.launch(Dispatchers.IO) {
 
-            when(_checklistJSON.value.checklistData!!.steps[currentStep.value].views[currentView.value].viewType){
+            when (_checklistJSON.value.checklistData!!.steps[currentStep.value].views[currentView.value].viewType) {
 
                 ViewScreens.IM1.name, ViewScreens.IM2.name, ViewScreens.IM3.name ->
                     checklistRepository.openImage(
@@ -157,6 +177,44 @@ class ChecklistViewModel @Inject constructor(
         }
 
     }
+
+    private suspend fun chargeJsonData(context: Context, fileName: String) {
+        //Charge JsonData
+        val jsonData = checklistRepository.getJson(
+            context = context,
+            fileName = fileName
+        )
+        Log.d("JSON", jsonData.toString())
+        _checklistJSON.value = checklistRepository.extractChecklist(
+            jsonChecklist = jsonData
+        )
+        Log.d("CKVAL", _checklistJSON.value.toString())
+        //            val jsonData = GetJsonDataFromAsset(context = context, fileName)
+        //            _checklistData.value = com.rle.STS.logic.json.extractChecklist(jsonData)
+//        Log.d(
+//            "CKVIEWMODEL",
+//            checklist.value.checklistData!!.steps[_currentStep.value].views[_currentView.value].viewType
+//        )
+    }
+
+    //    fun extractChecklist(fileName: String, context: Context) =
+//        viewModelScope.launch(Dispatchers.IO) {
+//            val jsonData = checklistRepository.getJson(
+//                context = context,
+//                fileName = fileName
+//            )
+//            Log.d("JSON", jsonData.toString())
+//            _checklistJSON.value = checklistRepository.extractChecklist(
+//                jsonChecklist = jsonData
+//            )
+//            Log.d("CKVAL", _checklistJSON.value.toString())
+////            val jsonData = GetJsonDataFromAsset(context = context, fileName)
+////            _checklistData.value = com.rle.STS.logic.json.extractChecklist(jsonData)
+//            Log.d(
+//                "CKVIEWMODEL",
+//                checklist.value.checklistData!!.steps[_currentStep.value].views[_currentView.value].viewType
+//            )
+//        }
 
 }
 

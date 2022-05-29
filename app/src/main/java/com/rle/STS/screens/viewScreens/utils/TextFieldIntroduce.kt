@@ -29,7 +29,7 @@ fun TextFieldIntroduce(
     buttonText: String,
     buttonColor: Color,
     buttonIcon: Int,
-    buttonSize: Int = 180,
+    buttonSize: Int = 150,
     result: String,
     textResultSize: Int = 25,
     textResultWeight: FontWeight = FontWeight.SemiBold
@@ -61,14 +61,15 @@ fun TextFieldIntroduce(
             DescriptionRow(
                 viewData = viewData,
                 modifier = Modifier
-                    .weight(0.8f)
+                    .weight(0.6f)
             )
 
             //Result Row
             Row(
                 modifier = Modifier
-                    .weight(1f),
-                horizontalArrangement = Arrangement.SpaceEvenly,
+                    .weight(1f)
+                    .fillMaxWidth(),
+                horizontalArrangement = Arrangement.SpaceBetween,
                 verticalAlignment = Alignment.CenterVertically
             ) {
 
@@ -147,12 +148,11 @@ fun TextFieldIntroduce(
                 }
 
                 Spacer(
-                    modifier = Modifier.fillMaxWidth(0.06f)
+                    modifier = Modifier.fillMaxWidth(0.05f)
                 )
 
                 CustomTopIconButton(
-                    modifier = Modifier
-                        .fillMaxWidth(0.3f),
+                    modifier = Modifier,
                     text = buttonText,
                     buttonColor = buttonColor, //Color(0xFF3BCE8E)
                     onClick = buttonFunction, //launcherBarCode.launch(intentBarCode)

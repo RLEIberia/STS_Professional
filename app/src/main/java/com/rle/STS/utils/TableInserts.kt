@@ -1,6 +1,7 @@
 package com.rle.STS.utils
 
 import com.rle.STS.model.BBDD.ChecklistsTable
+import com.rle.STS.model.BBDD.FilesInTable
 import com.rle.STS.model.BBDD.ProjectsTable
 import com.rle.STS.model.BBDD.UsersTable
 
@@ -103,5 +104,48 @@ object TableInserts {
         updated_at = 1,
         state = 4
     )
+
+    //0 imagen, 1 video, 2 audio, 3 QR???, 4 PDF
+    val fileExtra1 = FilesInTable(
+        id = 1001,
+        name = "Especificaciones de tractora",
+        description = "Documento de descripción TGR 1846 4X2 ELEGANCE",
+        file = "A3-Especificaciones.pdf",
+        date = 1653760913,
+        type = 4
+    )
+    val fileExtra2 = FilesInTable(
+        id = 1002,
+        name = "Vídeo de ejemplo",
+        description = "Vídeo de la ciudad de Seúl a gran velocidad.",
+        file = "seoul.mp4",
+        date = 1653660913,
+        type = 1
+    )
+    val fileExtra3 = FilesInTable(
+        id = 1003,
+        name = "Montaje en Ford Valencia",
+        description = "Varios operarios trabajando en el montaje de un vehículo de la marca Ford en la planta de Valencia",
+        file = "ford.jpeg",
+        date = 1653660813,
+        type = 0
+    )
+    val fileExtra4 = FilesInTable(
+        id = 1004,
+        name = "Fotografía de oficina",
+        description = "Fotografía tomada con las SmartGlasses de Realwear en la oficina de RLE International Iberia en Barcelona.",
+        file = "JPEG_1_1_user_6709210335990447830.jpg",
+        type = 0,
+        date = 1653760813
+    )
+    val fileExtra5 = FilesInTable(
+        id = 1005,
+        name = "Edificio Conata",
+        description = "Edificio sede de las oficinas de RLE International Iberia en Barcelona.",
+        file = "EdificioConata.jpg",
+        type = 0,
+        date = 1653761813
+    )
+
 
 }

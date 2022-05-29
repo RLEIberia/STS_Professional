@@ -23,12 +23,14 @@ import kotlin.coroutines.CoroutineContext
 //TODO - Estandarizar SimpleTopBar
 
 @Composable
-fun SimpleTopBar(
-    scope: CoroutineScope,
-    scaffoldState: ScaffoldState,
+fun VerySimpleTopBar(
     text: String = "",
-    leftOnClick: () -> Unit = {scope.launch { scaffoldState.drawerState.open()}},
+    leftExists: Boolean = false,
+    leftVisible: Boolean = false,
+    leftOnClick: () -> Unit = {},
+    leftText: String = "LEFT",
     rightExist: Boolean = false,
+    rightVisible: Boolean = false,
     rightOnClick: () -> Unit = {},
     rightText: String = "RIGHT",
 ) {
@@ -44,17 +46,22 @@ fun SimpleTopBar(
                 horizontalArrangement = Arrangement.SpaceBetween
             ) {
                 Spacer(modifier = Modifier.width(10.dp))
-                Column(
-                    modifier = Modifier
-                        .weight(0.2f)
-                        .fillMaxSize(),
-                    horizontalAlignment = Alignment.Start,
-                    verticalArrangement = Arrangement.Center
-                ) {
-                    CustomButton(
-                        text = stringResource(R.string.menu),
-                        onClick =leftOnClick
-                    )
+                if(leftExists) {
+                    Column(
+                        modifier = Modifier
+                            .weight(0.2f)
+                            .fillMaxSize(),
+                        horizontalAlignment = Alignment.Start,
+                        verticalArrangement = Arrangement.Center
+                    ) {
+                        if (leftVisible) {
+                            CustomButton(
+                                text = leftText,
+                                onClick = leftOnClick
+                            )
+                        }
+
+                    }
                 }
                 Column(
                     modifier = Modifier
@@ -71,18 +78,20 @@ fun SimpleTopBar(
 
                     )
                 }
-                Column(
-                    modifier = Modifier
-                        .weight(0.2f)
-                        .fillMaxSize(),
-                    horizontalAlignment = Alignment.End,
-                    verticalArrangement = Arrangement.Center
-                ) {
-                    if(rightExist) {
-                        CustomButton(
-                            text = rightText,
-                            onClick = leftOnClick
-                        )
+                if(rightExist) {
+                    Column(
+                        modifier = Modifier
+                            .weight(0.2f)
+                            .fillMaxSize(),
+                        horizontalAlignment = Alignment.End,
+                        verticalArrangement = Arrangement.Center
+                    ) {
+                        if (rightVisible) {
+                            CustomButton(
+                                text = rightText,
+                                onClick = leftOnClick
+                            )
+                        }
                     }
                 }
                 Spacer(modifier = Modifier.width(10.dp))

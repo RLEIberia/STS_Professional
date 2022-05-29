@@ -3,6 +3,7 @@ package com.rle.STS.data.BBDD
 import androidx.room.*
 import com.rle.STS.model.BBDD.*
 import kotlinx.coroutines.flow.Flow
+import java.io.File
 import java.util.*
 import kotlin.collections.ArrayList
 
@@ -43,6 +44,9 @@ interface STSDao {
 
     @Query("SELECT * from checklists_table where id =:id")
     suspend fun getChecklistById(id: Int): ChecklistsTable
+
+    @Query("SELECT * from checklists_table where name =:name")
+    suspend fun getChecklistByName(name: String): ChecklistsTable
 
     @Query("SELECT * from checklists_table where id =:id")
     suspend fun getMultipleChecklistById(id: Array<Int>): List<ChecklistsTable>
@@ -90,8 +94,14 @@ interface STSDao {
     @Query("SELECT * from file_in_table")
     fun getFilesIn(): Flow<List<FilesInTable>>
 
+    @Query("SELECT * FROM file_in_table WHERE type IN (:types)")
+    fun getFilesByTypes(types: Array<Int>): Flow<List<FilesInTable>>
+
     @Query("SELECT * from file_in_table where id =:id")
     suspend fun getFilesInById(id: Int): FilesInTable
+
+    @Query("SELECT * from file_in_table where name =:name")
+    suspend fun getFilesInByName(name: String): FilesInTable
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertFilesIn(fileInTable: FilesInTable)
@@ -148,23 +158,32 @@ interface STSDao {
     @Query("SELECT * from views_persistence_table")
     fun getViewPersistence(): Flow<List<ViewsPersistenceTable>>
 
+    @Query("SELECT * from views_persistence_table WHERE step_persistence_id =:stepPersistenceId ORDER BY `view` ASC")
+    fun getCurrentStepViews(stepPersistenceId: UUID): Flow<List<ViewsPersistenceTable>>
+
+    @Query("SELECT * from views_persistence_table WHERE step_persistence_id =:stepPersistenceId AND `view` =:view")
+    fun getCurrentView(stepPersistenceId: UUID, view: Int): Flow<List<ViewsPersistenceTable>>
+
     @Query("SELECT * from views_persistence_table where id =:id")
-    suspend fun getViewPersistenceById(id: Int): ViewsPersistenceTable
+    suspend fun getViewPersistenceById(id: UUID): ViewsPersistenceTable
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertViewPersistence(viewPersistenceTableDao: ViewsPersistenceTable)
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun updateViewPersistence(viewPersistenceTableDao: ViewsPersistenceTable)
+    suspend fun insertMultipleViewPersistence(viewsTableList: ArrayList<ViewsPersistenceTable>)
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun updateViewPersistence(viewPersistenceTable: ViewsPersistenceTable)
 
     @Query("DELETE from views_persistence_table")
     suspend fun deleteAllViewsPersistence()
 
     @Query("DELETE from views_persistence_table where execution_id =:executionId")
-    suspend fun deleteCkInstanceViews(executionId: Int) //Eliminar todas las vistas de una instancia de checklist
+    suspend fun deleteCkInstanceViews(executionId: UUID) //Eliminar todas las vistas de una instancia de checklist
 
     @Delete
-    suspend fun deleteViewPersistence(viewPersistenceTableDao: ViewsPersistenceTable)
+    suspend fun deleteViewPersistence(viewPersistenceTable: ViewsPersistenceTable)
 
 
     //ExecutionsDao
@@ -194,8 +213,8 @@ interface STSDao {
     @Query("SELECT * from steps_persistence_table")
     fun getStepsList(): Flow<List<StepPersistenceTable>>
 
-    @Query("SELECT * from steps_persistence_table WHERE execution_id =:executionId AND step_id =:stepId ")
-    fun getCurrentStep(executionId: UUID, stepId: Int): Flow<List<StepPersistenceTable>>
+    @Query("SELECT * from steps_persistence_table WHERE execution_id =:executionId AND step =:step ")
+    fun getCurrentStep(executionId: UUID, step: Int): Flow<List<StepPersistenceTable>>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertStep(stepPersistenceTable: StepPersistenceTable)
@@ -211,5 +230,7 @@ interface STSDao {
 
     @Delete
     suspend fun deleteStep(stepPersistenceTable: StepPersistenceTable)
+
+
 
 }

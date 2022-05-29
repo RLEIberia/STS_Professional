@@ -30,7 +30,7 @@ fun CustomTopIconButton(
     textColor: Color = buttonsTextColor,
     textSize: Float = 30.0f,
     borderColor: Color = buttonsTextBorderColor,
-    buttonSize: Int = 110,
+    buttonSize: Int = 220,
     enabled: Boolean = true,
     icon: Int = R.drawable.correct_icon
 
@@ -42,7 +42,7 @@ fun CustomTopIconButton(
         //color = Color.Black.copy(alpha = 0f)
     ) {
         Column(
-            modifier = Modifier
+            modifier = modifier
                 .background(buttonColor)
                 .padding(start = 10.dp, end = 10.dp, top = 15.dp, bottom = 15.dp)
                 .width(buttonSize.dp),

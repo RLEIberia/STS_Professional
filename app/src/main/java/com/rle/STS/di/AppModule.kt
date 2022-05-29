@@ -54,6 +54,7 @@ class AppModule {
     //Instanciar DataStore Provider
     @Singleton
     @Provides
-    fun provideDataStoreRepository(@ApplicationContext context: Context) = DataStoreRepository(context)
+    fun provideDataStoreRepository(@ApplicationContext context: Context) =
+        DataStoreRepository(context)
 
 }

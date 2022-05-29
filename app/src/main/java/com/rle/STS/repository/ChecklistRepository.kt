@@ -2,21 +2,88 @@ package com.rle.STS.repository
 
 import android.content.Context
 import com.rle.STS.logic.json.extractChecklistData
+import com.rle.STS.model.BBDD.ExecutionsTable
+import com.rle.STS.model.BBDD.StepPersistenceTable
+import com.rle.STS.model.BBDD.ViewsPersistenceTable
 import com.rle.STS.model.JSON.checklistStructure.ChecklistJSON
-import com.rle.STS.utils.GetJsonDataFromAsset
+import com.rle.STS.model.JSON.checklistStructure.Steps
+import com.rle.STS.utils.*
 import com.rle.STS.utils.checklistUtils.openImage
 import com.rle.STS.utils.checklistUtils.openVideo
+import com.rle.STS.utils.checklistUtils.openPdf
+import java.util.*
 import javax.inject.Inject
 
 
 class ChecklistRepository @Inject constructor(){
 
     //Info
-    suspend fun getJson(context: Context, fileName: String): String? = GetJsonDataFromAsset(context = context, fileName = fileName)
-    suspend fun extractChecklist (jsonChecklist: String?): ChecklistJSON = extractChecklistData(jsonChecklist)
+    suspend fun getJson(context: Context, fileName: String): String? =
+        GetJsonDataFromAsset(context = context, fileName = fileName)
+    suspend fun extractChecklist (jsonChecklist: String?): ChecklistJSON =
+        extractChecklistData(jsonChecklist)
 
     //Utils
-    suspend fun openImage(fileName: String, context: Context) = openImage(file = fileName, context = context)
-    suspend fun openVideo(fileName: String, context: Context) = openVideo(file = fileName, context = context)
+    suspend fun openImage(fileName: String, context: Context) =
+        openImage(file = fileName, context = context)
+    suspend fun openVideo(fileName: String, context: Context) =
+        openVideo(file = fileName, context = context)
+
+    fun openPdf(fileName: String, context: Context) =
+        openPdf(file = fileName, context = context)
+
+    //Initialize persistence
+    fun executionsInit(executionId: UUID, user_id: Int = 1, id_ck_version: Int = 1) : ExecutionsTable =
+        ExecutionsInit(executionId = executionId, user_id = user_id, id_ck_version = id_ck_version)
+    fun stepInit(id: UUID, execution_id: UUID, steps: Steps, iteration: Int = 1,
+                 last_step_id: Int = 0, next_step_id: Int = -1): StepPersistenceTable =
+        StepPersistenceInit(id = id, execution_id = execution_id, steps = steps,
+            iteration = iteration, last_step_id = last_step_id, next_step_id = next_step_id)
+    fun viewListInit(stepData: Steps, executionId: UUID, step_persistence_id: UUID): ArrayList<ViewsPersistenceTable> =
+        ViewPersistenceListInit(stepData = stepData, executionId = executionId, step_persistence_id = step_persistence_id)
+
+    //Update persistence
+    fun executionUpdate(
+        previousExecutionData: ExecutionsTable,
+        current_step: Int? = null,
+        current_view: Int? = null,
+        json_result: String? = null,
+        state: Int? = null
+    ): ExecutionsTable =
+        ExecutionUpdate(
+            previousExecutionData = previousExecutionData,
+            current_step = current_step,
+            current_view = current_view,
+            json_result = json_result,
+            state = state
+        )
+
+    fun stepUpdate(
+        previousStepData: StepPersistenceTable,
+        result_code: Int? = null,
+        finished: Boolean? = null,
+        last_iteration_check: Boolean? = null,
+        next_step_id: Int? = null
+    ): StepPersistenceTable =
+        StepUpdate(
+            previousStepData = previousStepData,
+            result_code = result_code,
+            finished = finished,
+            last_iteration_check = last_iteration_check,
+            next_step_id = next_step_id
+        )
+
+    fun viewUpdate(
+        previousViewData: ViewsPersistenceTable,
+        result: String? = null,
+        extra_data: String? = null,
+        extra_file: String? = null
+    ): ViewsPersistenceTable =
+        ViewUpdate(
+            previousViewData = previousViewData,
+            result = result,
+            extra_data = extra_data,
+            extra_file = extra_file
+        )
 
 }

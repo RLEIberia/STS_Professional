@@ -43,4 +43,6 @@
     <string name="up">up</string>
     <string name="scanner">SCANNER</string>
     <string name="dictate">DICTATE</string>
+    <string name="go_back">RETURN</string>
+    <string name="open_file">OPEN FILE</string>
 </resources>

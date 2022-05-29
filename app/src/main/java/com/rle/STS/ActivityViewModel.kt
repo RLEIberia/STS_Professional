@@ -44,9 +44,9 @@ class ActivityViewModel @Inject constructor(
     private val _toastAction: MutableStateFlow<Boolean> = MutableStateFlow(false)
     val toastAction = _toastAction.asStateFlow()
 
-    private val _selectedChecklist: MutableStateFlow<ChecklistsTable> = MutableStateFlow(
-        ChecklistsTable()
-    )
+    private val _selectedChecklist: MutableStateFlow<ChecklistsTable> =
+        MutableStateFlow(ChecklistsTable())
+    val selectedChecklist = _selectedChecklist.asStateFlow()
 
     init {
         saveUserData(userData = UserData(1, "2d4b6637bfaa6224cd08f31a79ebf9ab"))
@@ -112,6 +112,8 @@ class ActivityViewModel @Inject constructor(
             val videoInDirectory = File(videoInPath)
             val imageInPath = context.filesDir.path + File.separator + "Images" + File.separator + "In"
             val imageInDirectory = File(imageInPath)
+            val pdfInPath = context.filesDir.path + File.separator + "PDF" + File.separator + "In"
+            val pdfInDirectory = File(pdfInPath)
 
             //Check if directory exists, if not create it
             if (!audioInDirectory.exists())
@@ -120,6 +122,8 @@ class ActivityViewModel @Inject constructor(
                 videoInDirectory.mkdirs()
             if (!imageInDirectory.exists())
                 imageInDirectory.mkdirs()
+            if (!pdfInDirectory.exists())
+                pdfInDirectory.mkdirs()
 
         }
     }

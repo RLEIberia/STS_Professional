@@ -18,13 +18,12 @@ import com.rle.STS.utils.converters.UUIDConverter
         StepPersistenceTable::class,
         ViewsPersistenceTable::class
     ],
-    version = 19,
-    exportSchema = false
+    version = 22,
+    exportSchema = true
 )
 @TypeConverters(DateConverter::class, UUIDConverter::class)
 abstract class STSDatabase : RoomDatabase() {
 
     abstract fun STSDao(): STSDao
-    //TODO stepDao
 
 }

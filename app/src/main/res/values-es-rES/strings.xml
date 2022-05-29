@@ -41,4 +41,7 @@
     <string name="up">SUBIR</string>
     <string name="scanner">LECTOR</string>
     <string name="dictate">DICTAR</string>
+    <string name="go_back">VOLVER</string>
+    <string name="open_file">ABRIR</string>
+
 </resources>

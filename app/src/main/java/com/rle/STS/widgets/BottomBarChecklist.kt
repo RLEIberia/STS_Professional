@@ -41,7 +41,7 @@ fun BottomBarChecklist(
         mutableStateOf(R.drawable.options)
     }
 
-    if (checklist.value.checklistData != null) {
+    if (checklist.value.checklistData != null && currentStep.value != -1 && currentView.value != -1) {
 
         when (checklist.value.checklistData!!.steps[currentStep.value].views[currentView.value].viewType) {
 
@@ -59,28 +59,51 @@ fun BottomBarChecklist(
             }
 
         }
+
+        BottomBar(
+            modifierBottomBar = modifier,
+            leftActive = !(currentStep.value == 0 && currentView.value == 0),
+            leftText = stringResource(id = R.string.back),
+            leftIcon = R.drawable.back,
+            leftOnClick = { checklistViewModel.back() },
+            leftSize = 250,
+            centerActive = centerActiveView.value,
+            centerText = centerTextView.value,
+            centerIcon = centerIconView.value,
+            centerOnClick = { checklistViewModel.centerButton(context = context) },
+            centerColor = centerColor,
+            centerSize = 250,
+            rightActive = rightActive,
+            rightText = stringResource(id = R.string.next),
+            rightIcon = R.drawable.next,
+            rightOnClick = { checklistViewModel.next() },
+            rightSize = 250
+        )
+
     }
 
-    BottomBar(
-        modifierBottomBar = modifier,
-        leftActive = !(currentStep.value == 0 && currentView.value == 0),
-        leftText = stringResource(id = R.string.back),
-        leftIcon = R.drawable.back,
-        leftOnClick = { checklistViewModel.back() },
-        leftSize = 250,
-        centerActive = centerActiveView.value,
-        centerText = centerTextView.value,
-        centerIcon = centerIconView.value,
-        centerOnClick = { checklistViewModel.centerButton(context = context) },
-        centerColor = centerColor,
-        centerSize = 250,
-        rightActive = rightActive,
-        rightText = stringResource(id = R.string.next),
-        rightIcon = R.drawable.next,
-        rightOnClick = { checklistViewModel.next() },
-        rightSize = 250
-    )
 }
+
+//    BottomBar(
+//        modifierBottomBar = modifier,
+//        leftActive = !(currentStep.value == 0 && currentView.value == 0),
+//        leftText = stringResource(id = R.string.back),
+//        leftIcon = R.drawable.back,
+//        leftOnClick = { checklistViewModel.back() },
+//        leftSize = 250,
+//        centerActive = centerActiveView.value,
+//        centerText = centerTextView.value,
+//        centerIcon = centerIconView.value,
+//        centerOnClick = { checklistViewModel.centerButton(context = context) },
+//        centerColor = centerColor,
+//        centerSize = 250,
+//        rightActive = rightActive,
+//        rightText = stringResource(id = R.string.next),
+//        rightIcon = R.drawable.next,
+//        rightOnClick = { checklistViewModel.next() },
+//        rightSize = 250
+//    )
+
 
 
 

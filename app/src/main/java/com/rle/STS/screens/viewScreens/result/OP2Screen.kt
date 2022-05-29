@@ -87,7 +87,7 @@ fun OP2Screen(
                             textColor =
                                 when (currentAnswer.value) {
                                     -1 -> Color.Black
-                                    (index+1) -> Color.Black
+                                    (index) -> Color.Black
                                     else -> Color.Gray
                                 },
                             number = index,

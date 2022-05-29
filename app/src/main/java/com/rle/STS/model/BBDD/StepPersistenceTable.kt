@@ -35,7 +35,7 @@ data class StepPersistenceTable(
     val step: Int,
 
     @ColumnInfo(name = "result_code")
-    val result_code: Int,
+    val result_code: Int, //0 es que no se ha introducido
 
     @ColumnInfo(name = "iteration")
     val iteration: Int,

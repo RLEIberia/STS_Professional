@@ -11,6 +11,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
+import com.rle.STS.ActivityViewModel
 import com.rle.STS.R
 import com.rle.STS.ui.theme.topBarColor
 import com.rle.STS.screens.ViewRepository
@@ -26,7 +27,8 @@ import kotlin.collections.ArrayList
 @Composable
 fun ChecklistScreen(
     navController: NavController,
-    checklistViewModel: ChecklistViewModel = hiltViewModel()
+    checklistViewModel: ChecklistViewModel,
+    activityViewModel: ActivityViewModel
 ) {
 
     val scaffoldState = rememberScaffoldState(rememberDrawerState(DrawerValue.Closed))
@@ -40,17 +42,27 @@ fun ChecklistScreen(
     val checklist = checklistViewModel.checklist.collectAsState().value
 
     val executionData = checklistViewModel.executionData.observeAsState(emptyList())
+    val stepPersistence = checklistViewModel.stepPersistenceFlow.observeAsState(emptyList())
+    val viewPersistence = checklistViewModel.viewPersistenceListFlow.observeAsState(emptyList())
 
-    LaunchedEffect(true) {
-        Log.d("LAUNCH", "LaunchedEffect finished")
-        //Recogemos la información del archivo JSON
-        checklistViewModel.extractChecklist(fileName = "exampleChecklist.json", context = context)
-        checklistViewModel.startChecklistExecution(UUID.fromString("00000000-0000-0000-0000-000000000000"))
-        //TODO cargar datos si existía
-        //TODO Que se reciba el json como parámetro
-    }
+    LaunchedEffect(
+        key1 = true,
+        block = {
+            Log.d("LAUNCH", "LaunchedEffect finished")
+            //Recogemos la información del archivo JSON
+            //checklistViewModel.extractChecklist(fileName = "exampleChecklist.json", context = context)
+            checklistViewModel.startChecklistExecution(
+                selectedExecutionId = UUID.fromString("00000000-0000-0000-0000-000000000000"),
+                context = context,
+                fileName = "exampleChecklist.json",
+                userId = activityViewModel.userSimple.value.userCode,
+                idCkVersion = activityViewModel.selectedChecklist.value.id
+            )
+            //TODO cargar datos si existía
+            //TODO Que se reciba el json como parámetro
+        })
 
-    if(executionData.value.isNullOrEmpty()){
+    if (executionData.value.isNullOrEmpty()) {
         Log.d("EXECUT", ": Null")
     } else {
         Log.d("EXECUT", ": Initialized, $executionData")
@@ -83,9 +95,15 @@ fun ChecklistScreen(
         // Cargar JSON y seleccionar vista actual, Crear metodo que lea JSON y devuelva siguiente vista
 
         //ESPERAMOS A QUE EL VIEWMODEL HAYA CARGADO LOS DATOS
-        if (checklist.checklistData != null) {
+        if (checklist.checklistData != null
+            && currentStep.value != -1
+            && currentView.value != -1
+        ) {
 
             Log.d("POS", currentView.value.toString())
+            Log.d("EXECUTION", executionData.toString())
+            Log.d("STEP", stepPersistence.toString())
+            Log.d("VIEWS", viewPersistence.toString())
 
 
             Surface(
@@ -142,7 +160,7 @@ fun ChecklistScreen(
                     ViewScreens.OP1.name -> ViewRepository.OP1(
                         checklistViewModel = checklistViewModel
                     )
-                    ViewScreens.OP2.name ->  ViewRepository.OP2(
+                    ViewScreens.OP2.name -> ViewRepository.OP2(
                         checklistViewModel = checklistViewModel
                     )
 

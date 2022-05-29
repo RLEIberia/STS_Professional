@@ -39,7 +39,6 @@ class SplashViewModel @Inject constructor(
             dbRepository.insertUser(TableInserts.user2)
 
             //Si la base de datos no está creada no va bien
-            dbRepository.insertChecklist(TableInserts.checklistExtra1)
 
             saveUserData(userData = UserData(1, "2d4b6637bfaa6224cd08f31a79ebf9ab"))
 
@@ -49,6 +48,17 @@ class SplashViewModel @Inject constructor(
             dbRepository.insertProject(TableInserts.projectExtra4)
             dbRepository.insertProject(TableInserts.projectExtra5)
             dbRepository.insertProject(TableInserts.projectExtra6)
+
+            try{
+                dbRepository.insertChecklist(TableInserts.checklistExtra1)
+            } catch (e: Exception){
+                Log.d("EX", ": $e")
+            }
+            dbRepository.insertFileIn(TableInserts.fileExtra1)
+            dbRepository.insertFileIn(TableInserts.fileExtra2)
+            dbRepository.insertFileIn(TableInserts.fileExtra3)
+            dbRepository.insertFileIn(TableInserts.fileExtra4)
+            dbRepository.insertFileIn(TableInserts.fileExtra5)
         }
 
     }

@@ -39,7 +39,7 @@ fun QR1Screen(checklistViewModel: ChecklistViewModel){
         buttonText = stringResource(id = R.string.scanner),
         buttonColor = Color(0xFF3BCE8E),
         buttonIcon = R.drawable.scan_qr,
-        buttonSize = 180,
+        buttonSize = 500,
         result = result.value.toString()
     )
 

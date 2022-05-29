@@ -289,7 +289,7 @@ fun ConfirmImageDialog(
                                 context,
                                 context.packageName + ".provider",
                                 file
-                            ), "image/*"
+                            ), "pdf/*"
                         )
                         intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
                         context.startActivity(intent)

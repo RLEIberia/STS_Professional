@@ -34,9 +34,7 @@ fun SplashScreen(
         key1 = true,
         block = {
             delay(2000L)
-            navController.navigate(STSScreens.MainScreen.name){
-                popUpTo(0)
-            }
+            navController.navigate(STSScreens.MainScreen.name)
         }
     )
 
@@ -52,8 +50,5 @@ fun SplashScreen(
         Image(painter = painterResource(id = R.drawable.sts_logo), contentDescription = "STS Logo")
     }
 
-//    splashViewModel.navigate(
-//        navController = navController
-//    )
 
 }
