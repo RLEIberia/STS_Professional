@@ -27,7 +27,7 @@ data class ExecutionsTable(
 
     @PrimaryKey
     @ColumnInfo(name = "id")
-    val id: UUID,
+    val id: Long? = null,
 
     @ColumnInfo(name = "user_id")
     val user_id: Int,

@@ -11,13 +11,11 @@ import kotlin.collections.ArrayList
 //INITIALIZE
 
 fun ExecutionsInit(
-    executionId: UUID,
     user_id: Int = 1,
     id_ck_version: Int = 1,
 ): ExecutionsTable {
 
     return ExecutionsTable(
-        id = executionId,
         user_id = user_id,
         id_ck_version = id_ck_version,
         created_at = getCurrentUnix(),
@@ -31,16 +29,14 @@ fun ExecutionsInit(
 }
 
 fun StepPersistenceInit(
-    id: UUID,
-    execution_id: UUID,
+    execution_id: Long,
     steps: Steps,
     iteration: Int = 1,
-    last_step_id: Int = 0,
-    next_step_id: Int = -1
+    last_step_id: Long = 0,
+    next_step_id: Long = -1
 ): StepPersistenceTable {
 
     return StepPersistenceTable(
-        id = id,
         execution_id = execution_id,
         step_id = steps.idStep,
         step = steps.position,
@@ -56,8 +52,8 @@ fun StepPersistenceInit(
 
 fun ViewPersistenceListInit(
     stepData: Steps,
-    executionId: UUID,
-    step_persistence_id: UUID
+    executionId: Long,
+    step_persistence_id: Long
 ): ArrayList<ViewsPersistenceTable> {
 
     var viewsList: ArrayList<ViewsPersistenceTable> = ArrayList()
@@ -65,7 +61,6 @@ fun ViewPersistenceListInit(
     stepData.views.forEach { view ->
         viewsList.add(
             ViewsPersistenceTable(
-                id = UUID.randomUUID(),
                 execution_id = executionId,
                 view_id = view.idView,
                 view = view.viewOrder,
@@ -109,7 +104,7 @@ fun StepUpdate(
     result_code: Int? = null,
     finished: Boolean? = null,
     last_iteration_check: Boolean? = null,
-    next_step_id: Int? = null
+    next_step_id: Long? = null
 ): StepPersistenceTable {
 
     return StepPersistenceTable(

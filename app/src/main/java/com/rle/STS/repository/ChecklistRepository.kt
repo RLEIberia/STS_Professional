@@ -33,13 +33,13 @@ class ChecklistRepository @Inject constructor(){
         openPdf(file = fileName, context = context)
 
     //Initialize persistence
-    fun executionsInit(executionId: UUID, user_id: Int = 1, id_ck_version: Int = 1) : ExecutionsTable =
-        ExecutionsInit(executionId = executionId, user_id = user_id, id_ck_version = id_ck_version)
-    fun stepInit(id: UUID, execution_id: UUID, steps: Steps, iteration: Int = 1,
-                 last_step_id: Int = 0, next_step_id: Int = -1): StepPersistenceTable =
-        StepPersistenceInit(id = id, execution_id = execution_id, steps = steps,
+    fun executionsInit(user_id: Int = 1, id_ck_version: Int = 1) : ExecutionsTable =
+        ExecutionsInit(user_id = user_id, id_ck_version = id_ck_version)
+    fun stepInit(execution_id: Long, steps: Steps, iteration: Int = 1,
+                 last_step_id: Long = 0, next_step_id: Long = -1): StepPersistenceTable =
+        StepPersistenceInit(execution_id = execution_id, steps = steps,
             iteration = iteration, last_step_id = last_step_id, next_step_id = next_step_id)
-    fun viewListInit(stepData: Steps, executionId: UUID, step_persistence_id: UUID): ArrayList<ViewsPersistenceTable> =
+    fun viewListInit(stepData: Steps, executionId: Long, step_persistence_id: Long): ArrayList<ViewsPersistenceTable> =
         ViewPersistenceListInit(stepData = stepData, executionId = executionId, step_persistence_id = step_persistence_id)
 
     //Update persistence
@@ -63,7 +63,7 @@ class ChecklistRepository @Inject constructor(){
         result_code: Int? = null,
         finished: Boolean? = null,
         last_iteration_check: Boolean? = null,
-        next_step_id: Int? = null
+        next_step_id: Long? = null
     ): StepPersistenceTable =
         StepUpdate(
             previousStepData = previousStepData,

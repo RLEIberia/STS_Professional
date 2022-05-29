@@ -19,15 +19,18 @@ import java.util.*
 )
 data class FilesOutTable(
 
-    @PrimaryKey
+    @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "id")
-    val id: UUID, //También será el nombre del fichero
+    val id: Int? = null, //También será el nombre del fichero
 
     @ColumnInfo(name = "execution_id")
-    val execution_id: UUID,
+    val execution_id: Int,
 
     @ColumnInfo(name = "type")
     val type: Int, //0 imagen, 1 video, 2 audio, 3 QR???, 4 PDF
+
+    @ColumnInfo(name = "file")
+    val file: UUID,
 
     @ColumnInfo(name = "size")
     val size: Int, //bytes

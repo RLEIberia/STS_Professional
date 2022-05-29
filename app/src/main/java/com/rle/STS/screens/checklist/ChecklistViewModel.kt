@@ -40,19 +40,17 @@ class ChecklistViewModel @Inject constructor(
     private val _currentView: MutableStateFlow<Int> = MutableStateFlow(-1)
     val currentView = _currentView.asStateFlow()
 
-    //Execution
-    //Flow query execution
-    //null UUID 00000000-0000-0000-0000-000000000000
-    private val _executionId: MutableStateFlow<UUID> =
-        MutableStateFlow(UUID.fromString("00000000-0000-0000-0000-000000000000"))
+
+    private val _executionId: MutableStateFlow<Long> =
+        MutableStateFlow(0)
     val executionId = _executionId.asStateFlow()
 
-    private val _executionDataFlow = executionId.flatMapLatest { id ->
-        if (id == UUID.fromString("00000000-0000-0000-0000-000000000000")) {
-            Log.d("EXEC", ": Null")
+    private val _executionDataFlow = _executionId.flatMapLatest { id ->
+        if (id.equals(0)) {
+            Log.d("EXEC_FLOW", ": 0")
             emptyFlow()
         } else {
-            Log.d("EXEC", ": $id")
+            Log.d("EXEC_FLOW", ": $id")
             dbRepository.getExecutionFlowById(id).distinctUntilChanged()
         }
     }.flowOn(Dispatchers.IO)
@@ -60,17 +58,17 @@ class ChecklistViewModel @Inject constructor(
 
     //Flow query step
 
-    private val _stepPersistenceId: MutableStateFlow<UUID> =
-        MutableStateFlow(UUID.fromString("00000000-0000-0000-0000-000000000000"))
+    private val _stepPersistenceId: MutableStateFlow<Long> =
+        MutableStateFlow(0)
     val stepPersistenceId = _stepPersistenceId.asStateFlow()
 
     private val _stepPersistenceFlow = currentStep.flatMapLatest { step ->
         Log.d("STEPFLOW", ": Executed with $step and ${executionId.value}")
-        if(step == -1){
+        if (step == -1) {
             Log.d("STEP", ": Null")
             emptyFlow()
         } else {
-            dbRepository.getCurrentStep(executionId = executionId.value, step = step+1)
+            dbRepository.getCurrentStep(executionId = executionId.value, step = step + 1)
                 .distinctUntilChanged()
         }
     }.flowOn(Dispatchers.IO)
@@ -83,7 +81,7 @@ class ChecklistViewModel @Inject constructor(
 
     //Start
     fun startChecklistExecution(
-        selectedExecutionId: UUID,
+        selectedExecutionId: Int,
         context: Context,
         fileName: String,
         userId: Int,
@@ -93,34 +91,40 @@ class ChecklistViewModel @Inject constructor(
 
             chargeJsonData(context, fileName)
 
-            if (selectedExecutionId == UUID.fromString("00000000-0000-0000-0000-000000000000")) {
+            Log.d("START_CHECKLIST", ": SelectedExe $selectedExecutionId")
+
+            if (selectedExecutionId == 0) {
+
+                Log.d("SELECTED_EXE", ": 0")
 
                 //Execution first insert
-                _executionId.value = UUID.randomUUID()
+                _executionId.value =
+                    dbRepository.insertExecution(
+                        checklistRepository.executionsInit(
+                            user_id = userId,
+                            id_ck_version = idCkVersion
+                        )
+                    )
                 _currentStep.value = 0
                 _currentView.value = 0
-                dbRepository.insertExecution(
-                    checklistRepository.executionsInit(
-                        executionId.value,
-                        user_id = userId,
-                        id_ck_version = idCkVersion
-                    )
-                )
+                Log.d("EXE_ID", ": ${_executionId.value}")
                 //Step first insert
-                _stepPersistenceId.value = UUID.randomUUID()
-                dbRepository.insertStep(
-                    checklistRepository.stepInit(
-                        id = stepPersistenceId.value,
-                        execution_id = executionId.value,
-                        steps = checklist.value.checklistData!!.steps[currentStep.value]
+
+                _stepPersistenceId.value =
+                    dbRepository.insertStep(
+                        checklistRepository.stepInit(
+                            execution_id = _executionId.value,
+                            steps = checklist.value.checklistData!!.steps[currentStep.value]
+                        )
                     )
-                )
+                Log.d("STEP_ID", ": ${_stepPersistenceId.value}")
+
                 //Views for Step first insert
                 dbRepository.inserMutlipleViewPersistence(
                     checklistRepository.viewListInit(
                         stepData = checklist.value.checklistData!!.steps[currentStep.value],
-                        executionId = executionId.value,
-                        step_persistence_id = stepPersistenceId.value
+                        executionId = _executionId.value,
+                        step_persistence_id = _stepPersistenceId.value
                     )
                 )
             } else {
@@ -196,60 +200,4 @@ class ChecklistViewModel @Inject constructor(
 //            checklist.value.checklistData!!.steps[_currentStep.value].views[_currentView.value].viewType
 //        )
     }
-
-    //    fun extractChecklist(fileName: String, context: Context) =
-//        viewModelScope.launch(Dispatchers.IO) {
-//            val jsonData = checklistRepository.getJson(
-//                context = context,
-//                fileName = fileName
-//            )
-//            Log.d("JSON", jsonData.toString())
-//            _checklistJSON.value = checklistRepository.extractChecklist(
-//                jsonChecklist = jsonData
-//            )
-//            Log.d("CKVAL", _checklistJSON.value.toString())
-////            val jsonData = GetJsonDataFromAsset(context = context, fileName)
-////            _checklistData.value = com.rle.STS.logic.json.extractChecklist(jsonData)
-//            Log.d(
-//                "CKVIEWMODEL",
-//                checklist.value.checklistData!!.steps[_currentStep.value].views[_currentView.value].viewType
-//            )
-//        }
-
 }
-
-//private val _checkListSize = MutableStateFlow<Int>(0)
-//val checkListSize = _checkListSize.asStateFlow()
-//
-//fun setSize(size: Int) {
-//    _checkListSize.value = size
-//}
-//
-///*
-//fun getSize(): LiveData<Int> {
-//    return _checkListSize
-//}
-//
-//fun setSize(size: Int) {
-//    // Do an asynchronous operation to fetch users.
-//    _checkListSize.value = size
-//}
-//*/
-//
-//private val _checkListPosition = MutableStateFlow<Int>(0)
-//val checkListPosition = _checkListPosition.asStateFlow()
-//
-//fun setPosition(position: Int) {
-//    _checkListPosition.value = position
-//}
-//
-//private val _showConfirmDialog = MutableStateFlow<Boolean>(false)
-//
-//val showConfirmDialog = _showConfirmDialog.asStateFlow()
-//
-//fun setConfirmDialog(openDialog: Boolean) {
-//    _showConfirmDialog.value = openDialog
-//}
-//
-//private val _viewChosen = MutableStateFlow<String>("")
-//val viewChosen = _viewChosen.asStateFlow()

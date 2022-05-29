@@ -21,12 +21,12 @@ import java.util.*
 
 data class StepPersistenceTable(
 
-    @PrimaryKey
+    @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "id")
-    val id: UUID,
+    val id: Long? = null,
 
     @ColumnInfo(name = "execution_id")
-    val execution_id: UUID,
+    val execution_id: Long,
 
     @ColumnInfo(name = "step_id")
     val step_id: Int, //Viene desde plataforma
@@ -47,9 +47,9 @@ data class StepPersistenceTable(
     val last_iteration_check: Boolean,
 
     @ColumnInfo(name = "last_step_id")
-    val last_step_id: Int, //id a esta tabla del anterior paso
+    val last_step_id: Long, //id a esta tabla del anterior paso
 
     @ColumnInfo(name = "next_step_id")
-    val next_step_id: Int //id a esta tabla del siguiente paso
+    val next_step_id: Long //id a esta tabla del siguiente paso
 
 )

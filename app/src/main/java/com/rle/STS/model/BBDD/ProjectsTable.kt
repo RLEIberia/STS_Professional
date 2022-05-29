@@ -9,7 +9,7 @@ import com.rle.STS.model.APIs.projects.Project
 )
 data class ProjectsTable(
 
-    @PrimaryKey
+    @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "id")
     val id: Int = -1,
 

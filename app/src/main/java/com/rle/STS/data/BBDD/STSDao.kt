@@ -23,10 +23,10 @@ interface STSDao {
     suspend fun getMultipleProjectsByIds(ids: Array<Int>): List<ProjectsTable>
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
-    suspend fun insertProject(project: ProjectsTable)
+    suspend fun insertProject(project: ProjectsTable): Long
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
-    suspend fun insertMultipleProjects(projects: ArrayList<ProjectsTable>)
+    suspend fun insertMultipleProjects(projects: ArrayList<ProjectsTable>): List<Long>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun updateProject(project: ProjectsTable)
@@ -57,10 +57,10 @@ interface STSDao {
     //TODO add checklist by id and user
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
-    suspend fun insertChecklist(checklist: ChecklistsTable)
+    suspend fun insertChecklist(checklist: ChecklistsTable): Long
 
     @Insert(onConflict = OnConflictStrategy.IGNORE) //Ignore ignora si hay algo que ya esté introducido con esa primary key
-    suspend fun insertMultipleChecklists(checklists: ArrayList<ChecklistsTable>)
+    suspend fun insertMultipleChecklists(checklists: ArrayList<ChecklistsTable>): List<Long>
 
     @Update(onConflict = OnConflictStrategy.REPLACE)
     suspend fun updateChecklist(checklist: ChecklistsTable)
@@ -104,7 +104,7 @@ interface STSDao {
     suspend fun getFilesInByName(name: String): FilesInTable
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertFilesIn(fileInTable: FilesInTable)
+    suspend fun insertFilesIn(fileInTable: FilesInTable): Long
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun updateFilesIn(fileInTable: FilesInTable)
@@ -123,7 +123,7 @@ interface STSDao {
     suspend fun getFilesOutById(id: Int): FilesOutTable
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertFilesOut(fileOutTable: FilesOutTable)
+    suspend fun insertFilesOut(fileOutTable: FilesOutTable): Long
 
     @Update(onConflict = OnConflictStrategy.REPLACE)
     suspend fun updateFilesIn(fileOutTable: FilesOutTable)
@@ -141,7 +141,7 @@ interface STSDao {
     @Query("SELECT * from users_table where id =:id")
     suspend fun getUserById(id: Int): UsersTable
 
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun insertUser(user: UsersTable)
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
@@ -159,19 +159,19 @@ interface STSDao {
     fun getViewPersistence(): Flow<List<ViewsPersistenceTable>>
 
     @Query("SELECT * from views_persistence_table WHERE step_persistence_id =:stepPersistenceId ORDER BY `view` ASC")
-    fun getCurrentStepViews(stepPersistenceId: UUID): Flow<List<ViewsPersistenceTable>>
+    fun getCurrentStepViews(stepPersistenceId: Long): Flow<List<ViewsPersistenceTable>>
 
     @Query("SELECT * from views_persistence_table WHERE step_persistence_id =:stepPersistenceId AND `view` =:view")
-    fun getCurrentView(stepPersistenceId: UUID, view: Int): Flow<List<ViewsPersistenceTable>>
+    fun getCurrentView(stepPersistenceId: Long, view: Int): Flow<List<ViewsPersistenceTable>>
 
     @Query("SELECT * from views_persistence_table where id =:id")
-    suspend fun getViewPersistenceById(id: UUID): ViewsPersistenceTable
+    suspend fun getViewPersistenceById(id: Long): ViewsPersistenceTable
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertViewPersistence(viewPersistenceTableDao: ViewsPersistenceTable)
+    suspend fun insertViewPersistence(viewPersistenceTableDao: ViewsPersistenceTable): Long
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertMultipleViewPersistence(viewsTableList: ArrayList<ViewsPersistenceTable>)
+    suspend fun insertMultipleViewPersistence(viewsTableList: ArrayList<ViewsPersistenceTable>): List<Long>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun updateViewPersistence(viewPersistenceTable: ViewsPersistenceTable)
@@ -180,7 +180,7 @@ interface STSDao {
     suspend fun deleteAllViewsPersistence()
 
     @Query("DELETE from views_persistence_table where execution_id =:executionId")
-    suspend fun deleteCkInstanceViews(executionId: UUID) //Eliminar todas las vistas de una instancia de checklist
+    suspend fun deleteCkInstanceViews(executionId: Long) //Eliminar todas las vistas de una instancia de checklist
 
     @Delete
     suspend fun deleteViewPersistence(viewPersistenceTable: ViewsPersistenceTable)
@@ -191,10 +191,10 @@ interface STSDao {
     fun getExecutions(): Flow<List<ExecutionsTable>>
 
     @Query("SELECT * from executions_table where id =:id")
-    fun getExecutionFlowById(id: UUID): Flow<List<ExecutionsTable>> //Sólo hay uno
+    fun getExecutionFlowById(id: Long): Flow<List<ExecutionsTable>> //Sólo hay uno
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertExecution(executionsTable: ExecutionsTable)
+    suspend fun insertExecution(executionsTable: ExecutionsTable): Long
 
     @Update(onConflict = OnConflictStrategy.REPLACE)
     suspend fun updateExecution(executionsTable: ExecutionsTable)
@@ -203,7 +203,7 @@ interface STSDao {
     suspend fun deleteAllExecutions()
 
     @Query("DELETE from executions_table where id =:id")
-    suspend fun deleteExecutionById(id: UUID)
+    suspend fun deleteExecutionById(id: Long)
 
     @Delete
     suspend fun deleteExecution(executionsTable: ExecutionsTable)
@@ -214,10 +214,10 @@ interface STSDao {
     fun getStepsList(): Flow<List<StepPersistenceTable>>
 
     @Query("SELECT * from steps_persistence_table WHERE execution_id =:executionId AND step =:step ")
-    fun getCurrentStep(executionId: UUID, step: Int): Flow<List<StepPersistenceTable>>
+    fun getCurrentStep(executionId: Long, step: Int): Flow<List<StepPersistenceTable>>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertStep(stepPersistenceTable: StepPersistenceTable)
+    suspend fun insertStep(stepPersistenceTable: StepPersistenceTable): Long
 
     @Update(onConflict = OnConflictStrategy.REPLACE)
     suspend fun updateStep(stepPersistenceTable: StepPersistenceTable)
@@ -226,7 +226,7 @@ interface STSDao {
     suspend fun deleteAllSteps()
 
     @Query("DELETE from steps_persistence_table where id =:id")
-    suspend fun deleteStepById(id: UUID)
+    suspend fun deleteStepById(id: Long)
 
     @Delete
     suspend fun deleteStep(stepPersistenceTable: StepPersistenceTable)

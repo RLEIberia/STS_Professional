@@ -53,30 +53,30 @@ class DbRepository @Inject constructor(private val STSDao: STSDao) {
 
     //Executions Dao
     fun getExecutions(): Flow<List<ExecutionsTable>> = STSDao.getExecutions()
-    fun getExecutionFlowById(id: UUID): Flow<List<ExecutionsTable>> =
+    fun getExecutionFlowById(id: Long): Flow<List<ExecutionsTable>> =
         STSDao.getExecutionFlowById(id = id).flowOn(Dispatchers.IO)
             .conflate()
-    suspend fun insertExecution(executionsTable: ExecutionsTable) =
+    suspend fun insertExecution(executionsTable: ExecutionsTable): Long =
         STSDao.insertExecution(executionsTable = executionsTable)
     suspend fun updateExecution(executionsTable: ExecutionsTable) =
         STSDao.updateExecution(executionsTable = executionsTable)
     suspend fun deleteAllExecutions() = STSDao.deleteAllExecutions()
-    suspend fun deleteExecutionsById(id: UUID) = STSDao.deleteExecutionById(id = id)
+    suspend fun deleteExecutionsById(id: Long) = STSDao.deleteExecutionById(id = id)
     suspend fun deleteExecution(executionsTable: ExecutionsTable) =
         STSDao.deleteExecution(executionsTable = executionsTable)
 
     //Steps Dao
     fun getStepList(): Flow<List<StepPersistenceTable>> = STSDao.getStepsList().flowOn(Dispatchers.IO)
         .conflate()
-    fun getCurrentStep(executionId: UUID, step: Int): Flow<List<StepPersistenceTable>> =
+    fun getCurrentStep(executionId: Long, step: Int): Flow<List<StepPersistenceTable>> =
         STSDao.getCurrentStep(executionId = executionId, step = step).flowOn(Dispatchers.IO)
             .conflate()
-    suspend fun insertStep(stepPersistenceTable: StepPersistenceTable) =
+    suspend fun insertStep(stepPersistenceTable: StepPersistenceTable): Long =
         STSDao.insertStep(stepPersistenceTable = stepPersistenceTable)
     suspend fun updateStep(stepPersistenceTable: StepPersistenceTable) =
         STSDao.updateStep(stepPersistenceTable = stepPersistenceTable)
     suspend fun deleteAllSteps() = STSDao.deleteAllSteps()
-    suspend fun deleteStepById(id: UUID) = STSDao.deleteStepById(id = id)
+    suspend fun deleteStepById(id: Long) = STSDao.deleteStepById(id = id)
     suspend fun deleteStep(stepPersistenceTable: StepPersistenceTable) =
         STSDao.deleteStep(stepPersistenceTable = stepPersistenceTable)
 
@@ -84,13 +84,13 @@ class DbRepository @Inject constructor(private val STSDao: STSDao) {
     //ViewPersistenceDao
     fun getViewPersistence(): Flow<List<ViewsPersistenceTable>> = STSDao.getViewPersistence()
         .flowOn(Dispatchers.IO).conflate()
-    fun getCurrentView(stepPersistenceId: UUID, view: Int): Flow<List<ViewsPersistenceTable>> =
+    fun getCurrentView(stepPersistenceId: Long, view: Int): Flow<List<ViewsPersistenceTable>> =
         STSDao.getCurrentView(stepPersistenceId = stepPersistenceId, view = view).flowOn(Dispatchers.IO)
             .conflate()
-    fun getCurrentStepViews(stepPersistenceId: UUID): Flow<List<ViewsPersistenceTable>> =
+    fun getCurrentStepViews(stepPersistenceId: Long): Flow<List<ViewsPersistenceTable>> =
         STSDao.getCurrentStepViews(stepPersistenceId = stepPersistenceId).flowOn(Dispatchers.IO)
             .conflate()
-    suspend fun getViewPersistenceById(id: UUID) : ViewsPersistenceTable =
+    suspend fun getViewPersistenceById(id: Long) : ViewsPersistenceTable =
         STSDao.getViewPersistenceById(id = id)
     suspend fun insertViewPersistence(viewsPersistenceTable: ViewsPersistenceTable) =
         STSDao.insertViewPersistence(viewPersistenceTableDao = viewsPersistenceTable)
@@ -99,7 +99,7 @@ class DbRepository @Inject constructor(private val STSDao: STSDao) {
     suspend fun updateViewPersistence(viewsPersistenceTable: ViewsPersistenceTable) =
         STSDao.updateViewPersistence(viewPersistenceTable = viewsPersistenceTable)
     suspend fun deleteAllViewsPersistence() = STSDao.deleteAllViewsPersistence()
-    suspend fun deleCkInstanceViews(executionId: UUID) =
+    suspend fun deleCkInstanceViews(executionId: Long) =
         STSDao.deleteCkInstanceViews(executionId = executionId)
     suspend fun deleteViewPersistence(viewsPersistenceTable: ViewsPersistenceTable) =
         STSDao.deleteViewPersistence(viewPersistenceTable = viewsPersistenceTable)

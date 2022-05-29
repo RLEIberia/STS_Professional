@@ -26,12 +26,12 @@ import java.util.*
 )
 data class ViewsPersistenceTable(
 
-    @PrimaryKey
+    @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "id")
-    val id: UUID,
+    val id: Long? = null,
 
     @ColumnInfo(name = "execution_id")
-    val execution_id: UUID,
+    val execution_id: Long,
 
     @ColumnInfo(name = "view_id")
     val view_id: Int, //viene dado desde plataforma
@@ -40,7 +40,7 @@ data class ViewsPersistenceTable(
     val view: Int,
 
     @ColumnInfo(name = "step_persistence_id")
-    val step_persistence_id: UUID,
+    val step_persistence_id: Long,
 
     @ColumnInfo(name = "date")
     val updated_at: Long,

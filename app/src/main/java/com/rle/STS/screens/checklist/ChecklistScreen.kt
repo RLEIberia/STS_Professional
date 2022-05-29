@@ -48,11 +48,11 @@ fun ChecklistScreen(
     LaunchedEffect(
         key1 = true,
         block = {
-            Log.d("LAUNCH", "LaunchedEffect finished")
+            Log.d("LAUNCH_CHECK", "LaunchedEffect finished")
             //Recogemos la información del archivo JSON
             //checklistViewModel.extractChecklist(fileName = "exampleChecklist.json", context = context)
             checklistViewModel.startChecklistExecution(
-                selectedExecutionId = UUID.fromString("00000000-0000-0000-0000-000000000000"),
+                selectedExecutionId = 0,
                 context = context,
                 fileName = "exampleChecklist.json",
                 userId = activityViewModel.userSimple.value.userCode,
