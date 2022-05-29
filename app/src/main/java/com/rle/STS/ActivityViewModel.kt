@@ -49,20 +49,19 @@ class ActivityViewModel @Inject constructor(
     val selectedChecklist = _selectedChecklist.asStateFlow()
 
     init {
-        saveUserData(userData = UserData(1, "2d4b6637bfaa6224cd08f31a79ebf9ab"))
-
-        try{
-            getUserData(context = context)
-            getUserById(context = context)
-        } catch (e: Exception) {
-            viewModelScope.launch(Dispatchers.IO) {
+        viewModelScope.launch(Dispatchers.Default) {
+            dataStoreRepository.saveUserData(userData = UserData(1, "2d4b6637bfaa6224cd08f31a79ebf9ab"))
+            delay(100)
+            try{
+                _userSimple.value = dataStoreRepository.getUserData()
+                _userDbData.value = dbRepository.getUserById(dataStoreRepository.getUserData().userCode)
+            } catch (e: Exception){
                 //TODO Montar como LiveEvent
                 _toastAction.value = true
                 delay(100)
                 _toastAction.value = false
             }
         }
-
     }
 
     //TODO guardar userData dependiendo del Login

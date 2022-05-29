@@ -7,6 +7,7 @@ import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
@@ -31,6 +32,7 @@ fun OP2Screen(
 
     val currentStep = checklistViewModel.currentStep.collectAsState()
     val currentView = checklistViewModel.currentView.collectAsState()
+    val viewPersistence = checklistViewModel.viewPersistenceListFlow.observeAsState(emptyList())
     val viewData =
         checklistViewModel.checklist.collectAsState().value.checklistData!!.steps[currentStep.value]
             .views[currentView.value].viewData
@@ -41,59 +43,68 @@ fun OP2Screen(
 
     val listState = rememberLazyListState()
 
-    Surface(
+    if (!viewPersistence.value.isNullOrEmpty()) {
+
+
+        Surface(
         modifier = Modifier
             .fillMaxSize()
             .padding(15.dp)
-    ){
-        Column(
-            modifier = Modifier
-                .fillMaxSize(),
-            verticalArrangement = Arrangement.SpaceEvenly,
-            horizontalAlignment = Alignment.CenterHorizontally
-        ){
-
-            DescriptionRow(viewData = viewData)
-
-            Row(
+    ) {
+            Column(
                 modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(10.dp),
-                verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.Center
+                    .fillMaxSize(),
+                verticalArrangement = Arrangement.SpaceEvenly,
+                horizontalAlignment = Alignment.CenterHorizontally
             ) {
 
-                LazyColumn(
+                DescriptionRow(viewData = viewData)
+
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(10.dp),
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.Center
+                ) {
+
+                    LazyColumn(
 //                    modifier = Modifier
 //                        .padding(10.dp),
-                    state = listState
-                ){
-                    itemsIndexed(items = viewData.options){ index, item ->
-                        ListRow(
-                            buttonLetter = "OP",
-                            buttonColor =
-                                when (currentAnswer.value) {
-                                    -1 -> specialButtonColor
-                                    (index) -> buttonOkColor
+                        state = listState
+                    ) {
+                        itemsIndexed(items = viewData.options) { index, item ->
+                            ListRow(
+                                buttonLetter = "OP",
+                                buttonColor =
+                                when (viewPersistence.value[currentView.value].result) {
+                                    "" -> specialButtonColor
+                                    (index.toString()) -> buttonOkColor
                                     else -> Color.Gray
                                 },
-                            height = 50.dp,
-                            rowColor =
-                                when (currentAnswer.value) {
-                                    -1 -> Color.White
-                                    (index) -> correctAnswer
+                                height = 50.dp,
+                                rowColor =
+                                when (viewPersistence.value[currentView.value].result) {
+                                    "" -> Color.White
+                                    (index.toString()) -> correctAnswer
                                     else -> Color.LightGray
                                 },
-                            textColor =
-                                when (currentAnswer.value) {
-                                    -1 -> Color.Black
-                                    (index) -> Color.Black
+                                textColor =
+                                when (viewPersistence.value[currentView.value].result) {
+                                    "" -> Color.Black
+                                    (index.toString()) -> Color.Black
                                     else -> Color.Gray
                                 },
-                            number = index,
-                            onClick = {currentAnswer.value = index},
-                            title = item
-                        )
+                                number = index,
+                                onClick = {
+                                    checklistViewModel.viewUpdate(
+                                        previousViewData = viewPersistence.value[currentView.value],
+                                        result = index.toString()
+                                    )
+                                },
+                                title = item
+                            )
+                        }
                     }
                 }
             }

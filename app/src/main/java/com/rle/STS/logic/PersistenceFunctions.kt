@@ -1,5 +1,6 @@
 package com.rle.STS.utils
 
+import android.util.Log
 import com.rle.STS.model.BBDD.ExecutionsTable
 import com.rle.STS.model.BBDD.StepPersistenceTable
 import com.rle.STS.model.BBDD.ViewsPersistenceTable
@@ -129,7 +130,9 @@ fun ViewUpdate(
     extra_file: String? = null
 ): ViewsPersistenceTable {
 
-    return ViewsPersistenceTable(
+    Log.d("VIEW_UPDATE_FUN", ": $result")
+
+    val updatedView = ViewsPersistenceTable(
         id = previousViewData.id,
         execution_id = previousViewData.execution_id,
         view_id = previousViewData.view_id,
@@ -140,5 +143,10 @@ fun ViewUpdate(
         extra_data = extra_data ?: previousViewData.extra_data,
         extra_file = extra_file ?: previousViewData.extra_file
     )
+
+    Log.d("UPDATED_VIEW", updatedView.toString())
+
+    return updatedView
+
 
 }

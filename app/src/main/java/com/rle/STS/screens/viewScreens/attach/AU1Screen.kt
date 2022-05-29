@@ -4,6 +4,8 @@ import android.content.Intent
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.graphics.Color
@@ -15,7 +17,12 @@ import com.rle.STS.items.RWMethod
 import com.rle.STS.screens.checklist.ChecklistViewModel
 
 @Composable
-fun AU1Screen(checklistViewModel: ChecklistViewModel){
+fun AU1Screen(checklistViewModel: ChecklistViewModel) {
+
+    val currentStep = checklistViewModel.currentStep.collectAsState()
+    val currentView = checklistViewModel.currentView.collectAsState()
+    val viewPersistence = checklistViewModel.viewPersistenceListFlow.observeAsState(emptyList())
+
 
     val result = remember { mutableStateOf<String?>("") }
     val context = LocalContext.current
@@ -27,22 +34,29 @@ fun AU1Screen(checklistViewModel: ChecklistViewModel){
 
             val data = it.data
             if (data != null) {
-                result.value = data.getStringExtra("result")
+
+                checklistViewModel.viewUpdate(
+                    previousViewData = viewPersistence.value[currentView.value],
+                    result = data.getStringExtra("result")!!
+                )
             }
         }
 
-    TextFieldIntroduce(
-        checklistViewModel = checklistViewModel,
-        pendingText = "Pendiente de dictado...",
-        finishedText = "Dictado finalizado.",
-        buttonFunction = {launcherDictate.launch(intentDictate)},
-        buttonText = stringResource(id = R.string.dictate),
-        buttonColor = Color(0xFF3BCE8E),
-        buttonIcon = R.drawable.dictate_icon,
-        buttonSize = 180,
-        result = result.value.toString(),
-        textResultSize = 25,
-        textResultWeight = FontWeight.Normal
-    )
+    if (!viewPersistence.value.isNullOrEmpty()) {
 
+
+        TextFieldIntroduce(
+            checklistViewModel = checklistViewModel,
+            pendingText = "Pendiente de dictado...",
+            finishedText = "Dictado finalizado.",
+            buttonFunction = { launcherDictate.launch(intentDictate) },
+            buttonText = stringResource(id = R.string.dictate),
+            buttonColor = Color(0xFF3BCE8E),
+            buttonIcon = R.drawable.dictate_icon,
+            buttonSize = 180,
+            result = viewPersistence.value[currentView.value].result,
+            textResultSize = 25,
+            textResultWeight = FontWeight.Normal
+        )
+    }
 }

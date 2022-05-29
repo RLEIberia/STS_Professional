@@ -38,6 +38,9 @@ fun ChecklistScreen(
     val context = LocalContext.current
     val currentStep = checklistViewModel.currentStep.collectAsState()
     val currentView = checklistViewModel.currentView.collectAsState()
+    val executionId = checklistViewModel.executionId.collectAsState()
+    val stepId = checklistViewModel.stepPersistenceId.collectAsState()
+
 
     val checklist = checklistViewModel.checklist.collectAsState().value
 

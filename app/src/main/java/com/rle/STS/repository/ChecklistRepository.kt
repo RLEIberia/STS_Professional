@@ -73,7 +73,7 @@ class ChecklistRepository @Inject constructor(){
             next_step_id = next_step_id
         )
 
-    fun viewUpdate(
+    suspend fun viewUpdate(
         previousViewData: ViewsPersistenceTable,
         result: String? = null,
         extra_data: String? = null,

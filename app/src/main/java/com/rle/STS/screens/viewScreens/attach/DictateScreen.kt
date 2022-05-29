@@ -30,6 +30,9 @@ fun DictateScreen(
 
     val intent = Intent(RWMethod.ACTION_DICTATION)
     val result = remember { mutableStateOf<String?>("") }
+
+
+
     val launcher =
         rememberLauncherForActivityResult(ActivityResultContracts.StartActivityForResult()) {
 

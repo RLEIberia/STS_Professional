@@ -11,6 +11,7 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.*
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
@@ -33,6 +34,7 @@ fun OKKOScreen(checklistViewModel: ChecklistViewModel) {
 
     val currentStep = checklistViewModel.currentStep.collectAsState()
     val currentView = checklistViewModel.currentView.collectAsState()
+    val viewPersistence = checklistViewModel.viewPersistenceListFlow.observeAsState(emptyList())
     val viewData =
         checklistViewModel.checklist.collectAsState().value.checklistData!!.steps[currentStep.value]
             .views[currentView.value].viewData
@@ -101,149 +103,80 @@ fun OKKOScreen(checklistViewModel: ChecklistViewModel) {
     val textRecording =
         remember { mutableStateOf(context.getString(R.string.start_recording)) }
 
-
-    Column(
-        modifier = Modifier
-            .padding(10.dp)
-            .fillMaxSize(),
-        verticalArrangement = Arrangement.SpaceEvenly
-    ) {
-
-        Text(
+    if (!viewPersistence.value.isNullOrEmpty()) {
+        Column(
             modifier = Modifier
-                .fillMaxWidth(),
-            style = MaterialTheme.typography.h4,
-            text = viewData.text[0],
-            textAlign = TextAlign.Center
-        )
-
-        Row(
-            modifier = Modifier
-                .fillMaxWidth(),
-            horizontalArrangement = Arrangement.SpaceEvenly
+                .padding(10.dp)
+                .fillMaxSize(),
+            verticalArrangement = Arrangement.SpaceEvenly
         ) {
-            CustomButton(
-                buttonSize = 160,
-                text = stringResource(id = R.string.correct),
-                onClick = {
-                    estado.value = 1
-                },
-                buttonColor = (
-                    if (estado.value == 1) {
-                        Color.Green
-                    } else {
-                        Color.LightGray
-                    }
-                )
+
+            Text(
+                modifier = Modifier
+                    .fillMaxWidth(),
+                style = MaterialTheme.typography.h4,
+                text = viewData.text[0],
+                textAlign = TextAlign.Center
             )
-            CustomButton(
-                buttonSize = 160,
-                text = stringResource(id = R.string.nsnc),
-                onClick = {
-                    estado.value = 2
-                },
-                buttonColor = (
-                    if (estado.value == 2) {
-                        Color.Blue
-                    } else {
-                        Color.LightGray
-                    }
+
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth(),
+                horizontalArrangement = Arrangement.SpaceEvenly
+            ) {
+                CustomButton(
+                    buttonSize = 160,
+                    text = stringResource(id = R.string.correct),
+                    onClick = {
+                        //estado.value = 1
+                        checklistViewModel.viewUpdate(
+                            previousViewData = viewPersistence.value[currentView.value],
+                            result = "1"
+                        )
+                    },
+                    buttonColor = (
+                        if (viewPersistence.value[currentView.value].result == "1") {
+                            Color.Green
+                        } else {
+                            Color.LightGray
+                        }
+                    )
                 )
-            )
-            CustomButton(
-                buttonSize = 160,
-                text = stringResource(id = R.string.incorrect),
-                onClick = {
-                    estado.value = 0
-                },
-                buttonColor = (
-                    if (estado.value == 0) {
-                        Color.Red
-                    } else {
-                        Color.LightGray
-                    }
+                CustomButton(
+                    buttonSize = 160,
+                    text = stringResource(id = R.string.nsnc),
+                    onClick = {
+                        checklistViewModel.viewUpdate(
+                            previousViewData = viewPersistence.value[currentView.value],
+                            result = "3"
+                        )
+                    },
+                    buttonColor = (
+                        if (viewPersistence.value[currentView.value].result == "3") {
+                            Color.Blue
+                        } else {
+                            Color.LightGray
+                        }
+                    )
                 )
-            )
+                CustomButton(
+                    buttonSize = 160,
+                    text = stringResource(id = R.string.incorrect),
+                    onClick = {
+                        checklistViewModel.viewUpdate(
+                            previousViewData = viewPersistence.value[currentView.value],
+                            result = "2"
+                        )
+                    },
+                    buttonColor = (
+                        if (viewPersistence.value[currentView.value].result == "2") {
+                            Color.Red
+                        } else {
+                            Color.LightGray
+                        }
+                    )
+                )
+            }
         }
-
-//        Row() {
-//
-//            Spacer(modifier = Modifier.weight(1f))
-//
-//            CustomButton(
-//                text = textRecording.value,
-//                buttonSize = 180,
-//                onClick = {
-//
-//                    if (recordingStarted.value) {
-//
-//                        try {
-//                            mediaRecorder.stop()
-//                            mediaRecorder.reset()
-//                            mediaRecorder.release()
-//                        } catch (e: Exception) {
-//                            e.printStackTrace()
-//                        }
-//                        recordingStarted.value = false
-//                        textRecording.value = context.getString(R.string.start_recording)
-//
-//                    } else {
-//
-//                        try {
-//                            mediaRecorder.reset()
-//
-//                            // Some works that require permission
-//                            mediaRecorder.setAudioSource(MediaRecorder.AudioSource.DEFAULT)
-//                            mediaRecorder.setOutputFormat(MediaRecorder.OutputFormat.MPEG_2_TS)
-//                            mediaRecorder.setAudioEncoder(MediaRecorder.AudioEncoder.AAC);
-//                            mediaRecorder.setOutputFile(file)
-//                            mediaRecorder.prepare()
-//
-//
-//                            mediaRecorder.start() //Empezar a grabar
-//                        } catch (e: IOException) {
-//                            e.printStackTrace()
-//                        }
-//                        recordingStarted.value = true
-//                        textRecording.value = context.getString(R.string.stop_recording)
-//
-//                    }
-//                }
-//            )
-//
-//            Spacer(modifier = Modifier.weight(1f))
-//
-//
-//            CustomButton(
-//                text = stringResource(id = R.string.play_recording),
-//                buttonSize = 180,
-//                onClick = {
-//                    if (recordingStarted.value) {
-//
-//                        Toast.makeText(
-//                            context,
-//                            context.getText(R.string.is_recording),
-//                            Toast.LENGTH_SHORT
-//                        ).show()
-//
-//                    } else {
-//
-//                        if (file.exists()) {
-//                            val uri = Uri.fromFile(file)
-//                            val mp: MediaPlayer = MediaPlayer.create(context, uri)
-//                            mp.start()
-//                        }
-//
-//                    }
-//                }
-//            )
-//
-//            Spacer(modifier = Modifier.weight(1f))
-//
-//        }
-
-//        Spacer(modifier = Modifier.weight(1f))
-
     }
-
 }

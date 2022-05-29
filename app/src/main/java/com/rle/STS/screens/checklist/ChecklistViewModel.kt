@@ -9,6 +9,7 @@ import androidx.lifecycle.viewModelScope
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.rle.STS.model.BBDD.ExecutionsTable
 import com.rle.STS.model.BBDD.StepPersistenceTable
+import com.rle.STS.model.BBDD.ViewsPersistenceTable
 import com.rle.STS.model.JSON.checklistStructure.ChecklistJSON
 import com.rle.STS.model.extra.ChecklistPosition
 import com.rle.STS.repository.ChecklistRepository
@@ -41,8 +42,7 @@ class ChecklistViewModel @Inject constructor(
     val currentView = _currentView.asStateFlow()
 
 
-    private val _executionId: MutableStateFlow<Long> =
-        MutableStateFlow(0)
+    private val _executionId: MutableStateFlow<Long> = MutableStateFlow(-1)
     val executionId = _executionId.asStateFlow()
 
     private val _executionDataFlow = _executionId.flatMapLatest { id ->
@@ -199,5 +199,19 @@ class ChecklistViewModel @Inject constructor(
 //            "CKVIEWMODEL",
 //            checklist.value.checklistData!!.steps[_currentStep.value].views[_currentView.value].viewType
 //        )
+    }
+
+    fun viewUpdate(previousViewData: ViewsPersistenceTable, result: String) {
+        viewModelScope.launch(Dispatchers.IO) {
+            Log.d("VIEW_UPDATE", previousViewData.toString())
+            Log.d("RESULT", result)
+
+            dbRepository.updateViewPersistence(
+                checklistRepository.viewUpdate(
+                    previousViewData = previousViewData,
+                    result = result
+                )
+            )
+        }
     }
 }

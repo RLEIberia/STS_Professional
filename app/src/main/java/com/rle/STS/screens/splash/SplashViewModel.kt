@@ -42,23 +42,23 @@ class SplashViewModel @Inject constructor(
 
             saveUserData(userData = UserData(1, "2d4b6637bfaa6224cd08f31a79ebf9ab"))
 
-//            dbRepository.insertProject(TableInserts.projectExtra1)
-//            dbRepository.insertProject(TableInserts.projectExtra2)
-//            dbRepository.insertProject(TableInserts.projectExtra3)
-//            dbRepository.insertProject(TableInserts.projectExtra4)
-//            dbRepository.insertProject(TableInserts.projectExtra5)
-//            dbRepository.insertProject(TableInserts.projectExtra6)
+            dbRepository.insertProject(TableInserts.projectExtra1)
+            dbRepository.insertProject(TableInserts.projectExtra2)
+            dbRepository.insertProject(TableInserts.projectExtra3)
+            dbRepository.insertProject(TableInserts.projectExtra4)
+            dbRepository.insertProject(TableInserts.projectExtra5)
+            dbRepository.insertProject(TableInserts.projectExtra6)
 
             try{
                 dbRepository.insertChecklist(TableInserts.checklistExtra1)
             } catch (e: Exception){
                 Log.d("EX", ": $e")
             }
-//            dbRepository.insertFileIn(TableInserts.fileExtra1)
-//            dbRepository.insertFileIn(TableInserts.fileExtra2)
-//            dbRepository.insertFileIn(TableInserts.fileExtra3)
-//            dbRepository.insertFileIn(TableInserts.fileExtra4)
-//            dbRepository.insertFileIn(TableInserts.fileExtra5)
+            dbRepository.insertFileIn(TableInserts.fileExtra1)
+            dbRepository.insertFileIn(TableInserts.fileExtra2)
+            dbRepository.insertFileIn(TableInserts.fileExtra3)
+            dbRepository.insertFileIn(TableInserts.fileExtra4)
+            dbRepository.insertFileIn(TableInserts.fileExtra5)
         }
 
     }
