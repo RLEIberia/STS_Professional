@@ -1,10 +1,14 @@
 package com.rle.STS.screens.checklist
 
 import android.content.Context
+import android.content.Intent
 import android.media.MediaPlayer
 import android.net.Uri
+import android.speech.tts.TextToSpeech
 import android.util.Log
+import androidx.activity.result.ActivityResultLauncher
 import androidx.compose.runtime.collectAsState
+import androidx.compose.ui.text.intl.Locale
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
@@ -18,9 +22,12 @@ import com.rle.STS.repository.ChecklistRepository
 import com.rle.STS.repository.DbRepository
 import com.rle.STS.screens.viewScreens.ViewScreens
 import com.rle.STS.utils.getCurrentUnix
+import com.rle.STS.utils.tts
 import dagger.hilt.android.lifecycle.HiltViewModel
+import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.android.scopes.ViewModelScoped
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import java.io.File
@@ -30,10 +37,30 @@ import javax.inject.Inject
 @HiltViewModel
 class ChecklistViewModel @Inject constructor(
     private val checklistRepository: ChecklistRepository,
-    private val dbRepository: DbRepository
+    private val dbRepository: DbRepository,
+    @ApplicationContext context: Context
 ) : ViewModel() {
 
     //TODO Cambiar a que la posición dependa de la base de datos
+
+    lateinit var tts: TextToSpeech
+    val delay = 300L
+    val locSpanish = java.util.Locale("es-ES")
+
+    init {
+        viewModelScope.launch(Dispatchers.IO) {
+
+            tts = TextToSpeech(context, TextToSpeech.OnInitListener {
+                if (it == TextToSpeech.SUCCESS) {
+                    tts.setLanguage(locSpanish)
+                    tts.setSpeechRate(1.0f)
+                }
+            })
+        }
+    }
+
+    private val _ttsOn: MutableStateFlow<Boolean> = MutableStateFlow(true)
+    val ttsOn = _ttsOn.asStateFlow()
 
     private val _checklistJSON: MutableStateFlow<ChecklistJSON> = MutableStateFlow(ChecklistJSON())
     val checklist = _checklistJSON.asStateFlow()
@@ -46,8 +73,6 @@ class ChecklistViewModel @Inject constructor(
 
     private val _executionId: MutableStateFlow<Long> = MutableStateFlow(-1)
     val executionId = _executionId.asStateFlow()
-
-
 
     private val _executionDataFlow = _executionId.flatMapLatest { id ->
         if (id.equals(0)) {
@@ -90,52 +115,63 @@ class ChecklistViewModel @Inject constructor(
         fileName: String,
         userId: Int,
         idCkVersion: Int
-    ) =
-        viewModelScope.launch(Dispatchers.IO) {
+    ) = viewModelScope.launch(Dispatchers.IO) {
 
-            chargeJsonData(context, fileName)
+        chargeJsonData(context, fileName)
 
-            Log.d("START_CHECKLIST", ": SelectedExe $selectedExecutionId")
+        Log.d("START_CHECKLIST", ": SelectedExe $selectedExecutionId")
 
-            if (selectedExecutionId == 0) {
+        if (selectedExecutionId == 0) {
 
-                Log.d("SELECTED_EXE", ": 0")
+            Log.d("SELECTED_EXE", ": 0")
 
-                //Execution first insert
-                _executionId.value =
-                    dbRepository.insertExecution(
-                        checklistRepository.executionsInit(
-                            user_id = userId,
-                            id_ck_version = idCkVersion
-                        )
-                    )
-                _currentStep.value = 0
-                _currentView.value = 0
-                Log.d("EXE_ID", ": ${_executionId.value}")
-                //Step first insert
-
-                _stepPersistenceId.value =
-                    dbRepository.insertStep(
-                        checklistRepository.stepInit(
-                            execution_id = _executionId.value,
-                            steps = checklist.value.checklistData!!.steps[currentStep.value]
-                        )
-                    )
-                Log.d("STEP_ID", ": ${_stepPersistenceId.value}")
-
-                //Views for Step first insert
-                dbRepository.inserMutlipleViewPersistence(
-                    checklistRepository.viewListInit(
-                        stepData = checklist.value.checklistData!!.steps[currentStep.value],
-                        executionId = _executionId.value,
-                        step_persistence_id = _stepPersistenceId.value
+            //Execution first insert
+            _executionId.value =
+                dbRepository.insertExecution(
+                    checklistRepository.executionsInit(
+                        user_id = userId,
+                        id_ck_version = idCkVersion
                     )
                 )
-            } else {
-                //TODO - Cargar lo que ya haya e ir al paso que toca
-                //Los pasos podrían venir de esto directamente y nos cargamos los otros dos campos
+            _currentStep.value = 0
+            _currentView.value = 0
+            Log.d("EXE_ID", ": ${_executionId.value}")
+            //Step first insert
+
+            _stepPersistenceId.value =
+                dbRepository.insertStep(
+                    checklistRepository.stepInit(
+                        execution_id = _executionId.value,
+                        steps = checklist.value.checklistData!!.steps[currentStep.value]
+                    )
+                )
+            Log.d("STEP_ID", ": ${_stepPersistenceId.value}")
+
+            //Views for Step first insert
+            dbRepository.inserMutlipleViewPersistence(
+                checklistRepository.viewListInit(
+                    stepData = checklist.value.checklistData!!.steps[currentStep.value],
+                    executionId = _executionId.value,
+                    step_persistence_id = _stepPersistenceId.value
+                )
+            )
+        } else {
+            //TODO - Cargar lo que ya haya e ir al paso que toca
+            //Los pasos podrían venir de esto directamente y nos cargamos los otros dos campos
+        }
+
+        if (_ttsOn.value) {
+            try {
+                delay(delay)
+                checklistRepository.speakTTS(
+                    _checklistJSON.value.checklistData!!.steps[_currentStep.value].views[_currentView.value].viewData.audio,
+                    tts
+                )
+            } catch (e: Exception) {
+                Log.d("SPEAK", "AUDIO NO PRESENTE")
             }
         }
+    }
 
 
     fun next() =
@@ -147,6 +183,18 @@ class ChecklistViewModel @Inject constructor(
             } else {
 
             }
+            if (_ttsOn.value) {
+                try {
+                    tts.stop()
+                    delay(delay)
+                    checklistRepository.speakTTS(
+                        _checklistJSON.value.checklistData!!.steps[_currentStep.value].views[_currentView.value].viewData.audio,
+                        tts
+                    )
+                } catch (e: Exception) {
+                    Log.d("SPEAK", "AUDIO NO PRESENTE")
+                }
+            }
             Log.d("POS_", _currentView.value.toString())
         }
 
@@ -156,7 +204,26 @@ class ChecklistViewModel @Inject constructor(
                 _currentView.value = _currentView.value - 1
                 Log.d("BACK", _currentView.value.toString())
             } else {
+                if(_currentStep.value==0){}
+                else {
+                    _currentView.value = 0
+                    _currentStep.value = _currentStep.value - 1
+                    _currentView.value =
+                        checklist.value.checklistData!!.steps[_currentStep.value].views.size - 1
+                }
 
+            }
+            if (_ttsOn.value) {
+                try {
+                    tts.stop()
+                    delay(delay)
+                    checklistRepository.speakTTS(
+                        _checklistJSON.value.checklistData!!.steps[_currentStep.value].views[_currentView.value].viewData.audio,
+                        tts
+                    )
+                } catch (e: Exception) {
+                    Log.d("SPEAK", "AUDIO NO PRESENTE")
+                }
             }
             Log.d("POS_", _currentView.value.toString())
         }
@@ -214,6 +281,28 @@ class ChecklistViewModel @Inject constructor(
                     result = result
                 )
             )
+        }
+    }
+
+
+    fun buttonSpeak() {
+        viewModelScope.launch(Dispatchers.IO) {
+            Log.d("BUTTON_AUDIO", ": Pressed.")
+            try {
+                delay(delay)
+                checklistRepository.speakTTS(
+                    audioText = _checklistJSON.value.checklistData!!.steps[_currentStep.value].views[_currentView.value].viewData.audio,
+                    tts = tts
+                )
+            } catch (e: Exception) {
+                Log.d("SPEAK", "AUDIO NO PRESENTE")
+            }
+        }
+    }
+
+    fun ttsSwitch(){
+        viewModelScope.launch(Dispatchers.IO) {
+            _ttsOn.value = !_ttsOn.value
         }
     }
 }

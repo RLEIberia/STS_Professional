@@ -7,5 +7,6 @@ enum class STSScreens {
     ChecklistSelectScreen,
     ChecklistScreen,
     DocumentSelectScreen,
-    ScannerDialog
+    ScannerDialog,
+    StateScreen
 }

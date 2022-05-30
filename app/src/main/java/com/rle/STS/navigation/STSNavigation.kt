@@ -7,6 +7,7 @@ import androidx.navigation.compose.rememberNavController
 import com.rle.STS.screens.MainScreen
 import androidx.navigation.compose.composable
 import com.rle.STS.ActivityViewModel
+import com.rle.STS.screens.StateScreen
 import com.rle.STS.screens.checklist.ChecklistScreen
 import com.rle.STS.screens.checklist.ChecklistViewModel
 import com.rle.STS.screens.checklistSelect.ChecklistSelectScreen
@@ -19,6 +20,7 @@ import com.rle.STS.screens.projectSelect.ProjectsViewModel
 import com.rle.STS.screens.scanner.ScannerViewModel
 import com.rle.STS.screens.splash.SplashScreen
 import com.rle.STS.screens.splash.SplashViewModel
+import com.rle.STS.screens.state.StateViewModel
 
 @Composable
 fun STSNavigation() {
@@ -32,6 +34,7 @@ fun STSNavigation() {
     val checklistViewModel: ChecklistViewModel = hiltViewModel()
     val scannerViewModel: ScannerViewModel = hiltViewModel()
     val documentSelectViewModel: DocumentSelectViewModel = hiltViewModel()
+    val stateViewModel: StateViewModel = hiltViewModel()
 
     NavHost(
         navController = navController,
@@ -83,6 +86,15 @@ fun STSNavigation() {
             DocumentSelectScreen(
                 navController = navController,
                 documentSelectViewModel = documentSelectViewModel
+            )
+        }
+
+        composable(STSScreens.StateScreen.name){
+            StateScreen(
+                navController = navController,
+                activityViewModel = activityViewModel,
+                stateViewModel = stateViewModel,
+                checklistViewModel = checklistViewModel
             )
         }
 

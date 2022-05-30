@@ -123,7 +123,7 @@ fun MainScreen(
                         icon = R.drawable.discover_icon,
                         onClick = {
                             /*TODO - Añadir dirección de estado*/
-                            navController.navigate(STSScreens.ProjectSelectScreen.name)
+                            navController.navigate(STSScreens.StateScreen.name)
                         },
                         buttonColor = Color(0xFFF44336),
                         buttonSize = 180

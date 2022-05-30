@@ -1,6 +1,7 @@
 package com.rle.STS.repository
 
 import android.content.Context
+import android.speech.tts.TextToSpeech
 import com.rle.STS.logic.json.extractChecklistData
 import com.rle.STS.model.BBDD.ExecutionsTable
 import com.rle.STS.model.BBDD.StepPersistenceTable
@@ -11,6 +12,7 @@ import com.rle.STS.utils.*
 import com.rle.STS.utils.checklistUtils.openImage
 import com.rle.STS.utils.checklistUtils.openVideo
 import com.rle.STS.utils.checklistUtils.openPdf
+import com.rle.STS.utils.checklistUtils.speak
 import java.util.*
 import javax.inject.Inject
 
@@ -31,6 +33,8 @@ class ChecklistRepository @Inject constructor(){
 
     fun openPdf(fileName: String, context: Context) =
         openPdf(file = fileName, context = context)
+
+    suspend fun speakTTS(audioText: CharSequence, tts: TextToSpeech) = speak(audioText = audioText, tts = tts)
 
     //Initialize persistence
     fun executionsInit(user_id: Int = 1, id_ck_version: Int = 1) : ExecutionsTable =

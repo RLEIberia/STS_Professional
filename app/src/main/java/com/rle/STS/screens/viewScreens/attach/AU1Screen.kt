@@ -24,7 +24,6 @@ fun AU1Screen(checklistViewModel: ChecklistViewModel) {
     val viewPersistence = checklistViewModel.viewPersistenceListFlow.observeAsState(emptyList())
 
 
-    val result = remember { mutableStateOf<String?>("") }
     val context = LocalContext.current
 
     val intentDictate = Intent(RWMethod.ACTION_DICTATION)

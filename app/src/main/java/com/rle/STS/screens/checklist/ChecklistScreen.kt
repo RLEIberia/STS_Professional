@@ -13,12 +13,14 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.rle.STS.ActivityViewModel
 import com.rle.STS.R
+import com.rle.STS.screens.ChecklistDrawer
 import com.rle.STS.ui.theme.topBarColor
 import com.rle.STS.screens.ViewRepository
 import com.rle.STS.ui.theme.specialButtonColor
 import com.rle.STS.screens.viewScreens.ViewScreens
 import com.rle.STS.widgets.BottomBarChecklist
 import com.rle.STS.widgets.CustomButton
+import com.rle.STS.widgets.SimpleTopBar
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 import java.util.*
@@ -57,7 +59,7 @@ fun ChecklistScreen(
             checklistViewModel.startChecklistExecution(
                 selectedExecutionId = 0,
                 context = context,
-                fileName = "exampleChecklist.json",
+                fileName = activityViewModel.selectedChecklist.value.json,
                 userId = activityViewModel.userSimple.value.userCode,
                 idCkVersion = activityViewModel.selectedChecklist.value.id
             )
@@ -71,37 +73,48 @@ fun ChecklistScreen(
         Log.d("EXECUT", ": Initialized, $executionData")
     }
 
-    Scaffold(
-        topBar = {
-            checklistTopBar(
-                scope = scope,
-                scaffoldState = scaffoldState,
-                checklistViewModel = checklistViewModel
-            )
-        },
-        bottomBar = {
-            BottomBarChecklist(
-                modifier = Modifier,
-                checklistViewModel = checklistViewModel,
-                backOnClick = { /*TODO*/ },
-                centerActive = true,
-                centerText = "TEST",
-                centerOnClick = { /*TODO*/ },
-                rightActive = true,
-                centerColor = specialButtonColor
-            )
-        },
-        drawerContent = {
-            //TODO
-        }
+    if (checklist.checklistData != null
+        && currentStep.value != -1
+        && currentView.value != -1
     ) {
-        // Cargar JSON y seleccionar vista actual, Crear metodo que lea JSON y devuelva siguiente vista
+        Scaffold(
+            scaffoldState = scaffoldState,
+            topBar = {
+                SimpleTopBar(
+                    scope = scope,
+                    scaffoldState = scaffoldState,
+                    text = checklist.checklistData!!.steps[currentStep.value].stepName,
+                    rightExist = true,
+                    rightText = "AUDIO",
+                    rightOnClick = { checklistViewModel.buttonSpeak() }
+                )
 
-        //ESPERAMOS A QUE EL VIEWMODEL HAYA CARGADO LOS DATOS
-        if (checklist.checklistData != null
-            && currentStep.value != -1
-            && currentView.value != -1
+            },
+            bottomBar = {
+                BottomBarChecklist(
+                    modifier = Modifier,
+                    checklistViewModel = checklistViewModel,
+                    backOnClick = { /*TODO*/ },
+                    centerActive = true,
+                    centerText = "TEST",
+                    centerOnClick = { /*TODO*/ },
+                    rightActive = true,
+                    centerColor = specialButtonColor
+                )
+            },
+            drawerContent = {
+                ChecklistDrawer(
+                    scope = scope,
+                    scaffoldState = scaffoldState,
+                    navController = navController,
+                    checklistViewModel = checklistViewModel
+                )
+            }
         ) {
+            // Cargar JSON y seleccionar vista actual, Crear metodo que lea JSON y devuelva siguiente vista
+
+            //ESPERAMOS A QUE EL VIEWMODEL HAYA CARGADO LOS DATOS
+
 
             Log.d("POS", currentView.value.toString())
             Log.d("EXECUTION", executionData.toString())
@@ -154,9 +167,8 @@ fun ChecklistScreen(
 
                     //Number
                     ViewScreens.NM1.name -> ViewRepository.NM1(
-                        viewModel = checklistViewModel,
-                        nextType = 0,
-                        check = { })
+                        checklistViewModel = checklistViewModel,
+                    )
                     ViewScreens.NM2.name -> {}//ViewRepository.NM2(viewModel = checklistViewModel)
 
                     //Option

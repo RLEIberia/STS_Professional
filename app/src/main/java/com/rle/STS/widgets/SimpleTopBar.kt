@@ -81,7 +81,7 @@ fun SimpleTopBar(
                     if(rightExist) {
                         CustomButton(
                             text = rightText,
-                            onClick = leftOnClick
+                            onClick = rightOnClick
                         )
                     }
                 }

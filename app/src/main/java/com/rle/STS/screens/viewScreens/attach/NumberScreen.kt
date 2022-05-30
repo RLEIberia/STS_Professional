@@ -13,10 +13,14 @@ import androidx.compose.material.Card
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.composed
+import androidx.compose.ui.focus.onFocusEvent
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
@@ -29,7 +33,7 @@ import com.rle.STS.widgets.defaultStepBottomButtons
 
 @SuppressLint("RestrictedApi")
 @Composable
-fun NumberScreen(check: () -> Unit, stepViewModel: ChecklistViewModel, nextType: Int) {
+fun NumberScreen(checklistViewModel: ChecklistViewModel) {
 
     val numero = remember { mutableStateOf("") }
     val openKeyboard = remember { mutableStateOf(false) }
@@ -78,7 +82,7 @@ fun NumberScreen(check: () -> Unit, stepViewModel: ChecklistViewModel, nextType:
                             false;
                         }
 
-                        editText.setInputType(InputType.TYPE_CLASS_NUMBER or InputType.TYPE_NUMBER_FLAG_DECIMAL or InputType.TYPE_NUMBER_FLAG_SIGNED)
+                        editText.inputType = InputType.TYPE_CLASS_NUMBER
                         //editText.setInputType(InputType.TYPE_CLASS_NUMBER)
 
                         view
@@ -124,19 +128,6 @@ fun NumberScreen(check: () -> Unit, stepViewModel: ChecklistViewModel, nextType:
             Spacer(modifier = Modifier.weight(1f))
 
         }
-
-        Spacer(modifier = Modifier.weight(1f))
-
-        Spacer(modifier = Modifier.height(10.dp))
-
-        if (numero.value == ""){
-            defaultStepBottomButtons(stepViewModel, hasValue = false, nextType = nextType)
-        } else {
-            defaultStepBottomButtons(stepViewModel, hasValue = true, nextType = nextType)
-        }
-
-        Spacer(modifier = Modifier.height(10.dp))
-
     }
 
 }

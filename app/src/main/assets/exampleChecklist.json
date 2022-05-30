@@ -22,21 +22,21 @@
         "numViews": 14,
         "path": [
           {
-            "actionCode": "100",
+            "actionCode": "000",
             "message": "",
             "nextStep": [
               2
             ]
           },
           {
-            "actionCode": "100",
+            "actionCode": "000",
             "message": "",
             "nextStep": [
               2
             ]
           },
           {
-            "actionCode": "100",
+            "actionCode": "000",
             "message": "",
             "nextStep": [
               2
@@ -47,10 +47,10 @@
           {
             "idView": 1,
             "viewOrder": 1,
-            "viewType": "QR1",
+            "viewType": "NM1",
             "viewData": {
               "text": [
-                "Elige entre Correcto, Incorrecto y NSNC asdfasdfasdf asdfasdf sdfasdf asdfasdf asdf"
+                "Realiza una prueba de dictado con el dispositivo"
               ],
               "audio": "Elige entre las opciones que ve en pantalla"
             }
@@ -63,7 +63,7 @@
               "text": [
                 "Mira el vídeo que sale por pantalla, pulsa a reproducir"
               ],
-              "audio": "Elige entre las opciones que ve en pantalla",
+              "audio": "Mira el vídeo que sale por pantalla, pulsa a reproducir",
               "files": [
                 {
                   "name": "",
@@ -233,10 +233,10 @@
           {
             "idView": 14,
             "viewOrder": 14,
-            "viewType": "NM1",
+            "viewType": "QR1",
             "viewData": {
               "text": [
-                "Realiza una prueba de dictado con el dispositivo"
+                "Elige entre Correcto, Incorrecto y NSNC asdfasdfasdf asdfasdf sdfasdf asdfasdf asdf"
               ],
               "audio": "Elige entre las opciones que ve en pantalla"
             }

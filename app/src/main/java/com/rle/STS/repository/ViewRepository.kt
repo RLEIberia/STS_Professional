@@ -52,8 +52,8 @@ class ViewRepository @Inject constructor(){
 
 
         @Composable
-        fun NM1(check: () -> Unit, viewModel: ChecklistViewModel, nextType: Int) {
-            NumberScreen(check, viewModel, nextType)
+        fun NM1(checklistViewModel: ChecklistViewModel){
+            NM1Screen(checklistViewModel = checklistViewModel)
         }
 
         //Text
@@ -80,29 +80,6 @@ class ViewRepository @Inject constructor(){
         @Composable
         fun OP2(checklistViewModel: ChecklistViewModel){
             OP2Screen(checklistViewModel = checklistViewModel)
-        }
-
-        @Composable
-        fun MultiOption3(viewModel: ChecklistViewModel, nextType: Int) {
-            MultiOptionScreen(
-                option1 = "option1",
-                option2 = "option2",
-                option3 = "option3",
-                stepViewModel = viewModel,
-                nextType = 0
-            )
-        }
-
-        @Composable
-        fun MultiOption4(viewModel: ChecklistViewModel, nextType: Int) {
-            MultiOptionScreen(
-                option1 = "option1",
-                option2 = "option2",
-                option3 = "option3",
-                option4 = "option4",
-                stepViewModel = viewModel,
-                nextType = 0
-            )
         }
 
     }
