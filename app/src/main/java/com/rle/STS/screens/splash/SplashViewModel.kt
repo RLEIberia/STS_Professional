@@ -1,26 +1,20 @@
 package com.rle.STS.screens.splash
 
-import android.content.Context
 import android.util.Log
-import androidx.compose.ui.platform.LocalContext
-import androidx.datastore.preferences.protobuf.Parser
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.NavController
-import com.google.gson.JsonObject
-import com.google.gson.JsonParser
 import com.rle.STS.model.DataStore.UserData
 import com.rle.STS.navigation.STSScreens
 import com.rle.STS.repository.APIRepository
 import com.rle.STS.repository.ChecklistRepository
 import com.rle.STS.repository.DataStoreRepository
 import com.rle.STS.repository.DbRepository
-import com.rle.STS.utils.TableInserts
+import com.rle.STS.items.TableInserts
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
-import java.io.File
 import javax.inject.Inject
 
 @HiltViewModel

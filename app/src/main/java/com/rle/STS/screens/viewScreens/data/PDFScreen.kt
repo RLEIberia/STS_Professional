@@ -24,6 +24,7 @@ import com.rle.STS.ui.theme.buttonOkColor
 import com.rle.STS.ui.theme.buttonStop
 import com.rle.STS.ui.theme.grayedButton
 import com.rle.STS.utils.checklistUtils.openAudio
+import com.rle.STS.utils.checklistUtils.openPdf
 import com.rle.STS.widgets.CustomSideIconButton
 import kotlinx.coroutines.delay
 import java.io.File
@@ -31,7 +32,7 @@ import kotlin.time.Duration.Companion.seconds
 
 
 @Composable
-fun AU2Screen(
+fun PDFScreen(
     checklistViewModel: ChecklistViewModel
 ) {
 
@@ -53,7 +54,7 @@ fun AU2Screen(
 //    }
 
     //Directory variables
-    val directoryStr = context.filesDir.path + File.separator + "Audios" + File.separator + "In"
+    val directoryStr = context.filesDir.path + File.separator + "PDF" + File.separator + "In"
     val directory = File(directoryStr)
     //Check if directory exists, if not create it
     if (!directory.exists())
@@ -134,7 +135,7 @@ fun AU2Screen(
                                     .fillMaxWidth(),
                                 horizontalArrangement = Arrangement.Center
                             ) {
-                                Text(text = "Esperando reproducción...")
+                                    Text(text = "Abra el archivo...")
                             }
                             Row(
                                 modifier = Modifier
@@ -168,13 +169,13 @@ fun AU2Screen(
                     ) {
 
                         CustomSideIconButton(
-                            text = stringResource(id = R.string.play),
+                            text = stringResource(id = R.string.open_file),
                             onClick = {
-                                openAudio(file = viewData.files[0].file, context = context)
+                                openPdf(file = viewData.files[0].file, context = context)
                             },
                             buttonColor = buttonOkColor,
                             buttonSize = 220,
-                            icon = R.drawable.play
+                            icon = R.drawable.file_icon
                         )
 
                         //TODO STOP WHEN CHANGE

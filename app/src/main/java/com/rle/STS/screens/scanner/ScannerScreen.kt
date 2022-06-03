@@ -25,6 +25,7 @@ import com.rle.STS.ActivityViewModel
 import com.rle.STS.R
 import com.rle.STS.items.RWMethod
 import com.rle.STS.model.BBDD.ChecklistsTable
+import com.rle.STS.model.BBDD.ExecutionsTable
 import com.rle.STS.model.BBDD.FilesInTable
 import com.rle.STS.model.BBDD.ProjectsTable
 import com.rle.STS.model.JSON.checklistStructure.ChecklistData
@@ -38,6 +39,7 @@ import com.rle.STS.utils.checklistUtils.openImage
 import com.rle.STS.utils.checklistUtils.openPdf
 import com.rle.STS.utils.checklistUtils.openVideo
 import com.rle.STS.widgets.BottomBar
+import com.rle.STS.widgets.TitleDialogBar
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -48,7 +50,7 @@ fun ScannerScreen(
     openScanner: MutableState<Boolean>,
     mainViewModel: MainViewModel,
     activityViewModel: ActivityViewModel,
-    scannerViewModel: ScannerViewModel
+    scannerViewModel: ScannerViewModel,
 ) {
 
     val result = remember { mutableStateOf<String?>("") }
@@ -85,6 +87,8 @@ fun ScannerScreen(
                     id.value = result.value.toString().split(" ", ignoreCase = true, limit = 3)[2]
 
                 }
+            } else {
+                openScanner.value = false
             }
 
             //Rle2022 CK aasdfasdfasdf
@@ -125,6 +129,7 @@ fun ScannerScreen(
                 when(type.value){
                     "CK" -> {
                         activityViewModel.getChecklistById(Integer.parseInt(id.value.trim()))
+                        activityViewModel.setExecution(ExecutionsTable())
                         navController.navigate(STSScreens.ChecklistScreen.name)
                     }
                     "PJ" -> {
@@ -181,29 +186,7 @@ private fun ScannerDialog(
                     .fillMaxSize(0.9f),
                 topBar =
                 {
-                    TopAppBar(
-                        modifier = Modifier
-                            .fillMaxWidth(),
-                        backgroundColor = topBarColor,
-                        elevation = 10.dp
-
-                    ) {
-                        Row(
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .padding(5.dp),
-                            horizontalArrangement = Arrangement.Center
-                        ) {
-                            Text(
-                                modifier = Modifier
-                                    .padding(),
-                                fontWeight = FontWeight.Bold,
-                                text = title,
-                                style = MaterialTheme.typography.h4,
-                                color = Color.White
-                            )
-                        }
-                    }
+                    TitleDialogBar(title)
 
                 },
                 content = {
@@ -266,6 +249,7 @@ private fun ScannerDialog(
         },
     )
 }
+
 
 @Composable
 fun contentChecklist(

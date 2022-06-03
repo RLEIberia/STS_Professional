@@ -2,6 +2,7 @@ package com.rle.STS.widgets
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
@@ -30,6 +31,8 @@ fun BottomBarChecklist(
     val currentStep = checklistViewModel.currentStep.collectAsState()
     val currentView = checklistViewModel.currentView.collectAsState()
     val checklist = checklistViewModel.checklist.collectAsState()
+
+    val executionData = checklistViewModel.executionData.observeAsState(emptyList())
 
     val centerActiveView = remember {
         mutableStateOf(false)
@@ -65,7 +68,7 @@ fun BottomBarChecklist(
             leftActive = !(currentStep.value == 0 && currentView.value == 0),
             leftText = stringResource(id = R.string.back),
             leftIcon = R.drawable.back,
-            leftOnClick = { checklistViewModel.back() },
+            leftOnClick = { checklistViewModel.back(previousExecutionData = executionData.value[0]) },
             leftSize = 250,
             centerActive = centerActiveView.value,
             centerText = centerTextView.value,
@@ -76,7 +79,7 @@ fun BottomBarChecklist(
             rightActive = rightActive,
             rightText = stringResource(id = R.string.next),
             rightIcon = R.drawable.next,
-            rightOnClick = { checklistViewModel.next() },
+            rightOnClick = { checklistViewModel.next(previousExecutionData = executionData.value[0]) },
             rightSize = 250
         )
 

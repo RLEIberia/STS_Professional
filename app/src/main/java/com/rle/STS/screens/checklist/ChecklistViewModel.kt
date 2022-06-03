@@ -1,37 +1,24 @@
 package com.rle.STS.screens.checklist
 
 import android.content.Context
-import android.content.Intent
-import android.media.MediaPlayer
-import android.net.Uri
 import android.speech.tts.TextToSpeech
 import android.util.Log
-import androidx.activity.result.ActivityResultLauncher
-import androidx.compose.runtime.collectAsState
-import androidx.compose.ui.text.intl.Locale
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
-import androidx.lifecycle.viewmodel.compose.viewModel
 import com.rle.STS.model.BBDD.ExecutionsTable
 import com.rle.STS.model.BBDD.StepPersistenceTable
 import com.rle.STS.model.BBDD.ViewsPersistenceTable
 import com.rle.STS.model.JSON.checklistStructure.ChecklistJSON
-import com.rle.STS.model.extra.ChecklistPosition
 import com.rle.STS.repository.ChecklistRepository
 import com.rle.STS.repository.DbRepository
 import com.rle.STS.screens.viewScreens.ViewScreens
-import com.rle.STS.utils.getCurrentUnix
-import com.rle.STS.utils.tts
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dagger.hilt.android.qualifiers.ApplicationContext
-import dagger.hilt.android.scopes.ViewModelScoped
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
-import java.io.File
-import java.util.*
 import javax.inject.Inject
 
 @HiltViewModel
@@ -59,7 +46,7 @@ class ChecklistViewModel @Inject constructor(
         }
     }
 
-    private val _ttsOn: MutableStateFlow<Boolean> = MutableStateFlow(true)
+    private val _ttsOn: MutableStateFlow<Boolean> = MutableStateFlow(false)
     val ttsOn = _ttsOn.asStateFlow()
 
     private val _checklistJSON: MutableStateFlow<ChecklistJSON> = MutableStateFlow(ChecklistJSON())
@@ -75,7 +62,7 @@ class ChecklistViewModel @Inject constructor(
     val executionId = _executionId.asStateFlow()
 
     private val _executionDataFlow = _executionId.flatMapLatest { id ->
-        if (id.equals(0)) {
+        if (id.equals(-1)) {
             Log.d("EXEC_FLOW", ": 0")
             emptyFlow()
         } else {
@@ -97,7 +84,7 @@ class ChecklistViewModel @Inject constructor(
             Log.d("STEP", ": Null")
             emptyFlow()
         } else {
-            dbRepository.getCurrentStep(executionId = executionId.value, step = step + 1)
+            dbRepository.getFlowCurrentStep(executionId = executionId.value, step = step + 1)
                 .distinctUntilChanged()
         }
     }.flowOn(Dispatchers.IO)
@@ -108,20 +95,28 @@ class ChecklistViewModel @Inject constructor(
     }.flowOn(Dispatchers.IO)
     val viewPersistenceListFlow = _viewPersistenceListFlow.asLiveData()
 
+    private val _endDialog: MutableStateFlow<Boolean> = MutableStateFlow(false)
+    val endDialog = _endDialog.asStateFlow()
+
+    fun hideEndDialog(){
+        viewModelScope.launch(Dispatchers.IO) {
+            _endDialog.value = false
+        }
+    }
+
     //Start
     fun startChecklistExecution(
-        selectedExecutionId: Int,
+        selectedExecutionId: Long?,
         context: Context,
-        fileName: String,
         userId: Int,
         idCkVersion: Int
     ) = viewModelScope.launch(Dispatchers.IO) {
 
-        chargeJsonData(context, fileName)
+        chargeJsonData(context, dbRepository.getChecklistById(idCkVersion).json)
 
         Log.d("START_CHECKLIST", ": SelectedExe $selectedExecutionId")
 
-        if (selectedExecutionId == 0) {
+        if (selectedExecutionId == null) {
 
             Log.d("SELECTED_EXE", ": 0")
 
@@ -142,7 +137,7 @@ class ChecklistViewModel @Inject constructor(
                 dbRepository.insertStep(
                     checklistRepository.stepInit(
                         execution_id = _executionId.value,
-                        steps = checklist.value.checklistData!!.steps[currentStep.value]
+                        steps = checklist.value.checklistData!!.steps[_currentStep.value]
                     )
                 )
             Log.d("STEP_ID", ": ${_stepPersistenceId.value}")
@@ -156,6 +151,20 @@ class ChecklistViewModel @Inject constructor(
                 )
             )
         } else {
+
+            _executionId.value = selectedExecutionId
+            _currentStep.value = dbRepository.getExecutionById(selectedExecutionId).current_step
+            _currentView.value = dbRepository.getExecutionById(selectedExecutionId).current_view
+            Log.d("CURRENT", ": step ${_currentStep.value}, view ${_currentView.value}")
+            Log.d("CURRENT_EXE", selectedExecutionId.toString())
+
+            _stepPersistenceId.value =
+                dbRepository.getCurrentStep(
+                    executionId = selectedExecutionId,
+                    step = checklist.value.checklistData!!.steps[_currentStep.value].idStep
+                ).id!!
+
+
             //TODO - Cargar lo que ya haya e ir al paso que toca
             //Los pasos podrían venir de esto directamente y nos cargamos los otros dos campos
         }
@@ -173,15 +182,25 @@ class ChecklistViewModel @Inject constructor(
         }
     }
 
-
-    fun next() =
+    fun next(
+        previousExecutionData: ExecutionsTable,
+        delay: Long = 0
+    ) =
         viewModelScope.launch(Dispatchers.IO) {
+            delay(delay)
             if (_currentView.value + 1 < _checklistJSON.value.checklistData!!.steps[_currentStep.value].views.size) {
                 _currentView.value = _currentView.value + 1
                 Log.d("NEXT", _currentView.value.toString())
+                dbRepository.updateExecution(
+                    checklistRepository.executionUpdate(
+                        previousExecutionData = previousExecutionData,
+                        current_step = _currentStep.value,
+                        current_view = _currentView.value
+                    )
+                )
 
             } else {
-
+                _endDialog.value = true
             }
             if (_ttsOn.value) {
                 try {
@@ -198,21 +217,30 @@ class ChecklistViewModel @Inject constructor(
             Log.d("POS_", _currentView.value.toString())
         }
 
-    fun back() =
+    fun back(previousExecutionData: ExecutionsTable) =
         viewModelScope.launch(Dispatchers.IO) {
             if (_currentView.value > 0) {
                 _currentView.value = _currentView.value - 1
                 Log.d("BACK", _currentView.value.toString())
+                dbRepository.updateExecution(
+                    checklistRepository.executionUpdate(
+                        previousExecutionData = previousExecutionData,
+                        current_step = _currentStep.value,
+                        current_view = _currentView.value
+                    )
+                )
             } else {
-                if(_currentStep.value==0){}
-                else {
-                    _currentView.value = 0
-                    _currentStep.value = _currentStep.value - 1
-                    _currentView.value =
-                        checklist.value.checklistData!!.steps[_currentStep.value].views.size - 1
-                }
+//                if(_currentStep.value==0){}
+//                else {
+//                    _currentView.value = 0
+//                    _currentStep.value = _currentStep.value - 1
+//                    _currentView.value =
+//                        checklist.value.checklistData!!.steps[_currentStep.value].views.size - 1
+//                }
 
             }
+
+            //TODO SACAR A FUNCIÓN TTS CONTROL
             if (_ttsOn.value) {
                 try {
                     tts.stop()
@@ -270,20 +298,44 @@ class ChecklistViewModel @Inject constructor(
 //        )
     }
 
-    fun viewUpdate(previousViewData: ViewsPersistenceTable, result: String) {
+    fun viewUpdate(
+        previousViewData: ViewsPersistenceTable,
+        result: String? = null,
+        extra_data: String? = null,
+        extra_file: String? = null
+    ) {
         viewModelScope.launch(Dispatchers.IO) {
             Log.d("VIEW_UPDATE", previousViewData.toString())
-            Log.d("RESULT", result)
 
             dbRepository.updateViewPersistence(
                 checklistRepository.viewUpdate(
                     previousViewData = previousViewData,
-                    result = result
+                    result = result,
+                    extra_data = extra_data,
+                    extra_file = extra_file
                 )
             )
         }
     }
 
+    fun stepUpdate(previousStepData: StepPersistenceTable,
+                   result_code: Int? = null,
+                   finished: Boolean? = null,
+                   last_iteration_check: Boolean? = null,
+                   next_step_id: Long? = null
+    ){
+        viewModelScope.launch(Dispatchers.IO) {
+            dbRepository.updateStep(
+                checklistRepository.stepUpdate(
+                    previousStepData = previousStepData,
+                    result_code = result_code,
+                    finished = finished,
+                    last_iteration_check = last_iteration_check,
+                    next_step_id = next_step_id
+                )
+            )
+        }
+    }
 
     fun buttonSpeak() {
         viewModelScope.launch(Dispatchers.IO) {

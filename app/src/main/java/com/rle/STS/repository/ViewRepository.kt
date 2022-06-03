@@ -81,6 +81,11 @@ class ViewRepository @Inject constructor(){
         fun OP2(checklistViewModel: ChecklistViewModel){
             OP2Screen(checklistViewModel = checklistViewModel)
         }
+        
+        @Composable
+        fun PDF1(checklistViewModel: ChecklistViewModel){
+            PDFScreen(checklistViewModel = checklistViewModel)
+        }
 
     }
 

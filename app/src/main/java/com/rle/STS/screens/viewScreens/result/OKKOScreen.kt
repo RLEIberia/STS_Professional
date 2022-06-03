@@ -20,6 +20,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.core.content.ContextCompat
 import com.rle.STS.R
+import com.rle.STS.items.Checklist
 import com.rle.STS.screens.viewScreens.attach.createAudioFile
 import com.rle.STS.screens.checklist.ChecklistViewModel
 import com.rle.STS.widgets.CustomButton
@@ -28,16 +29,15 @@ import java.io.File
 @Composable
 fun OKKOScreen(checklistViewModel: ChecklistViewModel) {
 
-    var estado = remember {
-        mutableStateOf(-1)
-    }
-
     val currentStep = checklistViewModel.currentStep.collectAsState()
     val currentView = checklistViewModel.currentView.collectAsState()
     val viewPersistence = checklistViewModel.viewPersistenceListFlow.observeAsState(emptyList())
+    val stepPersistence = checklistViewModel.stepPersistenceFlow.observeAsState(emptyList())
     val viewData =
         checklistViewModel.checklist.collectAsState().value.checklistData!!.steps[currentStep.value]
             .views[currentView.value].viewData
+
+    val executionData = checklistViewModel.executionData.observeAsState(emptyList())
 
     val context = LocalContext.current
 
@@ -131,14 +131,19 @@ fun OKKOScreen(checklistViewModel: ChecklistViewModel) {
                         //estado.value = 1
                         checklistViewModel.viewUpdate(
                             previousViewData = viewPersistence.value[currentView.value],
-                            result = "1"
+                            result = Checklist.CORRECT.toString()
                         )
+                        checklistViewModel.stepUpdate(
+                            previousStepData = stepPersistence.value[0],
+                            result_code = Checklist.CORRECT
+                        )
+                        checklistViewModel.next(previousExecutionData = executionData.value[0], delay = 500)
                     },
                     buttonColor = (
-                        if (viewPersistence.value[currentView.value].result == "1") {
+                        if (viewPersistence.value[currentView.value].result == Checklist.CORRECT.toString()) {
                             Color.Green
                         } else {
-                            Color.LightGray
+                            Color.Gray
                         }
                     )
                 )
@@ -148,14 +153,19 @@ fun OKKOScreen(checklistViewModel: ChecklistViewModel) {
                     onClick = {
                         checklistViewModel.viewUpdate(
                             previousViewData = viewPersistence.value[currentView.value],
-                            result = "3"
+                            result = Checklist.IGNORE.toString()
                         )
+                        checklistViewModel.stepUpdate(
+                            previousStepData = stepPersistence.value[0],
+                            result_code = Checklist.IGNORE
+                        )
+                        checklistViewModel.next(previousExecutionData = executionData.value[0], delay = 500)
                     },
                     buttonColor = (
-                        if (viewPersistence.value[currentView.value].result == "3") {
+                        if (viewPersistence.value[currentView.value].result == Checklist.IGNORE.toString()) {
                             Color.Blue
                         } else {
-                            Color.LightGray
+                            Color.Gray
                         }
                     )
                 )
@@ -165,14 +175,19 @@ fun OKKOScreen(checklistViewModel: ChecklistViewModel) {
                     onClick = {
                         checklistViewModel.viewUpdate(
                             previousViewData = viewPersistence.value[currentView.value],
-                            result = "2"
+                            result = Checklist.INCORRECT.toString()
                         )
+                        checklistViewModel.stepUpdate(
+                            previousStepData = stepPersistence.value[0],
+                            result_code = Checklist.INCORRECT
+                        )
+                        checklistViewModel.next(previousExecutionData = executionData.value[0], delay = 500)
                     },
                     buttonColor = (
-                        if (viewPersistence.value[currentView.value].result == "2") {
+                        if (viewPersistence.value[currentView.value].result == Checklist.INCORRECT.toString()) {
                             Color.Red
                         } else {
-                            Color.LightGray
+                            Color.Gray
                         }
                     )
                 )

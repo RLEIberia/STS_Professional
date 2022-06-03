@@ -193,6 +193,9 @@ interface STSDao {
     @Query("SELECT * from executions_table where id =:id")
     fun getExecutionFlowById(id: Long): Flow<List<ExecutionsTable>> //Sólo hay uno
 
+    @Query("SELECT * from executions_table where id =:id")
+    suspend fun getExecutionById(id: Long): ExecutionsTable
+
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertExecution(executionsTable: ExecutionsTable): Long
 
@@ -214,7 +217,10 @@ interface STSDao {
     fun getStepsList(): Flow<List<StepPersistenceTable>>
 
     @Query("SELECT * from steps_persistence_table WHERE execution_id =:executionId AND step =:step ")
-    fun getCurrentStep(executionId: Long, step: Int): Flow<List<StepPersistenceTable>>
+    fun getFlowCurrentStep(executionId: Long, step: Int): Flow<List<StepPersistenceTable>>
+
+    @Query("SELECT * from steps_persistence_table WHERE execution_id =:executionId AND step =:step")
+    suspend fun getCurrentStep(executionId: Long, step:Int): StepPersistenceTable
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertStep(stepPersistenceTable: StepPersistenceTable): Long

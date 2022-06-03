@@ -1,4 +1,4 @@
-package com.rle.STS.utils
+package com.rle.STS.items
 
 import com.rle.STS.model.BBDD.ChecklistsTable
 import com.rle.STS.model.BBDD.FilesInTable

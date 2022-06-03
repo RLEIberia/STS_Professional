@@ -1,6 +1,6 @@
-package com.rle.STS.utils
+package com.rle.STS.items
 
-object Constants {
+object Network {
 
     const val BASE_URL = "http://34.79.234.82"
     const val TOKEN = "2d4b6637bfaa6224cd08f31a79ebf9ab" //TODO Meterlo en DataStorage

@@ -35,8 +35,8 @@ enum class ViewScreens {
     //Audio
     AU1,
     AU2,
-    AU3
+    AU3,
 
     //PDF TODO
-    //PDF1
+    PDF1
 }

@@ -10,19 +10,13 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.unit.dp
-import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.rle.STS.ActivityViewModel
-import com.rle.STS.R
 import com.rle.STS.navigation.STSScreens
 import com.rle.STS.screens.checklist.ChecklistViewModel
 import com.rle.STS.screens.state.StateViewModel
 import com.rle.STS.ui.theme.specialButtonColor
-import com.rle.STS.ui.theme.topBarColor
 import com.rle.STS.widgets.BottomBar
-import com.rle.STS.widgets.CustomButton
 import com.rle.STS.widgets.ListRow
 import com.rle.STS.widgets.SimpleTopBar
 import kotlinx.coroutines.launch
@@ -104,7 +98,7 @@ fun StateScreen(
             ) {
                 itemsIndexed(items = executionList.value) { index, item ->
                     ListRow(
-                        buttonLetter = "EX",
+                        buttonLetter = "E",
                         buttonColor = Color(0xffff8000),
                         rowColor = Color.White,
                         textColor = Color.Black,
@@ -112,9 +106,9 @@ fun StateScreen(
                         title = item.id_ck_version.toString(),
                         dateTimeStamp = item.updated_at,
                         onClick = {
-                            Log.d("SELECTED", executionList.value[index].toString())
-                            checklistViewModel.executionId
-                            navController.navigate(STSScreens.ChecklistSelectScreen.name)
+                            Log.d("SELECTED", item.toString())
+                            activityViewModel.setExecution(item)
+                            navController.navigate(STSScreens.ChecklistScreen.name)
                         }
                     )
                 }

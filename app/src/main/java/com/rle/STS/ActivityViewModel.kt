@@ -9,6 +9,7 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.rle.STS.model.BBDD.ChecklistsTable
+import com.rle.STS.model.BBDD.ExecutionsTable
 import com.rle.STS.model.BBDD.ProjectsTable
 import com.rle.STS.model.BBDD.UsersTable
 import com.rle.STS.model.DataStore.UserData
@@ -38,15 +39,19 @@ class ActivityViewModel @Inject constructor(
         MutableStateFlow(UsersTable(-1, "", "", "", "", checklists_id = ""))
     val userDbData = _userDbData.asStateFlow()
 
+    private val _selectedExecution: MutableStateFlow<ExecutionsTable> = MutableStateFlow(ExecutionsTable())
+    val selectedExecution = _selectedExecution.asStateFlow()
+
     private val _selectedProject: MutableStateFlow<ProjectsTable> = MutableStateFlow(ProjectsTable())
     val selectedProject = _selectedProject.asStateFlow()
-
-    private val _toastAction: MutableStateFlow<Boolean> = MutableStateFlow(false)
-    val toastAction = _toastAction.asStateFlow()
 
     private val _selectedChecklist: MutableStateFlow<ChecklistsTable> =
         MutableStateFlow(ChecklistsTable())
     val selectedChecklist = _selectedChecklist.asStateFlow()
+
+
+    private val _toastAction: MutableStateFlow<Boolean> = MutableStateFlow(false)
+    val toastAction = _toastAction.asStateFlow()
 
     init {
         viewModelScope.launch(Dispatchers.Default) {
@@ -97,6 +102,12 @@ class ActivityViewModel @Inject constructor(
     fun getChecklistById(id: Int) {
         viewModelScope.launch(Dispatchers.IO) {
             _selectedChecklist.value = dbRepository.getChecklistById(id = id)
+        }
+    }
+
+    fun setExecution(expectedId: ExecutionsTable){
+        viewModelScope.launch {
+            _selectedExecution.value = expectedId
         }
     }
 

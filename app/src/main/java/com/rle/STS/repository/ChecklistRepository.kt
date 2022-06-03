@@ -62,7 +62,7 @@ class ChecklistRepository @Inject constructor(){
             state = state
         )
 
-    fun stepUpdate(
+    suspend fun stepUpdate(
         previousStepData: StepPersistenceTable,
         result_code: Int? = null,
         finished: Boolean? = null,

@@ -1,24 +1,14 @@
 package com.rle.STS.widgets
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.BottomAppBar
-import androidx.compose.material.Card
-import androidx.compose.material.Surface
-import androidx.compose.material.icons.Icons
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.zIndex
-import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.lifecycle.ViewModel
-import com.google.android.material.bottomappbar.BottomAppBar
 import com.rle.STS.ui.theme.buttonsColor
 import com.rle.STS.R
-import com.rle.STS.ui.theme.backgroundColor
 import com.rle.STS.ui.theme.bottomBarColor
 
 @Composable

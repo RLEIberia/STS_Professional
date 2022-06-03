@@ -15,6 +15,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
+import com.rle.STS.items.Checklist
 import com.rle.STS.screens.checklist.ChecklistViewModel
 import com.rle.STS.screens.viewScreens.utils.DescriptionRow
 import com.rle.STS.ui.theme.buttonOkColor
@@ -33,9 +34,12 @@ fun OP2Screen(
     val currentStep = checklistViewModel.currentStep.collectAsState()
     val currentView = checklistViewModel.currentView.collectAsState()
     val viewPersistence = checklistViewModel.viewPersistenceListFlow.observeAsState(emptyList())
+    val stepPersistence = checklistViewModel.stepPersistenceFlow.observeAsState(emptyList())
     val viewData =
         checklistViewModel.checklist.collectAsState().value.checklistData!!.steps[currentStep.value]
             .views[currentView.value].viewData
+
+    val executionData = checklistViewModel.executionData.observeAsState(emptyList())
 
     val currentAnswer = remember{
         mutableStateOf(-1)
@@ -78,29 +82,34 @@ fun OP2Screen(
                                 buttonLetter = "OP",
                                 buttonColor =
                                 when (viewPersistence.value[currentView.value].result) {
-                                    "" -> specialButtonColor
-                                    (index.toString()) -> buttonOkColor
+                                    Checklist.EMPTY_STRING -> specialButtonColor
+                                    ((index).toString()) -> buttonOkColor
                                     else -> Color.Gray
                                 },
                                 height = 50.dp,
                                 rowColor =
                                 when (viewPersistence.value[currentView.value].result) {
-                                    "" -> Color.White
-                                    (index.toString()) -> correctAnswer
+                                    Checklist.EMPTY_STRING -> Color.White
+                                    ((index).toString()) -> correctAnswer
                                     else -> Color.LightGray
                                 },
                                 textColor =
                                 when (viewPersistence.value[currentView.value].result) {
-                                    "" -> Color.Black
-                                    (index.toString()) -> Color.Black
+                                    Checklist.EMPTY_STRING -> Color.Black
+                                    ((index).toString()) -> Color.Black
                                     else -> Color.Gray
                                 },
                                 number = index,
                                 onClick = {
                                     checklistViewModel.viewUpdate(
                                         previousViewData = viewPersistence.value[currentView.value],
-                                        result = index.toString()
+                                        result = (index).toString()
                                     )
+                                    checklistViewModel.stepUpdate(
+                                        previousStepData = stepPersistence.value[0],
+                                        result_code = index
+                                    )
+                                    checklistViewModel.next(previousExecutionData = executionData.value[0], delay = 500)
                                 },
                                 title = item
                             )

@@ -23,23 +23,30 @@
         "path": [
           {
             "actionCode": "000",
-            "message": "",
+            "message": "Checklist finalizada",
             "nextStep": [
-              2
+              0
             ]
           },
           {
             "actionCode": "000",
-            "message": "",
+            "message": "Checklist finalizada",
             "nextStep": [
-              2
+              0
             ]
           },
           {
             "actionCode": "000",
-            "message": "",
+            "message": "Checklist finalizada",
             "nextStep": [
-              2
+              0
+            ]
+          },
+          {
+            "actionCode": "000",
+            "message": "Checklist finalizada",
+            "nextStep": [
+              0
             ]
           }
         ],
@@ -50,9 +57,9 @@
             "viewType": "NM1",
             "viewData": {
               "text": [
-                "Realiza una prueba de dictado con el dispositivo"
+                "Introducción de datos numéticos."
               ],
-              "audio": "Elige entre las opciones que ve en pantalla"
+              "audio": "Introduce un valor numérico."
             }
           },
           {
@@ -106,9 +113,9 @@
             "viewType": "AU2",
             "viewData": {
               "text": [
-                "Escucha el audio, puedes reproducir, pausar y detener"
+                "Reproduce el audio"
               ],
-              "audio": "Descripción del paso leído por las gafas",
+              "audio": "Escucha el audio, puedes reproducir, pausar y detener",
               "files": [
                 {
                   "name": "",
@@ -124,10 +131,10 @@
             "viewType": "TX3",
             "viewData": {
               "text": [
-                "Título test",
+                "Título de vista de ejemplo",
                 "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
               ],
-              "audio": "Título de paso reproducido por las gafas"
+              "audio": "Título y descripción."
             }
           },
           {
@@ -154,6 +161,7 @@
               "text": [
                 "Mira la imagen, puedes ampliar"
               ],
+              "audio": "Mira la imagen, puedes ampliar",
               "files": [
                 {
                   "name": "",
@@ -171,6 +179,7 @@
               "text": [
                 "Mira la imagen correcta, puedes ampliar"
               ],
+              "audio": "Mira la imagen correcta, puedes ampliar",
               "files": [
                 {
                   "name": "",
@@ -188,6 +197,7 @@
               "text": [
                 "Mira la imagen incorrecta, puedes ampliar"
               ],
+              "audio": "Mira la imagen incorrecta, puedes ampliar",
               "files": [
                 {
                   "name": "",
@@ -205,7 +215,7 @@
               "text": [
                 "Realiza una prueba de dictado con el dispositivo"
               ],
-              "audio": "Elige entre las opciones que ve en pantalla"
+              "audio": "Realiza una prueba de dictado con el dispositivo."
             }
           },
           {
@@ -214,9 +224,9 @@
             "viewType": "CM1",
             "viewData": {
               "text": [
-                "Realiza una prueba de dictado con el dispositivo"
+                "Saca una foto."
               ],
-              "audio": "Elige entre las opciones que ve en pantalla"
+              "audio": "Saca una foto con las smartglasses."
             }
           },
           {
@@ -225,9 +235,9 @@
             "viewType": "CM2",
             "viewData": {
               "text": [
-                "Realiza una prueba de dictado con el dispositivo"
+                "Graba un vídeo."
               ],
-              "audio": "Elige entre las opciones que ve en pantalla"
+              "audio": "Graba un vídeo con el dispositivo."
             }
           },
           {
@@ -236,9 +246,27 @@
             "viewType": "QR1",
             "viewData": {
               "text": [
-                "Elige entre Correcto, Incorrecto y NSNC asdfasdfasdf asdfasdf sdfasdf asdfasdf asdf"
+                "Realiza lectura de QR."
               ],
-              "audio": "Elige entre las opciones que ve en pantalla"
+              "audio": "Realiza lectura de QR."
+            }
+          },
+          {
+            "idView": 15,
+            "viewOrder": 15,
+            "viewType": "PDF1",
+            "viewData": {
+              "text": [
+                "Abre el fichero."
+              ],
+              "audio": "Abre el fichero PDF y visualízalo con las SmartGlasses",
+              "files": [
+                {
+                  "name": "",
+                  "description": "",
+                  "file": "RLE_International_Vorstellung-EHS_EN_2020.pdf"
+                }
+              ]
             }
           }
         ]
@@ -249,6 +277,7 @@
         "stepName": "Paso 2",
         "numViews": 3,
         "path": [
+
         ]
       }
     ]

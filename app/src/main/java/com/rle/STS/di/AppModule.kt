@@ -6,7 +6,7 @@ import com.rle.STS.data.BBDD.STSDao
 import com.rle.STS.data.BBDD.STSDatabase
 import com.rle.STS.network.StsAPI
 import com.rle.STS.repository.DataStoreRepository
-import com.rle.STS.utils.Constants
+import com.rle.STS.items.Network
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -14,7 +14,6 @@ import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
-import retrofit2.create
 import javax.inject.Singleton
 
 @Module
@@ -45,7 +44,7 @@ class AppModule {
     fun provideStsAPI(): StsAPI {
         return Retrofit
             .Builder()
-            .baseUrl(Constants.BASE_URL)
+            .baseUrl(Network.BASE_URL)
             .addConverterFactory(GsonConverterFactory.create())
             .build()
             .create(StsAPI::class.java)

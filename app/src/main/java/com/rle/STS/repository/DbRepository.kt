@@ -6,7 +6,6 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.conflate
 import kotlinx.coroutines.flow.flowOn
-import java.util.*
 import javax.inject.Inject
 import kotlin.collections.ArrayList
 
@@ -56,6 +55,7 @@ class DbRepository @Inject constructor(private val STSDao: STSDao) {
     fun getExecutionFlowById(id: Long): Flow<List<ExecutionsTable>> =
         STSDao.getExecutionFlowById(id = id).flowOn(Dispatchers.IO)
             .conflate()
+    suspend fun getExecutionById(id: Long) = STSDao.getExecutionById(id = id)
     suspend fun insertExecution(executionsTable: ExecutionsTable): Long =
         STSDao.insertExecution(executionsTable = executionsTable)
     suspend fun updateExecution(executionsTable: ExecutionsTable) =
@@ -68,9 +68,11 @@ class DbRepository @Inject constructor(private val STSDao: STSDao) {
     //Steps Dao
     fun getStepList(): Flow<List<StepPersistenceTable>> = STSDao.getStepsList().flowOn(Dispatchers.IO)
         .conflate()
-    fun getCurrentStep(executionId: Long, step: Int): Flow<List<StepPersistenceTable>> =
-        STSDao.getCurrentStep(executionId = executionId, step = step).flowOn(Dispatchers.IO)
+    fun getFlowCurrentStep(executionId: Long, step: Int): Flow<List<StepPersistenceTable>> =
+        STSDao.getFlowCurrentStep(executionId = executionId, step = step).flowOn(Dispatchers.IO)
             .conflate()
+    suspend fun getCurrentStep(executionId: Long, step: Int): StepPersistenceTable =
+        STSDao.getCurrentStep(executionId = executionId, step = step)
     suspend fun insertStep(stepPersistenceTable: StepPersistenceTable): Long =
         STSDao.insertStep(stepPersistenceTable = stepPersistenceTable)
     suspend fun updateStep(stepPersistenceTable: StepPersistenceTable) =

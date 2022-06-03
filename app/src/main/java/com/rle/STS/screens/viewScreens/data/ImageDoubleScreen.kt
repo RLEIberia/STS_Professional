@@ -34,12 +34,10 @@ import java.io.File
 import java.util.*
 import java.util.function.IntConsumer
 
-const val NORMAL = 0 //IM1
-const val CORRECT = 1 //IM2
-const val INCORRECT = 2 //IM3
+
 
 @Composable
-fun ImageScreen(type: Int, checklistViewModel: ChecklistViewModel) {
+fun ImageDoubleScreen(type: Int, checklistViewModel: ChecklistViewModel) {
 
 
     val context = LocalContext.current

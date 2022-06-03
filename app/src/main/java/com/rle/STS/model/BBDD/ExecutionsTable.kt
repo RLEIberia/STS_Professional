@@ -25,32 +25,32 @@ import java.util.*
 )
 data class ExecutionsTable(
 
-    @PrimaryKey
+    @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "id")
     val id: Long? = null,
 
     @ColumnInfo(name = "user_id")
-    val user_id: Int,
+    val user_id: Int = -1,
 
     @ColumnInfo(name = "id_ck_version")
-    val id_ck_version: Int,
+    val id_ck_version: Int = -1,
 
     @ColumnInfo(name = "created_at")
-    val created_at: Long,
+    val created_at: Long = -1,
 
     @ColumnInfo(name = "updated_at")
-    val updated_at: Long,
+    val updated_at: Long = -1,
 
     @ColumnInfo(name = "current_step")
-    val current_step: Int,
+    val current_step: Int = -1,
 
     @ColumnInfo(name = "current_view")
-    val current_view: Int,
+    val current_view: Int = -1,
 
     @ColumnInfo(name = "json_result")
-    val json_result: String,
+    val json_result: String = "",
 
     @ColumnInfo(name = "state")
-    val state: Int //1 - En curso, 2 - Finalizada, 3 - "No completada", 4 - Enviada, 5 - Eliminar
+    val state: Int = 1 //1 - En curso, 2 - Finalizada, 3 - "No completada", 4 - Enviada, 5 - Eliminar
 
 )

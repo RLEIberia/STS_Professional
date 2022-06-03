@@ -15,6 +15,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.rle.STS.ActivityViewModel
 import com.rle.STS.R
+import com.rle.STS.model.BBDD.ExecutionsTable
 import com.rle.STS.navigation.STSScreens
 import com.rle.STS.screens.Drawer
 import com.rle.STS.ui.theme.specialButtonColor
@@ -115,6 +116,7 @@ fun ChecklistSelectScreen(
                             title = item.name,
                             dateTimeStamp = item.updated_at,
                             onClick = {
+                                activityViewModel.setExecution(ExecutionsTable())
                                 activityViewModel.getChecklistById(checklistList[index].id)
                                 navController.navigate(STSScreens.ChecklistScreen.name)
                             }

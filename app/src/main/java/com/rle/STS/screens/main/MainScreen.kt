@@ -18,6 +18,7 @@ import com.rle.STS.navigation.STSScreens
 import com.rle.STS.screens.main.MainViewModel
 import com.rle.STS.screens.scanner.ScannerScreen
 import com.rle.STS.screens.scanner.ScannerViewModel
+import com.rle.STS.widgets.CustomDialog
 import com.rle.STS.widgets.CustomTopIconButton
 import com.rle.STS.widgets.SimpleTopBar
 
@@ -60,7 +61,7 @@ fun MainScreen(
             openScanner = openScanner,
             mainViewModel = mainViewModel,
             scannerViewModel = scannerViewModel,
-            activityViewModel = activityViewModel
+            activityViewModel = activityViewModel,
         )
     }
 
@@ -73,7 +74,7 @@ fun MainScreen(
             SimpleTopBar(
                 scope,
                 scaffoldState,
-                text = "MENÚ PRINCIPAL",
+                text = "INICIO",
             )
         },
         drawerContent = {
@@ -137,7 +138,7 @@ fun MainScreen(
                     verticalAlignment = Alignment.CenterVertically
                 ) {
                     CustomTopIconButton(
-                        text = "Scanner",
+                        text = "Lector",
                         icon = R.drawable.scan_qr,
                         onClick = {
                             openScanner.value = true
@@ -147,13 +148,14 @@ fun MainScreen(
                     )
                     CustomTopIconButton(
                         text = "Documentos",
-                        icon = R.drawable.call_icon,
+                        icon = R.drawable.file_icon,
                         onClick = {
                             navController.navigate(STSScreens.DocumentSelectScreen.name)
                         },
                         buttonColor = Color(0xFF533A36),
                         buttonSize = 180
                     )
+                    /*
                     CustomTopIconButton(
                         text = "Reporter",
                         icon = R.drawable.discover_icon,
@@ -164,6 +166,7 @@ fun MainScreen(
                         buttonColor = Color(0xFFF44336),
                         buttonSize = 180
                     )
+                    */
                 }
 
             }

@@ -5,21 +5,27 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
 import androidx.compose.runtime.*
 import androidx.compose.runtime.livedata.observeAsState
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.rle.STS.ActivityViewModel
 import com.rle.STS.R
+import com.rle.STS.navigation.STSScreens
 import com.rle.STS.screens.ChecklistDrawer
 import com.rle.STS.ui.theme.topBarColor
 import com.rle.STS.screens.ViewRepository
 import com.rle.STS.ui.theme.specialButtonColor
 import com.rle.STS.screens.viewScreens.ViewScreens
+import com.rle.STS.ui.theme.buttonKoColor
+import com.rle.STS.ui.theme.buttonOkColor
 import com.rle.STS.widgets.BottomBarChecklist
 import com.rle.STS.widgets.CustomButton
+import com.rle.STS.widgets.CustomDialog
 import com.rle.STS.widgets.SimpleTopBar
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
@@ -40,8 +46,11 @@ fun ChecklistScreen(
     val context = LocalContext.current
     val currentStep = checklistViewModel.currentStep.collectAsState()
     val currentView = checklistViewModel.currentView.collectAsState()
-    val executionId = checklistViewModel.executionId.collectAsState()
-    val stepId = checklistViewModel.stepPersistenceId.collectAsState()
+//    val executionId = checklistViewModel.executionId.collectAsState()
+//    val stepId = checklistViewModel.stepPersistenceId.collectAsState()
+
+    val endDialog = checklistViewModel.endDialog.collectAsState()
+
 
 
     val checklist = checklistViewModel.checklist.collectAsState().value
@@ -56,21 +65,31 @@ fun ChecklistScreen(
             Log.d("LAUNCH_CHECK", "LaunchedEffect finished")
             //Recogemos la información del archivo JSON
             //checklistViewModel.extractChecklist(fileName = "exampleChecklist.json", context = context)
-            checklistViewModel.startChecklistExecution(
-                selectedExecutionId = 0,
-                context = context,
-                fileName = activityViewModel.selectedChecklist.value.json,
-                userId = activityViewModel.userSimple.value.userCode,
-                idCkVersion = activityViewModel.selectedChecklist.value.id
-            )
+            if (activityViewModel.selectedExecution.value.id == null) {
+                checklistViewModel.startChecklistExecution(
+                    selectedExecutionId = null,
+                    context = context,
+                    userId = activityViewModel.userSimple.value.userCode,
+                    idCkVersion = activityViewModel.selectedChecklist.value.id
+                )
+            } else {
+                checklistViewModel.startChecklistExecution(
+                    selectedExecutionId = activityViewModel.selectedExecution.value.id!!,
+                    context = context,
+                    userId = activityViewModel.userSimple.value.userCode,
+                    idCkVersion = activityViewModel.selectedExecution.value.id_ck_version
+                )
+
+            }
             //TODO cargar datos si existía
             //TODO Que se reciba el json como parámetro
         })
 
-    if (executionData.value.isNullOrEmpty()) {
-        Log.d("EXECUT", ": Null")
-    } else {
-        Log.d("EXECUT", ": Initialized, $executionData")
+    if(endDialog.value){
+        EndChecklistDialog(
+            navController = navController,
+            checklistViewModel = checklistViewModel
+        )
     }
 
     if (checklist.checklistData != null
@@ -115,12 +134,10 @@ fun ChecklistScreen(
 
             //ESPERAMOS A QUE EL VIEWMODEL HAYA CARGADO LOS DATOS
 
-
             Log.d("POS", currentView.value.toString())
             Log.d("EXECUTION", executionData.toString())
             Log.d("STEP", stepPersistence.toString())
             Log.d("VIEWS", viewPersistence.toString())
-
 
             Surface(
                 modifier = Modifier
@@ -203,6 +220,11 @@ fun ChecklistScreen(
                     ViewScreens.AU3.name -> ViewRepository.AU3(
                         viewModel = checklistViewModel,
                         nextType = 0
+                    )
+
+                    //PDF
+                    ViewScreens.PDF1.name -> ViewRepository.PDF1(
+                        checklistViewModel = checklistViewModel
                     )
 
                     else -> {}
@@ -364,23 +386,6 @@ private fun checklistTopBar(
 //}
 
 
-fun createMockCheclist(): ArrayList<String> {
-    return arrayListOf<String>(
-        "texto",
-        "imagen",
-        //"video",
-        //"audio",
-        "QR",
-        "Record_Audio",
-        "Dictate",
-        "Take_Picture",
-        "Take_Video",
-        "Number",
-        "OK/KO",
-        "MultiOption"
-    )
-}
-
 //@Preview(showBackground = true, widthDp = 851, heightDp = 480)
 //@Composable
 //private fun DefaultPreview() {
@@ -388,3 +393,46 @@ fun createMockCheclist(): ArrayList<String> {
 //        CheckListStepScreen()
 //    }
 //}
+
+@Composable
+private fun EndChecklistDialog(
+    checklistViewModel: ChecklistViewModel,
+    navController: NavController,
+){
+    val buttonSize = 200
+
+    CustomDialog(
+        dialogSize = 0.75f,
+        dismissRequest = { checklistViewModel.hideEndDialog() },
+        title = "CHECKLIST FINALIZADA",
+        centerActive = false,
+        centerExists = false,
+        leftText = "ACEPTAR",
+        leftSize = buttonSize,
+        leftIcon = R.drawable.correct_icon,
+        leftColor = buttonOkColor,
+        leftOnClick = {navController.navigate(STSScreens.MainScreen.name)},
+        rightText = "VOLVER",
+        rightSize = buttonSize,
+        rightIcon = R.drawable.back,
+        rightColor = buttonKoColor,
+        rightOnClick = { checklistViewModel.hideEndDialog() },
+        /*
+        content = {
+            Column(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(10.dp),
+                horizontalAlignment = Alignment.CenterHorizontally,
+                verticalArrangement = Arrangement.Center
+            ) {
+                Text(
+                    text = "¿Desea terminar la ejecución y enviar los resultados?",
+                    fontWeight = FontWeight.Bold,
+                    style = MaterialTheme.typography.h4
+                )
+            }
+        }
+         */
+    )
+}

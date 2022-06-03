@@ -27,7 +27,9 @@ import androidx.core.content.FileProvider
 import coil.compose.rememberAsyncImagePainter
 import com.rle.STS.R
 import com.rle.STS.screens.checklist.ChecklistViewModel
+import com.rle.STS.screens.viewScreens.utils.DescriptionRow
 import com.rle.STS.ui.theme.buttonExtraColor
+import com.rle.STS.ui.theme.cardTextColor
 import com.rle.STS.ui.theme.cardsColor
 import com.rle.STS.widgets.BottomButtons
 import com.rle.STS.widgets.CustomButton
@@ -36,7 +38,7 @@ import java.io.File
 
 @SuppressLint("RestrictedApi")
 @Composable
-fun TakePictureScreen(stepViewModel: ChecklistViewModel) {
+fun TakePictureScreen(checklistViewModel: ChecklistViewModel) {
 
     val context = LocalContext.current
 
@@ -81,17 +83,40 @@ fun TakePictureScreen(stepViewModel: ChecklistViewModel) {
             }
         }
 
-    Column() {
+    val currentStep = checklistViewModel.currentStep.collectAsState()
+    val currentView = checklistViewModel.currentView.collectAsState()
+    val viewData =
+        checklistViewModel.checklist.collectAsState().value.checklistData!!.steps[currentStep.value]
+            .views[currentView.value].viewData
 
-        Spacer(modifier = Modifier.weight(1f))
+    Column(
+        modifier = Modifier
+            .padding(10.dp)
+            .fillMaxSize(),
+        verticalArrangement = Arrangement.Center,
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
+        //Spacer(modifier = Modifier.weight(1f))
 
-        Row() {
+        DescriptionRow(
+            modifier = Modifier.weight(0.6f),
+            viewData = viewData
+        )
 
-            Spacer(modifier = Modifier.weight(1f))
+        Row(modifier = Modifier.weight(1.4f)) {
+            //Spacer(modifier = Modifier.weight(1f))
 
-            Column() {
+            Column(
+                modifier = Modifier.weight(1.4f),
+                verticalArrangement = Arrangement.Center,
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
 
-                Row() {
+                Row(
+                    modifier = Modifier.fillMaxSize(),
+                    horizontalArrangement = Arrangement.Center,
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
 
                     fileList.let { list ->
 
@@ -103,7 +128,7 @@ fun TakePictureScreen(stepViewModel: ChecklistViewModel) {
                                     .width(450.dp)
                                     .height(253.dp)
                                     .clip(RoundedCornerShape(10))
-                                    .border(1.dp, Color.Black, RoundedCornerShape(10)),
+                                    //.border(1.dp, Color.Black, RoundedCornerShape(10)),
                             )
                         } else {
                             Box(
@@ -111,8 +136,8 @@ fun TakePictureScreen(stepViewModel: ChecklistViewModel) {
                                     .width(450.dp)
                                     .height(253.dp)
                                     .clip(RoundedCornerShape(10))
-                                    .border(1.dp, Color.Black, RoundedCornerShape(10))
-                                    .background(Color.Gray),
+                                    //.border(1.dp, Color.Black, RoundedCornerShape(10))
+                                    .background(cardTextColor),
                                 contentAlignment = Alignment.Center
                             ) {
                                 Icon(
@@ -128,22 +153,32 @@ fun TakePictureScreen(stepViewModel: ChecklistViewModel) {
                 }
             }
 
-            Spacer(modifier = Modifier.weight(1f))
+            //Spacer(modifier = Modifier.weight(1f))
 
             Column(
-                modifier = Modifier.height(260.dp)
+                modifier = Modifier.weight(0.6f)
+                    .fillMaxSize(),
+                verticalArrangement = Arrangement.SpaceEvenly,
+                horizontalAlignment = Alignment.Start
             ) {
 
-                Spacer(modifier = Modifier.weight(1f))
+                //Spacer(modifier = Modifier.weight(1f))
 
                 CustomButton(
                     text = stringResource(id = R.string.open_list),
                     onClick = { if (fileList.size > 0) openDialog.value = true },
-                    buttonSize = 150
+                    buttonSize = 200
+                )
+                CustomButton(
+                    text = stringResource(R.string.take_picture),
+                    onClick = { launcherPhoto.launch(uri) },
+                    buttonSize = 200,
+                    buttonColor = buttonExtraColor,
                 )
 
-                Spacer(modifier = Modifier.weight(1f))
+                //Spacer(modifier = Modifier.weight(1f))
 
+                /*
                 Card(
                     shape = RoundedCornerShape(8.dp),
                     backgroundColor = cardsColor,
@@ -164,19 +199,22 @@ fun TakePictureScreen(stepViewModel: ChecklistViewModel) {
                         Text(text = fileList.size.toString())
                     }
                 }
+                */
 
-                Spacer(modifier = Modifier.weight(1f))
+
+                //Spacer(modifier = Modifier.weight(1f))
 
             }
 
-            Spacer(modifier = Modifier.weight(1f))
+            //Spacer(modifier = Modifier.weight(1f))
 
         }
 
-        Spacer(modifier = Modifier.height(10.dp))
+        //Spacer(modifier = Modifier.height(10.dp))
 
+        /*
         Row() {
-            Spacer(modifier = Modifier.weight(1f))
+            //Spacer(modifier = Modifier.weight(1f))
 
             CustomButton(
                 text = stringResource(R.string.take_picture),
@@ -185,13 +223,16 @@ fun TakePictureScreen(stepViewModel: ChecklistViewModel) {
                 buttonColor = buttonExtraColor,
             )
 
-            Spacer(modifier = Modifier.weight(1f))
+         */
+
+            //Spacer(modifier = Modifier.weight(1f))
         }
 
-        Spacer(modifier = Modifier.weight(1f))
+        //Spacer(modifier = Modifier.weight(1f))
 
-        Spacer(modifier = Modifier.height(10.dp))
+        //Spacer(modifier = Modifier.height(10.dp))
 
+        /*
         if (fileList.isEmpty()){
             defaultStepBottomButtons(stepViewModel, hasValue = false,)
         } else {
@@ -200,7 +241,9 @@ fun TakePictureScreen(stepViewModel: ChecklistViewModel) {
 
         Spacer(modifier = Modifier.height(10.dp))
 
-    }
+         */
+
+
 
     if (openConfirmDialog.value) {
         ConfirmImageDialog(

@@ -1,0 +1,162 @@
+{
+  "info": {
+    "language": "es-ES",
+    "checklistName": "Mantenimiento tractora RoR",
+    "checklistCode": "rleCkProt001",
+    "projectName": "Proyecto prototipo 1",
+    "projectCode": "rlePjProt001",
+    "version": 1,
+    "created_at": 1651565282,
+    "updated_at": 1651565356,
+    "designer": "RLE DT Valencia",
+    "manufacturer": "RLE SmartGlasses",
+    "client": "RLE DT Barcelona"
+  },
+  "checklistData": {
+    "numSteps": 1,
+    "steps": [
+      {
+        "position": 1,
+        "idStep": 1,
+        "stepName": "Mantenimiento tractora",
+        "numViews": 8,
+        "path": [
+          {
+            "actionCode": "000",
+            "message": "Checklist finalizada",
+            "nextStep": [
+              0
+            ]
+          },
+          {
+            "actionCode": "000",
+            "message": "Checklist finalizada",
+            "nextStep": [
+              0
+            ]
+          },
+          {
+            "actionCode": "000",
+            "message": "Checklist finalizada",
+            "nextStep": [
+              0
+            ]
+          },
+          {
+            "actionCode": "000",
+            "message": "Checklist finalizada",
+            "nextStep": [
+              0
+            ]
+          }
+        ],
+        "views": [
+          {
+            "idView": 1,
+            "viewOrder": 1,
+            "viewType": "OP2",
+            "viewData": {
+              "text": [
+                "Seleccione el modelo de vehículo."
+              ],
+              "options": [
+                "SCANIA R 450",
+                "BMC TGR 1846",
+                "SCANIA B 450",
+                "SCANIA 420 TOP LINE"
+              ]
+            }
+          },
+          {
+            "idView": 2,
+            "viewOrder": 2,
+            "viewType": "TX1",
+            "viewData": {
+              "text": [
+                "Realiza la comprobación del estado de la quinta rueda."
+              ]
+            }
+          },
+          {
+            "idView": 3,
+            "viewOrder": 3,
+            "viewType": "IM2",
+            "viewData": {
+              "audio": "Ejemplo de quinta rueda en estado correcto",
+              "files": [
+                {
+                  "name": "",
+                  "description": ",",
+                  "file": "quinta_rueda.jpeg"
+                }
+              ]
+            }
+          },
+          {
+            "idView": 4,
+            "viewOrder": 4,
+            "viewType": "OP1",
+            "viewData": {
+              "audio": "Indica el estado de la quinta rueda.",
+              "text": [
+                "Indica el estado de la quinta rueda."
+              ]
+            }
+          },
+          {
+            "idView": 5,
+            "viewOrder": 5,
+            "viewType": "CM1",
+            "viewData": {
+              "text": [
+                "Registra una evidencia fotográfica."
+              ]
+            }
+          },
+          {
+            "idView": 6,
+            "viewOrder": 6,
+            "viewType":"OP1",
+            "viewData": {
+              "text": [
+                "Comprueba el estado de la luna delantera."
+              ]
+            }
+          },
+          {
+            "idView": 7,
+            "viewOrder": 7,
+            "viewType": "AU1",
+            "viewData": {
+              "text": [
+                "Indica cual es el problema."
+              ]
+            }
+          },
+          {
+            "idView": 8,
+            "viewOrder": 8,
+            "viewType": "CM1",
+            "viewData": {
+              "text": [
+                "Saca una foto de la incidencia."
+              ]
+            }
+          },
+          {
+            "idView": 9,
+            "viewOrder": 9,
+            "viewType": "CM2",
+            "viewData": {
+              "text": [
+                "Haz un vídeo de peritaje de la tractora, prestando atención en la parte trasera"
+              ],
+              "audio": "Haz un vídeo de peritaje de la tractora, prestando atención en la parte trasera"
+            }
+          }
+        ]
+      }
+    ]
+  }
+}
+

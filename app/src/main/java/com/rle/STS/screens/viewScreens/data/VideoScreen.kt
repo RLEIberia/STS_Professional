@@ -70,35 +70,3 @@ fun VideoScreen(checklistViewModel: ChecklistViewModel) {
         }
     }
 }
-
-//        Row() {
-//
-//            Spacer(modifier = Modifier.weight(1f))
-//
-//            CustomButton(
-//                text = stringResource(id = R.string.open_video),
-//                buttonSize = 180,
-//                onClick = {
-//                    val intent = Intent()
-//                    intent.setAction(Intent.ACTION_VIEW)
-//                    Log.d(
-//                        "FILE LOCATION:",
-//                        video.exists().toString()
-//                    ) // FileProvider.getUriForFile(context,context.packageName + ".provider", file).path!!)
-//                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-//                        intent.setDataAndType(
-//                            FileProvider.getUriForFile(
-//                                context,
-//                                context.packageName + ".provider",
-//                                video
-//                            ), "video/*"
-//                        )
-//                    } else {
-//                        intent.setDataAndType(Uri.fromFile(video), "video/*")
-//                            .addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
-//                    }
-//                    intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
-//                    context.startActivity(intent)
-//                })
-//
-//            Spacer(modifier = Modifier.weight(1f))
