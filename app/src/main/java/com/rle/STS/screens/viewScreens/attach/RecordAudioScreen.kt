@@ -23,7 +23,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.core.content.ContextCompat
 import com.rle.STS.R
-import com.rle.STS.screens.checklist.ChecklistViewModel
+import com.rle.STS.viewModel.ChecklistViewModel
 import com.rle.STS.widgets.CustomButton
 import com.rle.STS.widgets.defaultStepBottomButtons
 import java.io.File

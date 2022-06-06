@@ -1,7 +1,6 @@
 package com.rle.STS.screens
 
 
-import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -10,31 +9,21 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.core.app.ActivityCompat
 import androidx.navigation.NavController
-import androidx.navigation.compose.rememberNavController
-import com.rle.STS.MainActivity
 import com.rle.STS.R
-import com.rle.STS.items.NavDrawerItem
 import com.rle.STS.items.NavDrawerItemChecklist
 import com.rle.STS.navigation.STSScreens
-import com.rle.STS.screens.checklist.ChecklistViewModel
+import com.rle.STS.viewModel.ChecklistViewModel
 import com.rle.STS.ui.theme.buttonOkColor
 import com.rle.STS.ui.theme.grayedButton
-import com.rle.STS.ui.theme.topBarColor
 import com.rle.STS.widgets.CustomSideIconButton
-import com.rle.STS.widgets.CustomText
 import com.rle.STS.widgets.XMLText
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch

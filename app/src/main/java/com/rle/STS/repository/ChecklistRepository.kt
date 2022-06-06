@@ -34,7 +34,8 @@ class ChecklistRepository @Inject constructor(){
     fun openPdf(fileName: String, context: Context) =
         openPdf(file = fileName, context = context)
 
-    suspend fun speakTTS(audioText: CharSequence, tts: TextToSpeech) = speak(audioText = audioText, tts = tts)
+    suspend fun speakTTS(audioText: CharSequence, tts: TextToSpeech, switch: Boolean, delay: Long) =
+        speak(audioText = audioText, tts = tts, switch = switch, delay = delay)
 
     //Initialize persistence
     fun executionsInit(user_id: Int = 1, id_ck_version: Int = 1) : ExecutionsTable =

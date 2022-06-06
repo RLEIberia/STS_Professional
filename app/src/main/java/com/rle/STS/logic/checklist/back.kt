@@ -1,6 +1,6 @@
 package com.rle.STS.logic.checklist
 
-import com.rle.STS.screens.checklist.ChecklistViewModel
+import com.rle.STS.viewModel.ChecklistViewModel
 
 fun back(
     checklistViewModel: ChecklistViewModel

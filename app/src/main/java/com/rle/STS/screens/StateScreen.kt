@@ -11,10 +11,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.navigation.NavController
-import com.rle.STS.ActivityViewModel
+import com.rle.STS.viewModel.ActivityViewModel
 import com.rle.STS.navigation.STSScreens
-import com.rle.STS.screens.checklist.ChecklistViewModel
-import com.rle.STS.screens.state.StateViewModel
+import com.rle.STS.viewModel.ChecklistViewModel
+import com.rle.STS.viewModel.StateViewModel
 import com.rle.STS.ui.theme.specialButtonColor
 import com.rle.STS.widgets.BottomBar
 import com.rle.STS.widgets.ListRow

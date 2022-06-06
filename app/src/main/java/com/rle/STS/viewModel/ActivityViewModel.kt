@@ -1,4 +1,4 @@
-package com.rle.STS
+package com.rle.STS.viewModel
 
 import android.app.Application
 import android.content.Context

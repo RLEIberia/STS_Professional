@@ -19,7 +19,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.rle.STS.screens.checklist.ChecklistViewModel
+import com.rle.STS.viewModel.ChecklistViewModel
 import com.rle.STS.ui.theme.cardsColor
 import com.rle.STS.widgets.defaultStepBottomButtons
 

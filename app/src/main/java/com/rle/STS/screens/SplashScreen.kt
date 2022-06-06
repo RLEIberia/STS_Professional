@@ -12,14 +12,12 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
-import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
-import com.rle.STS.ActivityViewModel
+import com.rle.STS.viewModel.ActivityViewModel
 import com.rle.STS.R
 import com.rle.STS.navigation.STSScreens
-import com.rle.STS.repository.DbRepository
+import com.rle.STS.viewModel.SplashViewModel
 import kotlinx.coroutines.delay
-import javax.inject.Inject
 
 @Composable
 fun SplashScreen(

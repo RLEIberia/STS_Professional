@@ -1,4 +1,4 @@
-package com.rle.STS.screens.splash
+package com.rle.STS.viewModel
 
 import android.util.Log
 import androidx.lifecycle.ViewModel

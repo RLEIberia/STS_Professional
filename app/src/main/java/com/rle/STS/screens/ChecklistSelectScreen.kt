@@ -13,12 +13,13 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
-import com.rle.STS.ActivityViewModel
+import com.rle.STS.viewModel.ActivityViewModel
 import com.rle.STS.R
 import com.rle.STS.model.BBDD.ExecutionsTable
 import com.rle.STS.navigation.STSScreens
 import com.rle.STS.screens.Drawer
 import com.rle.STS.ui.theme.specialButtonColor
+import com.rle.STS.viewModel.ChecklistSelectViewModel
 import com.rle.STS.widgets.BottomBar
 import com.rle.STS.widgets.ListRow
 import com.rle.STS.widgets.SimpleTopBar

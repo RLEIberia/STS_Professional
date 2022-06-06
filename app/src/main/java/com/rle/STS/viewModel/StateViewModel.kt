@@ -1,4 +1,4 @@
-package com.rle.STS.screens.state
+package com.rle.STS.viewModel
 
 import android.util.Log
 import androidx.lifecycle.ViewModel

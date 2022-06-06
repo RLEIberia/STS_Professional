@@ -1,6 +1,5 @@
 package com.rle.STS.screens.documentSelect
 
-import android.util.Log
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
@@ -16,17 +15,14 @@ import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.window.DialogProperties
 import androidx.navigation.NavController
 import com.rle.STS.R
-import com.rle.STS.model.BBDD.FilesInTable
-import com.rle.STS.navigation.STSScreens
 import com.rle.STS.screens.Drawer
 import com.rle.STS.ui.theme.buttonOkColor
-import com.rle.STS.ui.theme.buttonStop
-import com.rle.STS.ui.theme.grayedButton
 import com.rle.STS.ui.theme.specialButtonColor
 import com.rle.STS.utils.checklistUtils.openAudio
 import com.rle.STS.utils.checklistUtils.openImage
 import com.rle.STS.utils.checklistUtils.openPdf
 import com.rle.STS.utils.checklistUtils.openVideo
+import com.rle.STS.viewModel.DocumentSelectViewModel
 import com.rle.STS.widgets.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch

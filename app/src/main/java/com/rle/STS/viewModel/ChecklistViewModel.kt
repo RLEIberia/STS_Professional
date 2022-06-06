@@ -1,4 +1,4 @@
-package com.rle.STS.screens.checklist
+package com.rle.STS.viewModel
 
 import android.content.Context
 import android.speech.tts.TextToSpeech
@@ -6,6 +6,7 @@ import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
+import com.rle.STS.items.Constant
 import com.rle.STS.model.BBDD.ExecutionsTable
 import com.rle.STS.model.BBDD.StepPersistenceTable
 import com.rle.STS.model.BBDD.ViewsPersistenceTable
@@ -28,15 +29,11 @@ class ChecklistViewModel @Inject constructor(
     @ApplicationContext context: Context
 ) : ViewModel() {
 
-    //TODO Cambiar a que la posición dependa de la base de datos
-
     lateinit var tts: TextToSpeech
-    val delay = 300L
     val locSpanish = java.util.Locale("es-ES")
 
     init {
         viewModelScope.launch(Dispatchers.IO) {
-
             tts = TextToSpeech(context, TextToSpeech.OnInitListener {
                 if (it == TextToSpeech.SUCCESS) {
                     tts.setLanguage(locSpanish)
@@ -52,7 +49,7 @@ class ChecklistViewModel @Inject constructor(
     private val _checklistJSON: MutableStateFlow<ChecklistJSON> = MutableStateFlow(ChecklistJSON())
     val checklist = _checklistJSON.asStateFlow()
 
-    //Position
+    //TODO Poner a null
     private val _currentStep: MutableStateFlow<Int> = MutableStateFlow(-1)
     val currentStep = _currentStep.asStateFlow()
     private val _currentView: MutableStateFlow<Int> = MutableStateFlow(-1)
@@ -73,9 +70,7 @@ class ChecklistViewModel @Inject constructor(
     val executionData = _executionDataFlow.asLiveData()
 
     //Flow query step
-
-    private val _stepPersistenceId: MutableStateFlow<Long> =
-        MutableStateFlow(0)
+    private val _stepPersistenceId: MutableStateFlow<Long> = MutableStateFlow(0)
     val stepPersistenceId = _stepPersistenceId.asStateFlow()
 
     private val _stepPersistenceFlow = currentStep.flatMapLatest { step ->
@@ -104,7 +99,6 @@ class ChecklistViewModel @Inject constructor(
         }
     }
 
-    //Start
     fun startChecklistExecution(
         selectedExecutionId: Long?,
         context: Context,
@@ -114,13 +108,8 @@ class ChecklistViewModel @Inject constructor(
 
         chargeJsonData(context, dbRepository.getChecklistById(idCkVersion).json)
 
-        Log.d("START_CHECKLIST", ": SelectedExe $selectedExecutionId")
-
         if (selectedExecutionId == null) {
 
-            Log.d("SELECTED_EXE", ": 0")
-
-            //Execution first insert
             _executionId.value =
                 dbRepository.insertExecution(
                     checklistRepository.executionsInit(
@@ -130,8 +119,6 @@ class ChecklistViewModel @Inject constructor(
                 )
             _currentStep.value = 0
             _currentView.value = 0
-            Log.d("EXE_ID", ": ${_executionId.value}")
-            //Step first insert
 
             _stepPersistenceId.value =
                 dbRepository.insertStep(
@@ -140,7 +127,6 @@ class ChecklistViewModel @Inject constructor(
                         steps = checklist.value.checklistData!!.steps[_currentStep.value]
                     )
                 )
-            Log.d("STEP_ID", ": ${_stepPersistenceId.value}")
 
             //Views for Step first insert
             dbRepository.inserMutlipleViewPersistence(
@@ -155,8 +141,6 @@ class ChecklistViewModel @Inject constructor(
             _executionId.value = selectedExecutionId
             _currentStep.value = dbRepository.getExecutionById(selectedExecutionId).current_step
             _currentView.value = dbRepository.getExecutionById(selectedExecutionId).current_view
-            Log.d("CURRENT", ": step ${_currentStep.value}, view ${_currentView.value}")
-            Log.d("CURRENT_EXE", selectedExecutionId.toString())
 
             _stepPersistenceId.value =
                 dbRepository.getCurrentStep(
@@ -164,33 +148,29 @@ class ChecklistViewModel @Inject constructor(
                     step = checklist.value.checklistData!!.steps[_currentStep.value].idStep
                 ).id!!
 
-
-            //TODO - Cargar lo que ya haya e ir al paso que toca
-            //Los pasos podrían venir de esto directamente y nos cargamos los otros dos campos
         }
 
-        if (_ttsOn.value) {
-            try {
-                delay(delay)
-                checklistRepository.speakTTS(
-                    _checklistJSON.value.checklistData!!.steps[_currentStep.value].views[_currentView.value].viewData.audio,
-                    tts
-                )
-            } catch (e: Exception) {
-                Log.d("SPEAK", "AUDIO NO PRESENTE")
-            }
-        }
+        checklistRepository.speakTTS(
+            audioText = _checklistJSON.value.checklistData!!.steps[_currentStep.value]
+                .views[_currentView.value].viewData.audio,
+            tts = tts,
+            switch = _ttsOn.value,
+            delay = Constant.AUDIO_DELAY
+        )
+
     }
 
     fun next(
         previousExecutionData: ExecutionsTable,
-        delay: Long = 0
+        wait: Long = 0
     ) =
         viewModelScope.launch(Dispatchers.IO) {
-            delay(delay)
+
+            delay(wait)
+
             if (_currentView.value + 1 < _checklistJSON.value.checklistData!!.steps[_currentStep.value].views.size) {
                 _currentView.value = _currentView.value + 1
-                Log.d("NEXT", _currentView.value.toString())
+
                 dbRepository.updateExecution(
                     checklistRepository.executionUpdate(
                         previousExecutionData = previousExecutionData,
@@ -198,30 +178,25 @@ class ChecklistViewModel @Inject constructor(
                         current_view = _currentView.value
                     )
                 )
-
             } else {
                 _endDialog.value = true
             }
-            if (_ttsOn.value) {
-                try {
-                    tts.stop()
-                    delay(delay)
-                    checklistRepository.speakTTS(
-                        _checklistJSON.value.checklistData!!.steps[_currentStep.value].views[_currentView.value].viewData.audio,
-                        tts
-                    )
-                } catch (e: Exception) {
-                    Log.d("SPEAK", "AUDIO NO PRESENTE")
-                }
-            }
-            Log.d("POS_", _currentView.value.toString())
+
+            checklistRepository.speakTTS(
+                audioText = _checklistJSON.value.checklistData!!.steps[_currentStep.value]
+                    .views[_currentView.value].viewData.audio,
+                tts = tts,
+                switch = _ttsOn.value,
+                delay = Constant.AUDIO_DELAY
+            )
         }
 
     fun back(previousExecutionData: ExecutionsTable) =
         viewModelScope.launch(Dispatchers.IO) {
             if (_currentView.value > 0) {
+
                 _currentView.value = _currentView.value - 1
-                Log.d("BACK", _currentView.value.toString())
+
                 dbRepository.updateExecution(
                     checklistRepository.executionUpdate(
                         previousExecutionData = previousExecutionData,
@@ -237,65 +212,50 @@ class ChecklistViewModel @Inject constructor(
 //                    _currentView.value =
 //                        checklist.value.checklistData!!.steps[_currentStep.value].views.size - 1
 //                }
-
             }
 
-            //TODO SACAR A FUNCIÓN TTS CONTROL
-            if (_ttsOn.value) {
-                try {
-                    tts.stop()
-                    delay(delay)
-                    checklistRepository.speakTTS(
-                        _checklistJSON.value.checklistData!!.steps[_currentStep.value].views[_currentView.value].viewData.audio,
-                        tts
-                    )
-                } catch (e: Exception) {
-                    Log.d("SPEAK", "AUDIO NO PRESENTE")
-                }
-            }
-            Log.d("POS_", _currentView.value.toString())
+            checklistRepository.speakTTS(
+                audioText = _checklistJSON.value.checklistData!!.steps[_currentStep.value]
+                    .views[_currentView.value].viewData.audio,
+                tts = tts,
+                switch = _ttsOn.value,
+                delay = Constant.AUDIO_DELAY
+            )
+
         }
 
     fun centerButton(context: Context) {
         viewModelScope.launch(Dispatchers.IO) {
 
-            when (_checklistJSON.value.checklistData!!.steps[currentStep.value].views[currentView.value].viewType) {
+            when (_checklistJSON.value.checklistData!!.steps[currentStep.value]
+                .views[currentView.value].viewType) {
 
                 ViewScreens.IM1.name, ViewScreens.IM2.name, ViewScreens.IM3.name ->
                     checklistRepository.openImage(
                         context = context,
-                        fileName = _checklistJSON.value.checklistData!!.steps[currentStep.value].views[currentView.value].viewData.files[0].file
+                        fileName = _checklistJSON.value.checklistData!!.steps[currentStep.value]
+                            .views[currentView.value].viewData.files[0].file
                     )
-
                 ViewScreens.VD1.name ->
                     checklistRepository.openVideo(
                         context = context,
-                        fileName = _checklistJSON.value.checklistData!!.steps[currentStep.value].views[currentView.value].viewData.files[0].file
+                        fileName = _checklistJSON.value.checklistData!!.steps[currentStep.value]
+                            .views[currentView.value].viewData.files[0].file
                     )
-
             }
-
         }
-
     }
 
     private suspend fun chargeJsonData(context: Context, fileName: String) {
-        //Charge JsonData
+
         val jsonData = checklistRepository.getJson(
             context = context,
             fileName = fileName
         )
-        Log.d("JSON", jsonData.toString())
+
         _checklistJSON.value = checklistRepository.extractChecklist(
             jsonChecklist = jsonData
         )
-        Log.d("CKVAL", _checklistJSON.value.toString())
-        //            val jsonData = GetJsonDataFromAsset(context = context, fileName)
-        //            _checklistData.value = com.rle.STS.logic.json.extractChecklist(jsonData)
-//        Log.d(
-//            "CKVIEWMODEL",
-//            checklist.value.checklistData!!.steps[_currentStep.value].views[_currentView.value].viewType
-//        )
     }
 
     fun viewUpdate(
@@ -339,16 +299,13 @@ class ChecklistViewModel @Inject constructor(
 
     fun buttonSpeak() {
         viewModelScope.launch(Dispatchers.IO) {
-            Log.d("BUTTON_AUDIO", ": Pressed.")
-            try {
-                delay(delay)
-                checklistRepository.speakTTS(
-                    audioText = _checklistJSON.value.checklistData!!.steps[_currentStep.value].views[_currentView.value].viewData.audio,
-                    tts = tts
-                )
-            } catch (e: Exception) {
-                Log.d("SPEAK", "AUDIO NO PRESENTE")
-            }
+            checklistRepository.speakTTS(
+                audioText = _checklistJSON.value.checklistData!!.steps[_currentStep.value]
+                    .views[_currentView.value].viewData.audio,
+                tts = tts,
+                switch = true,
+                delay = Constant.AUDIO_DELAY
+            )
         }
     }
 

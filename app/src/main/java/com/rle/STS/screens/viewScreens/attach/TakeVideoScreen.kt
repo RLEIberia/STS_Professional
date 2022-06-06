@@ -24,11 +24,10 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.DialogProperties
 import androidx.core.content.FileProvider
 import com.rle.STS.R
-import com.rle.STS.screens.checklist.ChecklistViewModel
+import com.rle.STS.viewModel.ChecklistViewModel
 import com.rle.STS.screens.viewScreens.utils.DescriptionRow
 import com.rle.STS.ui.theme.buttonExtraColor
 import com.rle.STS.ui.theme.cardTextColor
-import com.rle.STS.ui.theme.cardsColor
 import com.rle.STS.widgets.BottomButtons
 import com.rle.STS.widgets.CustomButton
 import com.rle.STS.widgets.VideoThumbnail

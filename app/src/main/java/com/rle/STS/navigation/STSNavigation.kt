@@ -6,21 +6,21 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.rememberNavController
 import com.rle.STS.screens.MainScreen
 import androidx.navigation.compose.composable
-import com.rle.STS.ActivityViewModel
+import com.rle.STS.viewModel.ActivityViewModel
 import com.rle.STS.screens.StateScreen
 import com.rle.STS.screens.checklist.ChecklistScreen
-import com.rle.STS.screens.checklist.ChecklistViewModel
+import com.rle.STS.viewModel.ChecklistViewModel
 import com.rle.STS.screens.checklistSelect.ChecklistSelectScreen
-import com.rle.STS.screens.checklistSelect.ChecklistSelectViewModel
+import com.rle.STS.viewModel.ChecklistSelectViewModel
 import com.rle.STS.screens.documentSelect.DocumentSelectScreen
-import com.rle.STS.screens.documentSelect.DocumentSelectViewModel
-import com.rle.STS.screens.main.MainViewModel
+import com.rle.STS.viewModel.DocumentSelectViewModel
+import com.rle.STS.viewModel.MainViewModel
 import com.rle.STS.screens.projectSelect.ProjectSelectScreen
-import com.rle.STS.screens.projectSelect.ProjectsViewModel
-import com.rle.STS.screens.scanner.ScannerViewModel
+import com.rle.STS.viewModel.ProjectsViewModel
+import com.rle.STS.viewModel.ScannerViewModel
 import com.rle.STS.screens.splash.SplashScreen
-import com.rle.STS.screens.splash.SplashViewModel
-import com.rle.STS.screens.state.StateViewModel
+import com.rle.STS.viewModel.SplashViewModel
+import com.rle.STS.viewModel.StateViewModel
 
 @Composable
 fun STSNavigation() {

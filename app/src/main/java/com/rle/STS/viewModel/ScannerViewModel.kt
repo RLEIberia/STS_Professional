@@ -1,4 +1,4 @@
-package com.rle.STS.screens.scanner
+package com.rle.STS.viewModel
 
 import androidx.compose.runtime.MutableState
 import androidx.lifecycle.ViewModel

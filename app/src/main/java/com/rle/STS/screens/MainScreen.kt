@@ -12,13 +12,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.navigation.NavController
-import com.rle.STS.ActivityViewModel
+import com.rle.STS.viewModel.ActivityViewModel
 import com.rle.STS.R
 import com.rle.STS.navigation.STSScreens
-import com.rle.STS.screens.main.MainViewModel
+import com.rle.STS.viewModel.MainViewModel
 import com.rle.STS.screens.scanner.ScannerScreen
-import com.rle.STS.screens.scanner.ScannerViewModel
-import com.rle.STS.widgets.CustomDialog
+import com.rle.STS.viewModel.ScannerViewModel
 import com.rle.STS.widgets.CustomTopIconButton
 import com.rle.STS.widgets.SimpleTopBar
 

@@ -1,9 +1,8 @@
-package com.rle.STS.screens.documentSelect
+package com.rle.STS.viewModel
 
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import androidx.lifecycle.viewmodel.compose.viewModel
 import com.rle.STS.model.BBDD.FilesInTable
 import com.rle.STS.repository.DbRepository
 import dagger.hilt.android.lifecycle.HiltViewModel

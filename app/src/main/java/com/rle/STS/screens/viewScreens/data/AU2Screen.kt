@@ -1,8 +1,5 @@
 package com.rle.STS.screens.viewScreens.data
 
-import android.media.MediaPlayer
-import android.net.Uri
-import android.util.Log
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Card
@@ -13,21 +10,16 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.rle.STS.R
-import com.rle.STS.screens.checklist.ChecklistViewModel
+import com.rle.STS.viewModel.ChecklistViewModel
 import com.rle.STS.screens.viewScreens.utils.DescriptionRow
 import com.rle.STS.ui.theme.buttonOkColor
-import com.rle.STS.ui.theme.buttonStop
-import com.rle.STS.ui.theme.grayedButton
 import com.rle.STS.utils.checklistUtils.openAudio
 import com.rle.STS.widgets.CustomSideIconButton
-import kotlinx.coroutines.delay
 import java.io.File
-import kotlin.time.Duration.Companion.seconds
 
 
 @Composable

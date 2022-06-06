@@ -14,7 +14,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import com.rle.STS.R
 import com.rle.STS.items.RWMethod
-import com.rle.STS.screens.checklist.ChecklistViewModel
+import com.rle.STS.viewModel.ChecklistViewModel
 
 @Composable
 fun QR1Screen(checklistViewModel: ChecklistViewModel){

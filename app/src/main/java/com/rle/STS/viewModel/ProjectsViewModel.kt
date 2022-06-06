@@ -1,6 +1,5 @@
-package com.rle.STS.screens.projectSelect
+package com.rle.STS.viewModel
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.rle.STS.model.BBDD.ProjectsTable

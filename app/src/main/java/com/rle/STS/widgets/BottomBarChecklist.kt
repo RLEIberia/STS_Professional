@@ -10,18 +10,13 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import com.rle.STS.R
-import com.rle.STS.screens.checklist.ChecklistViewModel
+import com.rle.STS.viewModel.ChecklistViewModel
 import com.rle.STS.screens.viewScreens.ViewScreens
 
 @Composable
 fun BottomBarChecklist(
     modifier: Modifier = Modifier,
     checklistViewModel: ChecklistViewModel,
-    backOnClick: () -> Unit,
-    centerActive: Boolean,
-    centerText: String,
-    centerIcon: Int = R.drawable.options,
-    centerOnClick: () -> Unit,
     rightActive: Boolean,
     centerColor: Color
 ) {
@@ -47,7 +42,6 @@ fun BottomBarChecklist(
     if (checklist.value.checklistData != null && currentStep.value != -1 && currentView.value != -1) {
 
         when (checklist.value.checklistData!!.steps[currentStep.value].views[currentView.value].viewType) {
-
             ViewScreens.IM1.name, ViewScreens.IM2.name, ViewScreens.IM3.name -> {
                 centerActiveView.value = true
                 centerTextView.value = "AMPLIAR"
@@ -56,11 +50,9 @@ fun BottomBarChecklist(
                 centerActiveView.value = true
                 centerTextView.value = "REPRODUCIR"
             }
-
             else -> {
                 centerActiveView.value = false
             }
-
         }
 
         BottomBar(
@@ -82,30 +74,8 @@ fun BottomBarChecklist(
             rightOnClick = { checklistViewModel.next(previousExecutionData = executionData.value[0]) },
             rightSize = 250
         )
-
     }
-
 }
-
-//    BottomBar(
-//        modifierBottomBar = modifier,
-//        leftActive = !(currentStep.value == 0 && currentView.value == 0),
-//        leftText = stringResource(id = R.string.back),
-//        leftIcon = R.drawable.back,
-//        leftOnClick = { checklistViewModel.back() },
-//        leftSize = 250,
-//        centerActive = centerActiveView.value,
-//        centerText = centerTextView.value,
-//        centerIcon = centerIconView.value,
-//        centerOnClick = { checklistViewModel.centerButton(context = context) },
-//        centerColor = centerColor,
-//        centerSize = 250,
-//        rightActive = rightActive,
-//        rightText = stringResource(id = R.string.next),
-//        rightIcon = R.drawable.next,
-//        rightOnClick = { checklistViewModel.next() },
-//        rightSize = 250
-//    )
 
 
 

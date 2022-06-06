@@ -2,9 +2,8 @@ package com.rle.STS.screens
 
 import androidx.compose.runtime.Composable
 import com.rle.STS.screens.viewScreens.attach.*
-import com.rle.STS.screens.checklist.ChecklistViewModel
+import com.rle.STS.viewModel.ChecklistViewModel
 import com.rle.STS.screens.viewScreens.data.*
-import com.rle.STS.screens.viewScreens.result.MultiOptionScreen
 import com.rle.STS.screens.viewScreens.result.OKKOScreen
 import com.rle.STS.screens.viewScreens.result.OP2Screen
 import javax.inject.Inject

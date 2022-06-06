@@ -1,4 +1,4 @@
-package com.rle.STS.screens.checklistSelect
+package com.rle.STS.viewModel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
